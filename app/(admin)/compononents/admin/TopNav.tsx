@@ -1,5 +1,6 @@
 'use client'
 import { Bell, MessageSquare, Search, Sun, Moon, Globe, Plus, ChevronDown, Menu } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export function TopNav({ onToggleSidebar }: { onToggleSidebar: () => void }) {
@@ -35,11 +36,11 @@ export function TopNav({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
       {/* Actions */}
       <div className="flex items-center gap-1.5">
-        <button className="hidden items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110 md:inline-flex">
+        <Link href={'/dashboard/products/new'}><button className="hidden items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110 md:inline-flex">
           <Plus className="h-4 w-4" />
           Add Product
         </button>
-
+</Link>
         <IconBtn label="Language"><Globe className="h-5 w-5" /></IconBtn>
         <IconBtn label="Toggle theme" onClick={() => setDark((d) => !d)}>
           {dark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}

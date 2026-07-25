@@ -1,0 +1,42 @@
+import { json } from "stream/consumers";
+import { User } from "../types/interface";
+
+const base_url = `${process.env.API_URL}/users`;
+const API_URL="http://localhost:5000/api/v1"
+
+export async function getUsers() {
+    try {
+        const response = await fetch(`${API_URL}/users`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        const users = response.json();
+        return users;
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function createUser(user: User) {
+    try {
+        const response = await fetch(base_url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user)
+        },
+        )
+        const data = await response.json();
+        return data;
+    }
+
+    catch (error) {
+        console.error("Error creating product:", error);
+        throw error;
+    }
+}

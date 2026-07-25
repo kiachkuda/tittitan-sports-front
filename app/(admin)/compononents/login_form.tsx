@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import clsx from 'clsx';
-import { useAuthState } from '@/hook/AuthHook';
+import { useAuth } from '@/contexts/AuthProvider';
 
 export default function LoginForm() {
 
@@ -12,7 +12,8 @@ export default function LoginForm() {
     const [success, setSuccess] = useState(false);
   
   const router = useRouter();
-  const {setIsAuthenticated} = useAuthState();
+  const auth = useAuth();
+  const setUser = auth?.setUser;
 
   const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
     // Handle form submission logic here
@@ -37,10 +38,13 @@ export default function LoginForm() {
         
     if(res.ok && res.status == 200){
         const data = await res.json();
-        //console.log("Login successful:", data);
+        console.log("Login successful:", data);
         // Redirect or update UI on successful login
-        setIsAuthenticated(true);
-         router.push('/admin/');
+        if (setUser) {
+          setUser(data.user);
+          
+        }
+        router.push('/dashboard/home');
         setSuccess(true);
          setTimeout(() => { setSuccess(false); }, 3000); // 
         setIsError(false);

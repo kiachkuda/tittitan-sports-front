@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+#backend
+/titan-sportke
+
 # next.js
 /.next/
 /out/

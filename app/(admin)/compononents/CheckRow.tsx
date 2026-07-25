@@ -1,6 +1,6 @@
 import { CheckCircle2 } from "lucide-react";
 
-export default function CheckRow({ ok, children }: { ok: boolean; children: React.ReactNode }) {
+export function CheckRow({ ok, children }: { ok: boolean; children: React.ReactNode }) {
   return (
     <li className="flex items-center gap-2">
       <span

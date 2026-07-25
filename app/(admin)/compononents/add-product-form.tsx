@@ -7,7 +7,14 @@ import {
   ArrowLeft, Upload, X, Plus, Trash2, Save, Eye, Image as ImageIcon,
   Package, Tag, FileText, Layers, Star, CheckCircle2, GripVertical, Info,
 } from "lucide-react";
+
+// imports
 import AdminShell  from "@/app/(admin)/compononents/admin/AdminShell";
+import { Section } from "@/app/(admin)/compononents/section";
+import { CheckRow } from "@/app/(admin)/compononents/CheckRow";
+import { Field } from "@/app/(admin)/compononents/Field";
+import { Counter } from "@/app/(admin)/compononents/counter";
+import { Caret } from "@/app/(admin)/compononents/Caret";
 
 const CATEGORIES = [
   "Club Jerseys",
@@ -23,7 +30,7 @@ const BRANDS = ["Adidas", "Nike", "Puma", "Umbro", "New Balance", "Kappa"] as co
 const SIZE_PRESETS = ["XS", "S", "M", "L", "XL", "XXL"];
 
 type Variant = { id: string; size: string; quantity: number; sku?: string };
-type ImageItem = { id: string; url: string; name: string };
+type ImageItem = { id: string; file:File, url: string; name: string };
 
 function uid() {
   return Math.random().toString(36).slice(2, 9);
@@ -40,7 +47,7 @@ export function AddProductForm() {
   const [team, setTeam] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState<"Active" | "Draft">("Draft");
-  const [images, setImages] = useState<File[]>([]);
+  const [images, setImages] = useState<ImageItem[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const [variants, setVariants] = useState<Variant[]>([
     { id: uid(), size: "M", quantity: 0 },
@@ -62,22 +69,18 @@ export function AddProductForm() {
       router.push(destination);
   }
 
-  // function handleFiles(files: FileList | null) {
-  //   if (!files) return;
-  //   const next: ImageItem[] = [];
-  //   Array.from(files).forEach((f) => {
-  //     if (!f.type.startsWith("image/")) return;
-  //     next.push({ id: uid(), url: URL.createObjectURL(f), name: f.name });
-  //   });
-  //   setImages((prev) => [...prev, ...next]);
-  // }
+  function handleFiles(files: FileList | null) {
+    if (!files) return;
+    const next: ImageItem[] = [];
+    Array.from(files).forEach((f) => {
+      if (!f.type.startsWith("image/")) return;
+      next.push({ id: uid(), file:f, url: URL.createObjectURL(f), name: f.name });
+    });
+    setImages((prev) => [...prev, ...next]);
+  }
 
   
-  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImages(Array.from(e.target.files));
-    }
-  }
+ 
 
   function removeImage(id: string) {
     setImages((prev) => prev.filter((i) => i.id !== id));
@@ -95,7 +98,7 @@ export function AddProductForm() {
   }
 
   function addVariant(size?: string) {
-    setVariants((v) => [...v, { id: uid(), size: size || "", quantity: 0 }]);
+    setVariants((v) => [...v, { id: uid(), size: size || "S", quantity: 0 }]);
   }
   function updateVariant(id: string, patch: Partial<Variant>) {
     setVariants((v) => v.map((it) => (it.id === id ? { ...it, ...patch } : it)));
@@ -126,9 +129,9 @@ export function AddProductForm() {
     return Object.keys(e).length === 0;
   }
 
-  const handleSave = async (
-  e: React.FormEvent<HTMLFormElement>
-) => {
+   async function handleSave() 
+ 
+ {
  
 
   if (!validate()) return;
@@ -158,7 +161,7 @@ export function AddProductForm() {
     );
 
     // Images
-    images.forEach((file) => formData.set("image_paths", file));
+    images.forEach((file) => formData.append("files", file.file));
 
     
 
@@ -189,7 +192,7 @@ export function AddProductForm() {
 };
 
   return (
-    <AdminShell>
+    <>
       {/* Header */}
       
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
@@ -208,26 +211,7 @@ export function AddProductForm() {
             Fill in the details below to publish a new item to the TitanSports catalog.
           </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
-          >
-            Cancel
-          </Link>
-          <button
-            onClick={() => handleSave(false)}
-            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
-          >
-            <Save className="h-4 w-4" /> Save draft
-          </button>
-          <button
-            onClick={() => handleSave(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110"
-          >
-            <CheckCircle2 className="h-4 w-4" /> Publish product
-          </button>
-        </div>
+        
       </div>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
@@ -302,7 +286,7 @@ export function AddProductForm() {
 
               <Field label="SKU" hint="Auto-generated if left blank.">
                 <input
-                  value={team}
+                  value={sku}
                   onChange={(e) => setSku(e.target.value.toUpperCase())}
                   placeholder="ARS-H-2526"
                   className={`${inputCls(false)} font-mono`}
@@ -364,7 +348,7 @@ export function AddProductForm() {
               <input
                 ref={fileInput}
                 type="file"
-                accept="image/*"
+                // accept="image/*"
                 multiple
                 className="hidden"
                 onChange={(e) => handleFiles(e.target.files)}
@@ -568,36 +552,25 @@ export function AddProductForm() {
           </div>
 
           {/* Status */}
-          <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-soft)]">
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-              Visibility
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              {(["Draft", "Active"] as const).map((s) => (
-                <button
-                  key={s}
-                  onClick={() => setStatus(s)}
-                  className={`rounded-xl border px-3 py-2 text-sm font-semibold transition ${
-                    status === s
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border bg-background text-foreground hover:bg-muted"
-                  }`}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-            <p className="mt-3 flex items-start gap-2 text-xs text-muted-foreground">
-              <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
-              {status === "Active"
-                ? "This product will be visible to customers immediately after publishing."
-                : "Drafts are hidden from the storefront and can be edited later."}
-            </p>
-          </div>
+          <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href="/products"
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
+          >
+            Cancel
+          </Link>
+         
+          <button
+            onClick={() => handleSave()}
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110"
+          >
+            <CheckCircle2 className="h-4 w-4" /> Publish product
+          </button>
+        </div>
         </aside>
       </div>
       
-    </AdminShell>
+    </>
   );
 }
 
@@ -617,103 +590,9 @@ const selectCls = (err: boolean) =>
       : "border-border focus:border-primary focus:ring-primary/10"
   }`;
 
-function Caret() {
-  return (
-    <svg
-      className="pointer-events-none absolute right-3 top-1/2 h-3 w-3 -translate-y-1/2 text-muted-foreground"
-      viewBox="0 0 12 12"
-      fill="none"
-    >
-      <path d="M3 4.5 6 7.5 9 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
 
-function Section({
-  icon: Icon, title, description, children, error, action,
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description?: string;
-  children: React.ReactNode;
-  error?: string;
-  action?: React.ReactNode;
-}) {
-  return (
-    <section className="rounded-2xl border border-border bg-card shadow-[var(--shadow-soft)]">
-      <header className="flex items-start justify-between gap-3 border-b border-border p-5">
-        <div className="flex items-start gap-3">
-          <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
-            <Icon className="h-5 w-5" />
-          </div>
-          <div>
-            <h2 className="text-sm font-bold tracking-tight md:text-base">{title}</h2>
-            {description && (
-              <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
-            )}
-          </div>
-        </div>
-        {action}
-      </header>
-      <div className="space-y-5 p-5">
-        {children}
-        {error && (
-          <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-3 py-2 text-xs font-medium text-destructive">
-            {error}
-          </div>
-        )}
-      </div>
-    </section>
-  );
-}
 
-function Field({
-  label, hint, required, error, children,
-}: {
-  label: string;
-  hint?: string;
-  required?: boolean;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <div className="mb-1.5 flex items-center justify-between gap-3">
-        <label className="text-sm font-semibold">
-          {label}
-          {required && <span className="ml-1 text-primary">*</span>}
-        </label>
-        {hint && !error && (
-          <span className="text-[11px] text-muted-foreground">{hint}</span>
-        )}
-      </div>
-      {children}
-      {error && (
-        <div className="mt-1.5 text-xs font-medium text-destructive">{error}</div>
-      )}
-    </div>
-  );
-}
 
-function Counter({ now, max }: { now: number; max: number }) {
-  return (
-    <div className="mt-1 text-right text-[11px] text-muted-foreground">
-      {now} / {max}
-    </div>
-  );
-}
 
-function CheckRow({ ok, children }: { ok: boolean; children: React.ReactNode }) {
-  return (
-    <li className="flex items-center gap-2">
-      <span
-        className={`grid h-4 w-4 place-items-center rounded-full ${
-          ok ? "bg-success text-white" : "border border-border bg-background"
-        }`}
-      >
-        {ok && <CheckCircle2 className="h-3 w-3" />}
-      </span>
-      <span className={ok ? "text-foreground" : "text-muted-foreground"}>{children}</span>
-    </li>
-  );
-}
+
+

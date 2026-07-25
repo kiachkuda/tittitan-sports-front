@@ -1,4 +1,7 @@
 'use client'
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import AdminShell from "@/app/(admin)/compononents/admin/AdminShell";
 import {
   TrendingUp, TrendingDown, DollarSign, ShoppingBag, Package,
@@ -9,6 +12,7 @@ import {
   Tooltip, XAxis, YAxis,
 } from "recharts";
 
+import { useAuth } from "@/contexts/AuthProvider";
 
 
 const revenueData = [
@@ -44,9 +48,31 @@ const orders = [
   { id: "TS-10240", customer: "Faith Chebet", jersey: "PSG Third 25/26", qty: 1, pay: "PayPal", status: "Pending", total: "KES 5,100", date: "16 Jul" },
 ];
 
+
+
+
+
 export default function Home() {
+
+  const auth = useAuth();
+  const user = auth?.user;
+  const loading = auth?.loading ?? false;
+  const router = useRouter();
+
+  useEffect(() => {
+
+    if (!loading && !user) {
+      router.push("/dashboard")
+    }
+
+  }, [loading, user]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <AdminShell>
+    <>
       {/* Header */}
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -253,7 +279,7 @@ export default function Home() {
           </table>
         </div>
       </Card>
-    </AdminShell>
+  </>
   );
 }
 

@@ -12,24 +12,23 @@ const nav = [
   ]},
   { section: "Catalog", items: [
     { to: "/dashboard/products", label: "Products", icon: Package },
-    { to: "/categories", label: "Categories", icon: Tags },
-    { to: "/brands", label: "Brands", icon: Award },
-    { to: "/inventory", label: "Inventory", icon: Warehouse },
+    { to: "/dashboard/categories", label: "Categories", icon: Tags },
+    { to: "/dashboard/home", label: "Inventory", icon: Warehouse },
   ]},
   { section: "Sales", items: [
-    { to: "/orders", label: "Orders", icon: ShoppingCart, badge: "18" },
-    { to: "/customers", label: "Customers", icon: Users },
-    { to: "/payments", label: "Payments", icon: CreditCard },
-    { to: "/coupons", label: "Coupons", icon: Ticket },
-    { to: "/reviews", label: "Reviews", icon: Star },
+    { to: "/dashboard/orders", label: "Orders", icon: ShoppingCart, badge: "18" },
+    { to: "/dashboard/customers", label: "Customers", icon: Users },
+    { to: "/dashboard/payments", label: "Payments", icon: CreditCard },
+    { to: "/dashboard/coupons", label: "Coupons", icon: Ticket },
+    { to: "/dashboard/reviews", label: "Reviews", icon: Star },
   ]},
   { section: "Insights", items: [
-    { to: "/analytics", label: "Analytics", icon: BarChart3 },
-    { to: "/reports", label: "Reports", icon: FileText },
+    { to: "/dashboard/analytics", label: "Analytics", icon: BarChart3 },
+    { to: "/dashboard/reports", label: "Reports", icon: FileText },
   ]},
   { section: "System", items: [
-    { to: "/users", label: "Users", icon: UserCog },
-    { to: "/settings", label: "Settings", icon: Settings },
+    { to: "/dashboard/users", label: "Users", icon: UserCog },
+    { to: "/dashboard/settings", label: "Settings", icon: Settings },
   ]},
 ];
 

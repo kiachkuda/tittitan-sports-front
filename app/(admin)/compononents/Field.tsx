@@ -1,6 +1,6 @@
 "use client"
 
-export default function Field({
+export function Field({
   label, hint, required, error, children,
 }: {
   label: string;

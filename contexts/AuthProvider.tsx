@@ -1,67 +1,64 @@
-"use client"
+"use client";
 
-
-import { NextResponse } from 'next/server';
-import {useContext, useEffect, useState, createContext, Dispatch, SetStateAction} from 'react'
-import { useRouter } from 'next/navigation';
+import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 
 type AuthContextType = {
-  isAuthenticated: boolean;
-  setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
-  logout: () => void;
+  user: any;
+  loading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<any>>;
 };
 
 export const AuthContext = createContext<AuthContextType>({
-  isAuthenticated: false,
-  setIsAuthenticated: (() => {}) as Dispatch<SetStateAction<boolean>>,
-  logout: () => {}
+  user: null,
+  loading: true,
+  setUser: (() => {}) as React.Dispatch<React.SetStateAction<any>>
 });
 
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
+type AuthProviderProps = {
+  children: ReactNode;
+};
 
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const router = useRouter();
-    useEffect(() => {
-      const fetchAuth = async () => {
-        try {
-          const res = await fetch('localhost:3000/api/auth', { method: 'GET', credentials: 'include' });
-          if (!res.ok) {
-            setIsAuthenticated(false);
-            return;
-          }
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-         
-          let data: any = null;
-          try {
-            data = await res.json();
-           
-          } catch {
-            data = null;
+  useEffect(() => {
+    async function loadUser() {
+      try {
+        const response = await fetch(
+          "http://localhost:5000/api/v1/auth",
+          {
+            credentials: "include",
           }
+        );
 
-          if (data?.user) {      
-            setIsAuthenticated(true);
-            return;
-          }
-        } catch (err) {
-          setIsAuthenticated(false);
+        if (!response.ok) {
+          setLoading(false);
+          return; 
         }
-      };
 
-      fetchAuth();
-    }, []);
+        const data = await response.json();
 
-    const logout = async () => {
-      const res = await fetch('localhost:3000/api/auth/logout', { method: 'POST', credentials: 'include' });
-      if(res.ok){
-        setIsAuthenticated(false);
-        router.push('/shop');
+        setUser(data.user);
+      } finally {
+        setLoading(false);
       }
     }
+
+    loadUser();
+  }, []);
+
   return (
-    <AuthContext.Provider value={{isAuthenticated, logout, setIsAuthenticated}}>
-        {children}
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        setUser,
+      }}
+    >
+      {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
+export const useAuth = () => useContext(AuthContext);

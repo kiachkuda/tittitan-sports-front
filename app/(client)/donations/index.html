@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TitanSports — Your Sports Shop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink: '#0E0E10',
+        smoke: '#F5F5F4',
+        titan: { DEFAULT:'#F57C1F', dark:'#D9660A', light:'#FFA357' },
+      },
+      fontFamily: {
+        display: ['"Archivo Black"','sans-serif'],
+        sans: ['Inter','sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  html,body{background:#F5F5F4;color:#0E0E10;font-family:Inter,sans-serif;}
+  .display{font-family:"Archivo Black",sans-serif;letter-spacing:-.02em}
+  .marquee{display:flex;gap:3rem;animation:scroll 30s linear infinite;white-space:nowrap}
+  @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .grid-lines{background-image:linear-gradient(#0E0E1010 1px,transparent 1px),linear-gradient(90deg,#0E0E1010 1px,transparent 1px);background-size:56px 56px}
+  .card-tilt{transition:transform .4s cubic-bezier(.2,.9,.3,1),box-shadow .4s}
+  .card-tilt:hover{transform:translateY(-6px) rotate(-.4deg);box-shadow:0 30px 60px -30px rgba(245,124,31,.4)}
+  .noise{background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1px);background-size:3px 3px}
+  .chip{border:1.5px solid #0E0E10;border-radius:999px;padding:.4rem 1rem;font-weight:600;font-size:.8rem}
+  .btn-primary{background:#F57C1F;color:#fff;font-weight:700;border-radius:999px;transition:all .2s}
+  .btn-primary:hover{background:#0E0E10}
+  .swatch{width:22px;height:22px;border-radius:999px;border:2px solid #fff;box-shadow:0 0 0 1px #0E0E10}
+  /* size pill */
+  .size-pill{border:1.5px solid #0E0E10;padding:.55rem 0;text-align:center;font-weight:700;border-radius:12px;cursor:pointer;transition:all .15s}
+  .size-pill:hover{background:#0E0E10;color:#fff}
+  .size-pill.active{background:#F57C1F;color:#fff;border-color:#F57C1F}
+  .under-hero{clip-path:polygon(0 0,100% 0,100% 88%,0 100%)}
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ANNOUNCEMENT BAR -->
+
+
+<!-- NAV -->
+
+
+
+
+
+<!-- PRODUCT GRID -->
+<section id="grid" class="max-w-7xl mx-auto px-6 mt-24">
+  <div class="flex items-end justify-between mb-10 flex-wrap gap-4">
+    <div>
+      <div class="text-xs tracking-[.25em] text-titan font-bold">/ NEW ARRIVALS</div>
+      <h2 class="display text-4xl md:text-5xl mt-2">This week's drops.</h2>
+    </div>
+    <div class="flex gap-2 flex-wrap">
+      <button class="chip bg-ink text-white border-ink">All</button>
+      <button class="chip hover:bg-ink hover:text-white transition">Home</button>
+      <button class="chip hover:bg-ink hover:text-white transition">Away</button>
+      <button class="chip hover:bg-ink hover:text-white transition">Women's</button>
+      <button class="chip hover:bg-ink hover:text-white transition">Retro</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+    <!-- product template -->
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <span class="absolute top-3 left-3 chip bg-titan text-white border-titan text-[10px]">NEW</span>
+        <button class="absolute top-3 right-3 w-9 h-9 grid place-items-center rounded-full bg-white/90 hover:bg-titan hover:text-white transition">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+        <img src="https://images.unsplash.com/photo-1580087433295-ab2600c1030e?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-red-600"></span>
+          <span class="swatch bg-white"></span>
+          <span class="swatch bg-black"></span>
+        </div>
+        <div class="font-bold text-sm">Davies Canada 26/27 Home</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 85</span>
+          <span class="text-xs text-ink/50">★ 4.9</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <span class="absolute top-3 left-3 chip bg-ink text-white border-ink text-[10px]">HOT</span>
+        <img src="https://images.unsplash.com/photo-1577223625816-7546f13df25d?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-emerald-600"></span>
+          <span class="swatch bg-white"></span>
+        </div>
+        <div class="font-bold text-sm">A.Vega Mexico Women's Home</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 85</span>
+          <span class="text-xs text-ink/50">★ 4.8</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <span class="absolute top-3 left-3 chip bg-white text-ink border-ink text-[10px]">-20%</span>
+        <img src="https://images.unsplash.com/photo-1602293589930-45aad59ba3ab?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-sky-300"></span>
+          <span class="swatch bg-white"></span>
+        </div>
+        <div class="font-bold text-sm">Argentina 26/27 Crop Top</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 90</span>
+          <span class="text-xs text-ink/50">★ 5.0</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1614632537197-38a17061c2bd?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-red-700"></span>
+          <span class="swatch bg-yellow-500"></span>
+          <span class="swatch bg-black"></span>
+        </div>
+        <div class="font-bold text-sm">Belgium 26/27 Women's Home</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 85</span>
+          <span class="text-xs text-ink/50">★ 4.7</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <span class="absolute top-3 left-3 chip bg-titan text-white border-titan text-[10px]">NEW</span>
+        <img src="https://images.unsplash.com/photo-1571945153237-4929e783af4a?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-orange-500"></span>
+          <span class="swatch bg-lime-400"></span>
+        </div>
+        <div class="font-bold text-sm">Predator Elite FG Boots</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 220</span>
+          <span class="text-xs text-ink/50">★ 4.9</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1552318965-6e6be7484ada?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-black"></span>
+          <span class="swatch bg-white"></span>
+        </div>
+        <div class="font-bold text-sm">Match Ball Pro 26</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 65</span>
+          <span class="text-xs text-ink/50">★ 4.8</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <span class="absolute top-3 left-3 chip bg-ink text-white border-ink text-[10px]">RETRO</span>
+        <img src="https://images.unsplash.com/photo-1593757147298-e064ed1419e5?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-yellow-400"></span>
+          <span class="swatch bg-green-700"></span>
+        </div>
+        <div class="font-bold text-sm">Brazil '98 Retro</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 110</span>
+          <span class="text-xs text-ink/50">★ 5.0</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="#product" class="card-tilt bg-white rounded-2xl overflow-hidden group">
+      <div class="relative bg-smoke aspect-[4/5] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1556906781-9a412961c28c?w=600&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500"/>
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-1 mb-2">
+          <span class="swatch bg-black"></span>
+          <span class="swatch bg-orange-500"></span>
+        </div>
+        <div class="font-bold text-sm">Titan Training Duffel</div>
+        <div class="flex items-center justify-between mt-2">
+          <span class="display text-titan">CHF 75</span>
+          <span class="text-xs text-ink/50">★ 4.6</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+
+
+<!-- SOCIAL PROOF / COMMUNITY -->
+<section class="max-w-7xl mx-auto px-6 mt-28">
+  <div class="flex items-end justify-between mb-8 flex-wrap gap-4">
+    <div>
+      <div class="text-xs tracking-[.25em] text-titan font-bold">/ #TITANSPORTS</div>
+      <h2 class="display text-4xl md:text-5xl mt-2">Worn by the community.</h2>
+    </div>
+    <a href="#" class="chip hover:bg-ink hover:text-white transition">View all →</a>
+  </div>
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="relative aspect-square rounded-2xl overflow-hidden group"><img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=500&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"/><div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent flex items-end p-3 text-white text-xs font-bold">@marcusk · 2.3k ♥</div></div>
+    <div class="relative aspect-square rounded-2xl overflow-hidden group"><img src="https://images.unsplash.com/photo-1526232636376-6f6b0bc1caa5?w=500&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"/><div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent flex items-end p-3 text-white text-xs font-bold">@lena · 1.1k ♥</div></div>
+    <div class="relative aspect-square rounded-2xl overflow-hidden group"><img src="https://images.unsplash.com/photo-1552667466-07770ae110d0?w=500&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"/><div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent flex items-end p-3 text-white text-xs font-bold">@zico_9 · 4.7k ♥</div></div>
+    <div class="relative aspect-square rounded-2xl overflow-hidden group"><img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=500&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-110 transition duration-700"/><div class="absolute inset-0 bg-gradient-to-t from-ink/70 to-transparent flex items-end p-3 text-white text-xs font-bold">@ridwan · 3.9k ♥</div></div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+
+
+
+
+</body>
+</html>
