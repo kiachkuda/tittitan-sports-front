@@ -13,12 +13,12 @@ import {
 import Logo from "./logo";
 
 const navLinks = [
-  { name: "Jerseys", href: "/jerseys" },
-  { name: "National Teams", href: "/national-teams" },
-  { name: "Clubs", href: "/clubs" },
-  { name: "Boots", href: "/boots" },
-  { name: "Accessories", href: "/accessories" },
-  { name: "Sale", href: "/sale", sale: true },
+  { name: "Jerseys", href: "/home/products" },
+  { name: "National Teams",href: "/home/products" },
+  { name: "Clubs", href: "/home/products" },
+  { name: "Boots", href: "/home/products" },
+  { name: "Accessories",href: "/home/products" },
+  { name: "Sale", href: "/home/products", sale: true },
 ];
 
 export default function Nav() {

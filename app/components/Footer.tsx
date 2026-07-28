@@ -17,7 +17,6 @@ const shopLinks = [
 const helpLinks = [
   { name: "Shipping", href: "#" },
   { name: "Returns", href: "#" },
-  { name: "Size Guide", href: "#" },
   { name: "Contact Us", href: "#" },
 ];
 
