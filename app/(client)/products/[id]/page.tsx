@@ -53,9 +53,7 @@ export default function ProductPage() {
         
     }, [])
 
-    useEffect( ()=> {
-
-    })
+  
 
     
 
@@ -153,9 +151,7 @@ export default function ProductPage() {
                   Size (US)
                 </span>
 
-                <button className="text-sm underline">
-                  Size Guide
-                </button>
+  
               </div>
 
               <div className="grid grid-cols-5 gap-2">
