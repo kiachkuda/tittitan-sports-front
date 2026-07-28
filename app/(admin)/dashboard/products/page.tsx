@@ -233,11 +233,11 @@ function GridView({ rows }: { rows: Product[] }) {
     <div className="grid grid-cols-1 gap-4 p-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {rows.map((p) => (
         <div
-          key={p.id}
+          key={p.product_id}
           className="group overflow-hidden rounded-2xl border border-border bg-background transition hover:shadow-[var(--shadow-elevated)]"
         >
           <div className="relative grid h-40 place-items-center bg-gradient-to-br from-muted to-muted/40 text-6xl">
-            {p.image}
+            {p.product_image[0].image_path}
             
           </div>
           <div className="p-4">
@@ -284,33 +284,7 @@ function Select({
   );
 }
 
-// function StockPill({ n }: { n: number }) {
-//   const tone =
-//     n === 0 ? "bg-destructive/10 text-destructive"
-//     : n <= 20 ? "bg-warning/20 text-warning-foreground"
-//     : "bg-success/10 text-success";
-//   return (
-//     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${tone}`}>
-//       <span className="h-1.5 w-1.5 rounded-full bg-current" />
-//       {n === 0 ? "Out of stock" : `${n} in stock`}
-//     </span>
-//   );
-// }
 
-// function StatusBadge({ status }: { status: Status }) {
-//   const map: Record<Status, string> = {
-//     Active: "bg-success/10 text-success",
-//     Draft: "bg-muted text-muted-foreground",
-//     "Out of Stock": "bg-destructive/10 text-destructive",
-//     Archived: "bg-muted text-muted-foreground",
-//   };
-//   return (
-//     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ${map[status]}`}>
-//       <span className="h-1.5 w-1.5 rounded-full bg-current" />
-//       {status}
-//     </span>
-//   );
-// }
 
 function StatCard({
   label, value, delta, icon: Icon, accent,
