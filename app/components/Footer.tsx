@@ -47,7 +47,7 @@ export default function Footer() {
               alt="Titan Sports"
               width={45}
               height={45}
-              className="rounded-lg"
+              className="rounded-md p-2"
             />
 
             <div>
@@ -92,7 +92,7 @@ export default function Footer() {
 
             <div className="flex items-center gap-3">
               <Mail size={18} className="text-orange-600" />
-              info@titansports.co.ke
+              info@titansportke.co.ke
             </div>
           </div>
         </div>
