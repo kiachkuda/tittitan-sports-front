@@ -53,6 +53,10 @@ export default function ProductPage() {
         
     }, [])
 
+    useEffect( ()=> {
+
+    })
+
     
 
     return (
@@ -156,7 +160,7 @@ export default function ProductPage() {
 
               <div className="grid grid-cols-5 gap-2">
 
-                {product?.product_variants.map((s, i) => {
+                {variants.map((s, i) => {
 
                   return (
                     <button
