@@ -28,7 +28,7 @@ export default function CustomerPage() {
         <h1>Customer Page</h1>
 
         {users.map((user) =>
-            <div key={user.user_id}>{user.first_name}</div>
+            <div>{user.first_name}</div>
         )}
 
         </>
