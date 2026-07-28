@@ -1,6 +1,6 @@
 
 export type Category = {name:string, description:string}
-export type Variant = { id:number, size: string; stock_quantity: number; sku: string };
+export type Variant = {  size: string; stock_quantity: number; sku: string };
 export type ImageType = {product_id: number; image_path: string, file:File, is_cover:boolean, id:number}
 
 export type SingleProduct = {

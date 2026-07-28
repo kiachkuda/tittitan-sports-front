@@ -50,11 +50,11 @@ export default function ProductEditPage() {
   const [price, setPrice] = useState<number>(product.price);
 
   const [description, setDescription] = useState(product.description ?? "");
-  const [variants, setVariants] = useState<Variant[]>(product.variants ?? []);
-  const [images, setImages] = useState<ImageType[]>(product.images ?? []);
+  const [variants, setVariants] = useState<Variant[]>(product.product_variants ?? []);
+  const [images, setImages] = useState<ImageType[]>(product.product_image ?? []);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const thumbs = product.images?.map((img) => <img key={img.image_path} src={img.image_path} alt={product.name} className="h-full w-full object-cover " />) ?? [];
+  const thumbs = product.product_image?.map((img) => <img key={img.image_path} src={img.image_path} alt={product.name} className="h-full w-full object-cover " />) ?? [];
 
   const dirty =
     name !== product.name ||
