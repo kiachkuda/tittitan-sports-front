@@ -8,7 +8,7 @@ import {
 
 export default function ProductFilter() {
   return (
-    <aside className="sticky top-24 h-fit rounded-3xl bg-white p-6 shadow-sm">
+    <aside className=" top-24 h-fit rounded-3xl bg-white p-6 shadow-sm">
       <div className="mb-8 flex items-center gap-3">
         <Filter className="text-red-600" />
         <h2 className="text-xl font-bold">Filters</h2>

@@ -30,7 +30,7 @@ export default function ProductViewPage() {
 
   const { id } = useParams();
   const [product, setProduct] = useState<SingleProduct>({} as SingleProduct);
-  const thumbs = product.images?.map((img) => <img key={img.image_path} src={img.image_path} alt={product.name} className="h-full w-full object-cover " />) ?? [];
+  const thumbs = product.product_image?.map((img) => <img key={img.image_path} src={img.image_path} alt={product.name} className="h-full w-full object-cover " />) ?? [];
   const [selectedImg, setSelectedImg] = useState(0);
 
   useEffect(() => {
@@ -116,7 +116,7 @@ export default function ProductViewPage() {
           </Card>
 
           {/* Variants */}
-          <Card title="Variants & Inventory" subtitle={`${product.variants?.length ?? 0} sizes `}>
+          <Card title="Variants & Inventory" subtitle={`${product.product_variants?.length ?? 0} sizes `}>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
@@ -128,7 +128,7 @@ export default function ProductViewPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {(product.variants ?? []).map((v) => (
+                  {(product.product_variants ?? []).map((v) => (
                     <tr key={v.size} className="border-b border-border last:border-0">
                       <td className="py-3">
                         <span className="inline-grid h-9 w-9 place-items-center rounded-lg bg-muted font-bold">{v.size}</span>
@@ -176,7 +176,7 @@ export default function ProductViewPage() {
               <DetailRow label="SKU" value={<span className="font-mono text-xs">{product.sku}</span>} />
               <DetailRow label="Category" value={<span className="rounded-md bg-muted px-2 py-0.5 text-xs">{product.category}</span>} />
               <DetailRow label="Team" value={product.team} />
-              <DetailRow label="Variants" value={`${product.variants?.length ?? 0} sizes`} />
+              <DetailRow label="Variants" value={`${product.product_variants?.length ?? 0} sizes`} />
             </ul>
           </Card>
         </div>
