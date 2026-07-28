@@ -18,7 +18,7 @@ import { ImageType, SingleProduct, Variant } from "@/app/types/interface";
 import { getProductById } from "@/app/lib/product";
 import { useParams } from "next/navigation";
 import ProductGallery from "@/app/components/products/productImage";
-import ProductInfo from "@/app/components/products/productInfo";
+
 import VariantSelector from "@/app/components/products/variants";
 
 

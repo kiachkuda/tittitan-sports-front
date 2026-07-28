@@ -15,17 +15,17 @@ const shopLinks = [
 ];
 
 const helpLinks = [
-  { name: "Shipping", href: "/shipping" },
-  { name: "Returns", href: "/returns" },
-  { name: "Size Guide", href: "/size-guide" },
-  { name: "Contact Us", href: "/contact" },
+  { name: "Shipping", href: "#" },
+  { name: "Returns", href: "#" },
+  { name: "Size Guide", href: "#" },
+  { name: "Contact Us", href: "#" },
 ];
 
 const companyLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Our Stores", href: "/stores" },
-  { name: "Careers", href: "/careers" },
-  { name: "Press", href: "/press" },
+  { name: "About Us", href: "/" },
+  { name: "Our Stores", href: "/" },
+  { name: "Careers", href: "/" },
+  { name: "Press", href: "/" },
 ];
 
 const socialLinks = [
@@ -115,15 +115,15 @@ export default function Footer() {
           </p>
 
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-orange-600">
+            <Link href="" className="hover:text-orange-600">
               Privacy
             </Link>
 
-            <Link href="/terms" className="hover:text-orange-600">
+            <Link href="" className="hover:text-orange-600">
               Terms
             </Link>
 
-            <Link href="/cookies" className="hover:text-orange-600">
+            <Link href="" className="hover:text-orange-600">
               Cookies
             </Link>
           </div>
