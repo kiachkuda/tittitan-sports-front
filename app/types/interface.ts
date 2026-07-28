@@ -22,7 +22,7 @@ export type Product = {
   category: string;
   team: string;
   price: number;
-  image: string;
+  product_image: ImageType[];
   description?: string;
 };
 

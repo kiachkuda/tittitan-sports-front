@@ -1,7 +1,8 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-
+import {env} from "node:process"
+import { METHODS } from "node:http";
 type AuthContextType = {
   user: any;
   loading: boolean;
@@ -23,11 +24,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // console.log(process.env.NEXT_PUBLIC_API_URI)
     async function loadUser() {
       try {
-        const response = await fetch(
-          "http://localhost:5000/api/v1/auth",
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/auth`,
           {
+            method:"GET",
             credentials: "include",
           }
         );

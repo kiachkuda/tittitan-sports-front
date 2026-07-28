@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react';
 import clsx from 'clsx';
 import { useAuth } from '@/contexts/AuthProvider';
+import { env } from 'node:process';
 
 export default function LoginForm() {
 
@@ -24,7 +25,7 @@ export default function LoginForm() {
     const password = (form.elements.namedItem("password") as HTMLInputElement).value;
     
     // You can add your authentication logic here
-    const res = await fetch("http://localhost:5000/api/v1/auth", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/auth`, {
         method: "POST",
         credentials: "include",
         headers: {

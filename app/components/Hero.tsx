@@ -1,62 +1,129 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Shirt, Star, Clock3 } from "lucide-react";
 
 export default function Hero() {
-    return (
-        <section className="relative bg-ink text-white overflow-hidden under-hero">
-  <div className="absolute inset-0 noise opacity-40"></div>
-  <div className="absolute -right-32 -top-32 w-[600px] h-[600px] rounded-full bg-titan blur-3xl opacity-30"></div>
-  <div className="max-w-7xl mx-auto px-6 pt-16 pb-32 grid lg:grid-cols-12 gap-10 items-center relative">
-    <div className="lg:col-span-7">
-      <div className="inline-flex items-center gap-2 chip border-titan text-titan mb-6">
-        <span className="w-2 h-2 rounded-full bg-titan animate-pulse"></span>
-        DROP 04 · SEASON 26/27
-      </div>
-      <h1 className="display text-6xl md:text-8xl leading-[.85]">
-        WEAR THE<br/>
-        <span className="text-titan">GAME.</span><br/>
-        NOT JUST<br/>
-        A SHIRT.
-      </h1>
-      <p className="mt-6 text-white/70 max-w-md text-lg">
-        Match-grade jerseys, boots, and gear built for the culture. Curated for the players who don't just watch.
-      </p>
-      <div className="mt-8 flex flex-wrap gap-3">
-        <a href="#grid" className="btn-primary px-7 py-4 inline-flex items-center gap-2">
-          Shop the drop
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#" className="px-7 py-4 rounded-full border border-white/25 font-semibold hover:bg-white hover:text-ink transition">Customise your kit →</a>
-      </div>
-      <div className="mt-12 flex items-center gap-8 text-sm text-white/50">
-        <div><div className="display text-3xl text-white">120+</div>clubs & nations</div>
-        <div className="w-px h-10 bg-white/15"></div>
-        <div><div className="display text-3xl text-white">48h</div>name & number print</div>
-        <div className="w-px h-10 bg-white/15"></div>
-        <div><div className="display text-3xl text-white">4.9★</div>from 12k players</div>
-      </div>
-    </div>
+  return (
+    <section className="relative overflow-hidden bg-neutral-950 text-white">
+      {/* Background Glow */}
+      <div className="absolute -right-32 -top-32 h-[500px] w-[500px] rounded-full bg-orange-600/30 blur-3xl" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,.06),transparent_55%)]" />
 
-    
-    <div className="lg:col-span-5 relative">
-      <div className="absolute -top-6 -left-6 chip bg-titan text-white border-titan z-10">NEW · CANADA HOME 26/27</div>
-      <div className="relative bg-gradient-to-br from-titan to-titan-dark rounded-[2rem] p-8 shadow-2xl">
-        <img src="https://images.unsplash.com/photo-1580087433295-ab2600c1030e?w=800&auto=format&fit=crop" alt="Featured jersey" className="w-full h-96 object-cover rounded-2xl"/>
-        <div className="absolute bottom-8 left-8 right-8 bg-white rounded-2xl p-5 flex items-center justify-between">
-          <div>
-            <div className="text-xs text-ink/60 font-semibold">DAVIES · #19</div>
-            <div className="display text-lg">Canada Home Jersey</div>
+      <div className="relative mx-auto grid max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2">
+        {/* Left Side */}
+        <div>
+          <span className="inline-flex items-center gap-2 rounded-full border border-orange-500 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-orange-500">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-orange-500" />
+            Drop 04 • Season 26/27
+          </span>
+
+          <h1 className="mt-8 text-5xl font-black uppercase leading-none md:text-7xl">
+            Wear The
+            <br />
+            <span className="text-orange-600">Game.</span>
+            <br />
+            Not Just
+            <br />A Shirt.
+          </h1>
+
+          <p className="mt-6 max-w-xl text-lg leading-8 text-gray-300">
+            Discover authentic football jerseys, boots and training gear from
+            the world's biggest clubs and national teams.
+          </p>
+
+          <div className="mt-10 flex flex-wrap gap-4">
+            <Link
+              href="/products"
+              className="flex items-center gap-2 rounded-full bg-orange-600 px-7 py-4 font-semibold transition hover:bg-orange-700"
+            >
+              Shop Now
+              <ArrowRight size={18} />
+            </Link>
+
+            
           </div>
-          <div className="text-right">
-            <div className="text-xs text-ink/60 line-through">CHF 95</div>
-            <div className="display text-xl text-titan">CHF 85</div>
+
+          {/* Stats */}
+          <div className="mt-14 grid grid-cols-3 gap-6 border-t hidden md:block border-white/10 pt-8">
+            <div>
+              <Shirt className="mb-3 text-orange-500" />
+              <h3 className="text-2xl font-bold">120+</h3>
+              <p className="text-sm text-gray-400">
+                Clubs & National Teams
+              </p>
+            </div>
+
+            <div>
+              <Clock3 className="mb-3 text-orange-500" />
+              <h3 className="text-2xl font-bold">48 hrs</h3>
+              <p className="text-sm text-gray-400">
+                Custom Printing
+              </p>
+            </div>
+
+            <div>
+              <Star className="mb-3 fill-orange-500 text-orange-500" />
+              <h3 className="text-2xl font-bold">4.9</h3>
+              <p className="text-sm text-gray-400">
+                Customer Rating
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side */}
+        <div className="relative mx-auto w-full max-w-md">
+          {/* Badge */}
+          <div className="absolute left-4 top-4 z-10 rounded-full bg-orange-600 px-4 py-2 text-xs font-bold uppercase tracking-widest shadow-lg">
+            New • Arsenal Home 26/27
+          </div>
+
+          {/* Product Card */}
+          <div className="overflow-hidden rounded-3xl bg-gradient-to-br from-orange-600 to-orange-800 p-6 shadow-2xl">
+            <Image
+              src="/images/hero-image.webp"
+              alt="Canada Home Jersey"
+              width={600}
+              height={700}
+              priority
+              className="h-[500px] w-full rounded-2xl object-cover"
+            />
+
+            <div className="mt-6 flex items-center justify-between rounded-2xl bg-white p-5 text-black">
+              <div>
+                <p className="text-xs uppercase tracking-wider text-gray-500">
+                  Saka • #7
+                </p>
+
+                <h3 className="text-xl font-bold">
+                  Arsenal Home 26/27 Kit
+                </h3>
+              </div>
+
+              <div className="text-right">
+                <p className="text-sm text-gray-400 line-through">
+                  KSh 12,500
+                </p>
+
+                <p className="text-2xl font-bold text-orange-600">
+                  KSh 10,500
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Floating Sticker */}
+          <div className="absolute -bottom-6 -right-4 flex h-24 w-24 rotate-12 items-center justify-center rounded-full bg-white text-center text-xs font-black uppercase text-black shadow-xl">
+            FREE
+            <br />
+            PRINT
+            <br />
+            THIS WEEK
           </div>
         </div>
       </div>
-      
-      <div className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full bg-white text-ink grid place-items-center display text-xs text-center rotate-12 shadow-xl">
-        FREE<br/>PRINT<br/>THIS WEEK
-      </div>
-    </div>
-  </div>
-</section>
-    )
+    </section>
+  );
 }

@@ -83,7 +83,7 @@ export default function Home() {
             Welcome back, Alex 👋
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Here's what's happening in the TitanSports store today.
+            Here's what's happening in the TitanSportske store today.
           </p>
         </div>
         <div className="flex items-center gap-2 rounded-xl border border-border bg-card px-3 py-2 text-sm">

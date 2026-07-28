@@ -5,12 +5,12 @@ import {useRouter} from "next/navigation"
 
 
 
-const API_URL = "http://localhost:5000/api/v1"; 
+const API_URL = process.env.API_URI; 
 
 
 export async function createProduct(product: Product) {
   try {
-    const response = await fetch(`${API_URL}/products`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export async function createProduct(product: Product) {
 
 export async function getAllProducts() {
   try {
-    const response = await fetch(`${API_URL}/products`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export async function getAllProducts() {
 
 export const  getProductById = async( id: number) => {
   try{
-    const response = await fetch(`${API_URL}/products/${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export const  deleteProductById = async( id: number) => {
   let isDeleted = true;
 
   try{
-     const response = await fetch(`${API_URL}/products/${id}`, {
+     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();

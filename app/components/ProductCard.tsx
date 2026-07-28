@@ -1,0 +1,59 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Heart } from "lucide-react";
+import { ImageType } from "../types/interface";
+
+type ProductCardProps = {
+  product_id: string;
+  name: string;
+  price: number;
+  product_image: ImageType;
+};
+
+export default function ProductCard({
+  product_id,
+  name,
+  price,
+  product_image,
+}: ProductCardProps) {
+  return (
+    <div className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+      <div className="relative">
+        <Image
+          src={product_image.image_path}
+          alt={name}
+          width={300}
+          height={300}
+          loading="eager"
+          className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+        />
+
+        <button className="absolute right-4 top-4 rounded-full bg-white p-2 shadow transition hover:bg-orange-600 hover:text-white">
+          <Heart size={18} />
+        </button>
+      </div>
+
+      <div className="space-y-4 p-5">
+        <div>
+          <h3 className="line-clamp-2 text-lg font-bold">
+            {name}
+          </h3>
+
+          <p className="mt-2 text-2xl font-black text-orange-600">
+            KSh {price}
+          </p>
+        </div>
+
+        <Link
+          href={`/products/${product_id}`}
+          className="flex items-center justify-between rounded-xl bg-transparent border-2 px-4 py-3 font-semibold text-black transition hover:bg-orange-600"
+        >
+          View Product
+          <ArrowRight size={18} />
+        </Link>
+      </div>
+    </div>
+  );
+}
