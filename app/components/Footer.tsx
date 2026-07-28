@@ -8,10 +8,10 @@ import {
 } from "lucide-react";
 
 const shopLinks = [
-  { name: "Jerseys", href: "/products" },
-  { name: "Boots", href: "/boots" },
-  { name: "Accessories", href: "/accessories" },
-  { name: "Custom Jerseys", href: "/customize" },
+  { name: "Jerseys", href: "/home/products" },
+  { name: "Boots", href: "/" },
+  { name: "Accessories", href: "/" },
+  { name: "Custom Jerseys", href: "/" },
 ];
 
 const helpLinks = [
