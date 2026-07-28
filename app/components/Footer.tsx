@@ -53,7 +53,7 @@ export default function Footer() {
             <div>
               <h2 className="text-xl font-black text-white">
                 TITAN
-                <span className="text-red-600">SPORTS</span>
+                <span className="text-orange-600">SPORTSKE</span>
               </h2>
 
               <p className="text-xs uppercase tracking-[0.25em] text-gray-500">
@@ -72,7 +72,7 @@ export default function Footer() {
               <Link
                 key={index}
                 href={href}
-                className="rounded-full border border-gray-700 p-2 transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+                className="rounded-full border border-gray-700 p-2 transition hover:border-orange-600 hover:bg-orange-600 hover:text-white"
               >
                 <Icon size={18} />
               </Link>
@@ -81,17 +81,17 @@ export default function Footer() {
 
           <div className="mt-8 space-y-3 text-sm">
             <div className="flex items-center gap-3">
-              <MapPin size={18} className="text-red-600" />
+              <MapPin size={18} className="text-orange-600" />
               Nairobi, Kenya
             </div>
 
             <div className="flex items-center gap-3">
-              <Phone size={18} className="text-red-600" />
+              <Phone size={18} className="text-orange-600" />
               +254 700 000 000
             </div>
 
             <div className="flex items-center gap-3">
-              <Mail size={18} className="text-red-600" />
+              <Mail size={18} className="text-orange-600" />
               info@titansports.co.ke
             </div>
           </div>
@@ -115,15 +115,15 @@ export default function Footer() {
           </p>
 
           <div className="flex gap-6">
-            <Link href="/privacy" className="hover:text-red-600">
+            <Link href="/privacy" className="hover:text-orange-600">
               Privacy
             </Link>
 
-            <Link href="/terms" className="hover:text-red-600">
+            <Link href="/terms" className="hover:text-orange-600">
               Terms
             </Link>
 
-            <Link href="/cookies" className="hover:text-red-600">
+            <Link href="/cookies" className="hover:text-orange-600">
               Cookies
             </Link>
           </div>
@@ -151,7 +151,7 @@ function FooterColumn({
           <li key={link.name}>
             <Link
               href={link.href}
-              className="transition hover:text-red-600"
+              className="transition hover:text-orange-600"
             >
               {link.name}
             </Link>
