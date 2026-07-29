@@ -3,7 +3,7 @@ import ProductCard from "@/app/components/ProductCard";
 import ProductFilter from "@/app/components/ProductFilter";
 import { getAllCategories } from "@/app/lib/category";
 import { getAllProducts } from "@/app/lib/product";
-import { Product } from "@/app/types/interface";
+import { Category, Product } from "@/app/types/interface";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -17,6 +17,7 @@ export default function ProductsPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
+    const [categories, setCategories] = useState<Category[]>([]) 
    // const searchParams = useSearchParams();
 
     const currentPage = Number(searchParams.get("page") || 1);
@@ -33,12 +34,18 @@ export default function ProductsPage() {
             //setCurrentPage(pagination.page)
             setProducts(data.data);
 
-            // get all categories
-            const cats = await getAllCategories();
-            console.log(cats);
+            
+            
         }
 
+      const getCategories = async () => {
+        
+            const cats = await getAllCategories();
+            setCategories(cats);
+      }  
+
         getproducts();
+        getCategories();
     }, [currentPage])
 
 
@@ -82,7 +89,7 @@ const handlePageChange = (page: number) => {
 
       <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
         {/* Sidebar */}
-        <ProductFilter />
+        <ProductFilter categories={categories} />
 
         {/* Products */}
         <div>

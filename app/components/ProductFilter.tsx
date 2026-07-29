@@ -7,10 +7,13 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import FilterGroup from "./products/FilterGroup";
+import { getAllCategories } from "../lib/category";
+import { Category } from "../types/interface";
 
-export default function ProductFilter() {
+export default function ProductFilter({categories} : {categories : Category[]}) {
 
   const [isOpen, setIsOpen] = useState(false);
+
 
   return (
     <aside className="h-fit rounded-3xl bg-white p-6 shadow-sm">
@@ -21,15 +24,10 @@ export default function ProductFilter() {
 
       {/* Categories */}
       <FilterGroup title="Category">
-        {[
-          "Jerseys",
-          "Boots",
-          "Accessories",
-          "Training",
-        ].map((item) => (
-          <label key={item} className="flex items-center gap-3">
+        {categories.map((item) => (
+          <label key={item.name} className="flex items-center gap-3">
             <input type="checkbox" />
-            {item}
+            {item.name}
           </label>
         ))}
       </FilterGroup>

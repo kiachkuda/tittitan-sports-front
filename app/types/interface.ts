@@ -28,12 +28,7 @@ export type Product = {
   description?: string;
 };
 
-export const CATEGORIES: string[] = [
-  "National Teams",
-  "Club Teams",
-  "Sportswear",
-  "Accessories",
-]
+
 
 export type User = {
   user_id: Number,
