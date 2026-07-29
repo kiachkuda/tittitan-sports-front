@@ -1,6 +1,7 @@
 "use client"
 import ProductCard from "@/app/components/ProductCard";
 import ProductFilter from "@/app/components/ProductFilter";
+import { getAllCategories } from "@/app/lib/category";
 import { getAllProducts } from "@/app/lib/product";
 import { Product } from "@/app/types/interface";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -18,7 +19,7 @@ export default function ProductsPage() {
     const pathname = usePathname();
    // const searchParams = useSearchParams();
 
-const currentPage = Number(searchParams.get("page") || 1);
+    const currentPage = Number(searchParams.get("page") || 1);
 
     useEffect( ()=> {
         const getproducts = async () => {
@@ -31,6 +32,10 @@ const currentPage = Number(searchParams.get("page") || 1);
             console.log("products", data.pagination)
             //setCurrentPage(pagination.page)
             setProducts(data.data);
+
+            // get all categories
+            const cats = await getAllCategories();
+            console.log(cats);
         }
 
         getproducts();
