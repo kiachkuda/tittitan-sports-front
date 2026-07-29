@@ -21,7 +21,7 @@ export default function ProductCard({
   return (
      <Link
           href={`/products/${product_id}`}
-          className="flex items-center justify-between rounded-xl bg-transparent px-4 py-3 font-semibold text-black transition hover:bg-orange-600"
+          className="flex items-center justify-between rounded-xl"
         >
     <div className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
       
