@@ -19,7 +19,12 @@ export default function ProductCard({
   product_image,
 }: ProductCardProps) {
   return (
+     <Link
+          href={`/products/${product_id}`}
+          className="flex items-center justify-between rounded-xl bg-transparent px-4 py-3 font-semibold text-black transition hover:bg-orange-600"
+        >
     <div className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+      
       <div className="relative">
         <Image
           src={product_image.image_path}
@@ -46,14 +51,11 @@ export default function ProductCard({
           </p>
         </div>
 
-        <Link
-          href={`/products/${product_id}`}
-          className="flex items-center justify-between rounded-xl bg-transparent border-2 px-4 py-3 font-semibold text-black transition hover:bg-orange-600"
-        >
-          View Product
-          <ArrowRight size={18} />
-        </Link>
+       
+         
       </div>
+       
     </div>
+    </Link>
   );
 }

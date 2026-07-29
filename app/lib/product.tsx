@@ -5,9 +5,6 @@ import {useRouter} from "next/navigation"
 
 
 
-const API_URL = process.env.API_URI; 
-
-
 export async function createProduct(product: Product) {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products`, {
@@ -25,26 +22,48 @@ export async function createProduct(product: Product) {
   }
 }
 
-export async function getAllProducts() {
+export type ProductFilters = {
+  page?: number;
+  limit?: number;
+  category?: string;
+  team?: string;
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  size?: string;
+};
+
+export async function getAllProducts(filters: ProductFilters = {}) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+    const query = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        query.append(key, value.toString());
+      }
     });
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URI}/products?${query.toString()}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+
     if (!response.ok) {
       throw new Error(`Failed to fetch products (${response.status})`);
     }
-    const data = await response.json();
-    return data;
+
+    return await response.json();
   } catch (error) {
     console.error("Error fetching products:", error);
     throw error;
   }
 }
-
 
 export const  getProductById = async( id: number) => {
   try{
