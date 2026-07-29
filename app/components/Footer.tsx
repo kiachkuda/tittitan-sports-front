@@ -21,10 +21,10 @@ const helpLinks = [
 ];
 
 const companyLinks = [
-  { name: "About Us", href: "/" },
-  { name: "Our Stores", href: "/" },
-  { name: "Careers", href: "/" },
-  { name: "Press", href: "/" },
+  { name: "About Us", href: "#" },
+  { name: "Our Stores", href: "#" },
+  { name: "Careers", href: "#" },
+  { name: "Press", href: "#" },
 ];
 
 const socialLinks = [
@@ -39,7 +39,7 @@ export default function Footer() {
     <footer className="mt-24 bg-neutral-950 text-gray-300">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-2 lg:grid-cols-4">
         {/* Brand */}
-        {/* <div>
+        <div>
           <Link href="/" className="flex items-center gap-3">
             <Image
               src="/titan-logo.jpg"
@@ -94,20 +94,20 @@ export default function Footer() {
               info@titansportke.co.ke
             </div>
           </div>
-        </div> */}
+        </div>
 
         {/* Shop */}
-        {/* <FooterColumn title="Shop" links={shopLinks} /> */}
+        <FooterColumn title="Shop" links={shopLinks} />
 
         {/* Help */}
-        {/* <FooterColumn title="Help" links={helpLinks} /> */}
+        <FooterColumn title="Help" links={helpLinks} />
 
         {/* Company */}
-        {/* <FooterColumn title="Company" links={companyLinks} /> */}
+        <FooterColumn title="Company" links={companyLinks} />
       </div>
 
       {/* Bottom */}
-      {/* <div className="border-t border-gray-800">
+      <div className="border-t border-gray-800">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-sm text-gray-500 md:flex-row">
           <p>
             © {new Date().getFullYear()} Titan Sports. All rights reserved.
@@ -127,7 +127,7 @@ export default function Footer() {
             </Link>
           </div>
         </div>
-      </div> */}
+      </div>
     </footer>
   );
 }
