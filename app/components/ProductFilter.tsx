@@ -5,8 +5,13 @@ import {
   Filter,
   SlidersHorizontal,
 } from "lucide-react";
+import { useState } from "react";
+import FilterGroup from "./products/FilterGroup";
 
 export default function ProductFilter() {
+
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <aside className="h-fit rounded-3xl bg-white p-6 shadow-sm">
       <div className="mb-8 flex items-center gap-3">
@@ -83,21 +88,3 @@ export default function ProductFilter() {
   );
 }
 
-function FilterGroup({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="border-b py-5">
-      <button className="mb-4 flex w-full items-center justify-between font-semibold">
-        {title}
-        <ChevronDown size={18} />
-      </button>
-
-      <div className="space-y-3">{children}</div>
-    </div>
-  );
-}
