@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Heart } from "lucide-react";
+import { ArrowRight, Eye, EyeClosed, Heart } from "lucide-react";
 import { ImageType } from "../types/interface";
 
 type ProductCardProps = {
@@ -49,6 +49,10 @@ export default function ProductCard({
           <p className="mt-2 text-lg text-orange-600">
             KSh {price}
           </p>
+        </div>
+        <div className="flex w-full justify-between">
+         <p>View</p>
+           <Eye />
         </div>
       </div>
        

@@ -140,7 +140,7 @@ export default function ProductsPage() {
             </select>
           </div>
 
-          <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
+          <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
             {products.map((product: Product) => (
               <ProductCard
                 key={product.product_id}
