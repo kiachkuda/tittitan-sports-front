@@ -7,10 +7,7 @@ const HomePage = () => {
     return (
         <>
           <div className="flex gap-3 p-2">
-                <CategoryCard />
-                <CategoryCard />
-                <CategoryCard />
-                <CategoryCard />
+               
                 
           </div>
             
