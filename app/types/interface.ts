@@ -1,7 +1,14 @@
 
-export type Category = {category_id:number,name:string, description:string}
+export type Category = {category_id:number, name:string}
 export type Variant = {  size: string; stock_quantity: number; sku: string };
 export type ImageType = {product_id: number; image_path: string, file:File, is_cover:boolean, id:number}
+
+
+export type ProductCategory = {
+  category_id:number,
+  product_id:number,
+  categories: {name:string}
+}
 
 export type SingleProduct = {
   product_id: number;
@@ -13,6 +20,7 @@ export type SingleProduct = {
   product_image: ImageType[];
   description?: string;
   product_variants?: Variant[];
+  product_categories:ProductCategory[] 
 };
 
 

@@ -101,7 +101,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <section className="mx-auto ">
+    <section className="mx-auto px-4 ">
       {/* Heading */}
       <div className="mb-10">
         <p className="font-semibold uppercase tracking-[0.3em] text-red-600">
@@ -140,7 +140,7 @@ export default function ProductsPage() {
             </select>
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 grid-cols-2 md:grid-cols-3">
             {products.map((product: Product) => (
               <ProductCard
                 key={product.product_id}

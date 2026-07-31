@@ -29,10 +29,10 @@ export default function ProductCard({
         <Image
           src={product_image.image_path}
           alt={name}
-          width={300}
-          height={300}
+          width={250}
+          height={250}
           loading="eager"
-          className="aspect-square w-full object-cover transition duration-500 group-hover:scale-105"
+          className="aspect-square w-full h-full object-cover transition duration-500 group-hover:scale-105"
         />
 
         <button className="absolute right-4 top-4 rounded-full bg-white p-2 shadow transition hover:bg-orange-600 hover:text-white">
@@ -42,17 +42,14 @@ export default function ProductCard({
 
       <div className="space-y-4 p-5">
         <div>
-          <h3 className="line-clamp-2 text-lg font-bold">
+          <h3 className="line-clamp-2 text-sm font-bold">
             {name}
           </h3>
 
-          <p className="mt-2 text-xl text-orange-600">
+          <p className="mt-2 text-lg text-orange-600">
             KSh {price}
           </p>
         </div>
-
-       
-         
       </div>
        
     </div>

@@ -58,6 +58,8 @@ export async function getAllProducts(filters: ProductFilters = {}) {
       throw new Error(`Failed to fetch products (${response.status})`);
     }
 
+    
+
     return await response.json();
   } catch (error) {
     console.error("Error fetching products:", error);
