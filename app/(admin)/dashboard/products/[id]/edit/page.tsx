@@ -302,7 +302,7 @@ export default function ProductEditPage() {
                     {images[0] ? <img src={images[0].image_path} alt={name} className="h-full w-full object-cover" /> : "🎽"}
                   </div>
                   <div className="p-3">
-                    <div className="text-[10px] uppercase tracking-wider text-muted-foreground">{category}</div>
+                    
                     <div className="mt-0.5 line-clamp-2 text-sm font-semibold">{name || "Untitled product"}</div>
                     <div className="mt-1 text-xs text-muted-foreground">{team}</div>
                     <div className="mt-2 flex items-center justify-between">
