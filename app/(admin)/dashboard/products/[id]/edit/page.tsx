@@ -53,7 +53,7 @@ export default function ProductEditPage() {
 
   const [name, setName] = useState(product.name);
   const [sku, setSku] = useState(product.sku);
-  const [category, setCategory] = useState(product.category);
+  
   const [team, setTeam] = useState(product.team);
   const [price, setPrice] = useState<number>(product.price);
 
@@ -67,7 +67,7 @@ export default function ProductEditPage() {
   const dirty =
     name !== product.name ||
     sku !== product.sku ||
-    category !== product.category ||
+   
     team !== product.team ||
     price !== product.price ||
     description !== (product.description ?? "");
@@ -166,9 +166,7 @@ export default function ProductEditPage() {
                     className="input"
                   />
                 </Field>
-                <Field label="Category" required>
-                  <Select value={category} onChange={setCategory} options={[...categories]} />
-                </Field>
+                
                 <Field label="Team" required>
                   <input
                     type="text"
