@@ -16,9 +16,10 @@ import Link from "next/link";
 import AdminShell  from "@/app/(admin)/compononents/admin/AdminShell";
 
 import { getProductById } from "@/app/lib/product";
-import { ImageType, SingleProduct, Variant, CATEGORIES } from "@/app/types/interface";
+import { ImageType, SingleProduct, Variant, Category } from "@/app/types/interface";
 import { Card,  Select } from "@/app/(admin)/compononents/helpers/helpers";
 import {Field} from "@/app/(admin)/compononents/Field"
+import { getAllCategories } from "@/app/lib/category";
 
 
 
@@ -29,6 +30,7 @@ export default function ProductEditPage() {
   const product_id = useParams().id;
   const [product, setProduct] = useState<SingleProduct>({} as SingleProduct); 
     const router = useRouter();
+    const [categories, setCategories] = useState<Category[]>([]);
 
     
   useEffect(() => {
@@ -37,6 +39,12 @@ export default function ProductEditPage() {
       console.log("Fetched product data:", productData);
       setProduct(productData);
     };
+
+    const getCategories = async () => {
+       const categories = await getAllCategories();
+       setCategories(categories);
+    };
+
     fetchProduct();
   }, [product_id]);
 
@@ -159,7 +167,7 @@ export default function ProductEditPage() {
                   />
                 </Field>
                 <Field label="Category" required>
-                  <Select value={category} onChange={setCategory} options={[...CATEGORIES]} />
+                  <Select value={category} onChange={setCategory} options={[...categories]} />
                 </Field>
                 <Field label="Team" required>
                   <input

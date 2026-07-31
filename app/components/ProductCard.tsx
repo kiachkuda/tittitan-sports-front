@@ -46,7 +46,7 @@ export default function ProductCard({
             {name}
           </h3>
 
-          <p className="mt-2 text-2xl font-black text-orange-600">
+          <p className="mt-2 text-xl text-orange-600">
             KSh {price}
           </p>
         </div>

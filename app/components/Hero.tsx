@@ -46,7 +46,7 @@ export default function Hero() {
           </div>
 
           {/* Stats */}
-          <div className="mt-14 grid grid-cols-3 gap-6 border-t hidden md:block border-white/10 pt-8">
+          <div className=" md:flex-row mt-14  gap-6 border-t hidden md:flex border-white/10 pt-8">
             <div>
               <Shirt className="mb-3 text-orange-500" />
               <h3 className="text-2xl font-bold">120+</h3>
@@ -57,7 +57,7 @@ export default function Hero() {
 
             <div>
               <Clock3 className="mb-3 text-orange-500" />
-              <h3 className="text-2xl font-bold">48 hrs</h3>
+              <h3 className="text-2xl font-bold">1 hr</h3>
               <p className="text-sm text-gray-400">
                 Custom Printing
               </p>

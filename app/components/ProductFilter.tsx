@@ -1,68 +1,62 @@
 "use client";
 
-import {
-  ChevronDown,
-  Filter,
-  SlidersHorizontal,
-} from "lucide-react";
-import { useState } from "react";
+import { Filter, SlidersHorizontal } from "lucide-react";
 import FilterGroup from "./products/FilterGroup";
-import { getAllCategories } from "../lib/category";
 import { Category } from "../types/interface";
 
-export default function ProductFilter({categories} : {categories : Category[]}) {
+interface ProductFilterProps {
+  categories: Category[];
+  selectedCategory: string;
+  handleCategoryChange: (value: string) => void;
+  selectedSizes: string[];
+  handleSizeChange: (size: string) => void;
+}
 
-  const [isOpen, setIsOpen] = useState(false);
-
-
+export default function ProductFilter({
+  categories,
+  selectedCategory,
+  handleCategoryChange,
+  selectedSizes,
+  handleSizeChange
+}: ProductFilterProps) {
   return (
-    <aside className="h-fit rounded-3xl bg-white p-6 shadow-sm">
+    <aside className="md:block md:h-fit w-fit rounded-3xl bg-white p-6 shadow-sm">
       <div className="mb-8 flex items-center gap-3">
         <Filter className="text-red-600" />
         <h2 className="text-xl font-bold">Filters</h2>
       </div>
 
-      {/* Categories */}
       <FilterGroup title="Category">
         {categories.map((item) => (
-          <label key={item.name} className="flex items-center gap-3">
-            <input type="checkbox" />
+          <label key={item.category_id} className="flex items-center gap-3">
+            <input
+              type="checkbox"
+              checked={selectedCategory === item.name}
+              onChange={() => handleCategoryChange(item.name)}
+            />
             {item.name}
           </label>
         ))}
       </FilterGroup>
 
-      {/* Teams */}
-      <FilterGroup title="Teams">
-        {[
-          "Arsenal",
-          "Barcelona",
-          "Chelsea",
-          "Manchester United",
-        ].map((item) => (
-          <label key={item} className="flex items-center gap-3">
-            <input type="checkbox" />
-            {item}
-          </label>
-        ))}
-      </FilterGroup>
-
-      {/* Size */}
-
       <FilterGroup title="Size">
-        <div className="flex flex-wrap gap-2">
-          {["S", "M", "L", "XL", "XXL"].map((size) => (
-            <button
-              key={size}
-              className="rounded-lg border px-4 py-2 transition hover:border-red-600 hover:bg-red-600 hover:text-white"
-            >
-              {size}
-            </button>
-          ))}
-        </div>
-      </FilterGroup>
-
-      {/* Price */}
+  <div className="flex flex-wrap flex-row gap-2">
+    {["S", "M", "L", "XL", "XXL"].map((size) => (
+      <button
+        key={size}
+        type="button"
+        onClick={() => handleSizeChange(size)}
+        className={`rounded-lg border px-4 py-2 transition ${
+          selectedSizes.includes(size)
+            ? "border-red-600 bg-red-600 text-white"
+            : "hover:border-red-600 hover:bg-red-600 hover:text-white"
+        }`}
+      >
+        {size}
+      </button>
+    ))}
+  </div>
+</FilterGroup>
 
       <FilterGroup title="Price">
         <input
@@ -85,4 +79,3 @@ export default function ProductFilter({categories} : {categories : Category[]}) 
     </aside>
   );
 }
-

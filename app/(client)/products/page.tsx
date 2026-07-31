@@ -11,88 +11,122 @@ import { useEffect, useState } from "react";
 
 export default function ProductsPage() {
 
-    const [products, setProducts] = useState<Product[]>([]);
-    //const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const pathname = usePathname();
-    const [categories, setCategories] = useState<Category[]>([]) 
-   // const searchParams = useSearchParams();
+  const [products, setProducts] = useState<Product[]>([]);
+  //const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [category, setCategory] = useState<string>();
+  const [categories, setCategories] = useState<Category[]>([])
+  // const searchParams = useSearchParams();
 
-    const currentPage = Number(searchParams.get("page") || 1);
+  const currentPage = Number(searchParams.get("page") || 1);
 
-    useEffect( ()=> {
-        const getproducts = async () => {
-            const result = await getAllProducts({ page: currentPage });
-            const data = result;
-            const pagination = data.pagination;
+  useEffect(() => {
+    const getproducts = async () => {
+      const result = await getAllProducts({ page: currentPage, category: category });
+      const data = result;
+      const pagination = data.pagination;
 
-            setTotalPages(pagination.totalPages)
-            console.log("products", data.data)
-            console.log("products", data.pagination)
-            //setCurrentPage(pagination.page)
-            setProducts(data.data);
+      setTotalPages(pagination.totalPages)
+      setProducts(data.data);
 
-            
-            
-        }
+    }
 
-      const getCategories = async () => {
-        
-            const cats = await getAllCategories();
-            setCategories(cats);
-      }  
+    const getCategories = async () => {
+      const cats = await getAllCategories();
+      setCategories(cats.data);
+    }
 
-        getproducts();
-        getCategories();
-    }, [currentPage])
+    getproducts();
+    getCategories();
+  }, [currentPage, category])
 
 
 
-const handlePageChange = (page: number) => {
-  if (page < 1 || page > totalPages) return;
+  const handlePageChange = (page: number) => {
+    if (page < 1 || page > totalPages) return;
 
-  const params = new URLSearchParams(searchParams.toString());
-  params.set("page", page.toString());
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
 
-  router.push(`${pathname}?${params.toString()}`, {
-    scroll: true,
-  });
-};
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: true,
+    });
+  };
 
-  // const handleChange = (value:string) => {
-  //       const params = new URLSearchParams(searchParams);
-  //       params.set("category", value || '');
-  //       setCategory(value)
-  //       if(params.get('category') == "")
-  //       {
-  //         params.delete('category');
-  //         if(params.get('page')) params.set("page", "1")
-  //       }  
-          
-  //       router.push(`${pathname}/?${params}/#products`)
-  //   }
+  const handleChange = (value: string) => {
+    console.log("Clicked:", value);
+    const params = new URLSearchParams(searchParams);
+    params.set("category", value || '');
+    setCategory(value)
+    
+    if (params.get('category') == "") {
+      params.delete('category');
+      if (params.get('page')) params.set("page", "1")
+    }
+
+    router.push(`${pathname}/?${params}`)
+  }
+
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+
+  const handleSizeChange = (size: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    let updatedSizes: string[];
+
+    if (selectedSizes.includes(size)) {
+      updatedSizes = selectedSizes.filter((s) => s !== size);
+    } else {
+      updatedSizes = [...selectedSizes, size];
+    }
+
+    setSelectedSizes(updatedSizes);
+
+    // Remove old values
+    params.delete("size");
+
+    // Add each selected size
+    updatedSizes.forEach((size) => {
+      params.append("size", size);
+    });
+
+    if (params.has("page")) {
+      params.set("page", "1");
+    }
+
+    router.push(`${pathname}?${params.toString()}#products`);
+  };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-10 lg:px-6">
+    <section className="mx-auto ">
       {/* Heading */}
       <div className="mb-10">
         <p className="font-semibold uppercase tracking-[0.3em] text-red-600">
           Products
         </p>
 
-        <h1 className="mt-2 text-5xl font-black">
+        <h1 className="mt-2 md:text-5xl md:font-black text-2xl">
           Shop The Latest Collection
         </h1>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-[300px_1fr]">
+      <div className="flex flex-col md:flex-row gap-8">
         {/* Sidebar */}
-        <ProductFilter categories={categories} />
+        <div className="grid-cols-3">
+          <ProductFilter 
+            categories={categories} 
+            selectedCategory="category" 
+            handleCategoryChange={handleChange}
+            selectedSizes={selectedSizes}
+            handleSizeChange={handleSizeChange}
+             />
+        </div>
 
         {/* Products */}
-        <div>
+        <div className="grid-cols-9">
           <div className="mb-6 flex items-center justify-between">
             <p className="text-gray-500">
               Showing {products.length} Products
@@ -107,20 +141,20 @@ const handlePageChange = (page: number) => {
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
-            {products.map((product : Product) => (
+            {products.map((product: Product) => (
               <ProductCard
                 key={product.product_id}
                 product_id={product.product_id.toString()}
                 name={product.name}
-                
+
                 price={product.price}
                 product_image={product.product_image[0]}
-               
+
               />
             ))}
           </div>
 
-            {totalPages > 1 && (
+          {totalPages > 1 && (
             <div className="flex justify-center mt-8 space-x-2">
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
@@ -135,8 +169,8 @@ const handlePageChange = (page: number) => {
                   key={i}
                   onClick={() => handlePageChange(i + 1)}
                   className={`px-4 py-2 rounded ${currentPage === i + 1
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 hover:bg-gray-300"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200 hover:bg-gray-300"
                     }`}
                 >
                   {i + 1}
