@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import {env} from "node:process"
-import { METHODS } from "node:http";
+
 type AuthContextType = {
   user: any;
   loading: boolean;
