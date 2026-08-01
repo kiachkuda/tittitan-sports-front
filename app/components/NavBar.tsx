@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {useCart} from "@/contexts/CartProvider";
 import {
   Menu,
   X,
@@ -23,6 +24,7 @@ const navLinks = [
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
+  const { cartItems } = useCart();
 
   return (
     <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
@@ -61,14 +63,16 @@ export default function Nav() {
           </button>
 
           {/* Cart */}
+          <Link href={`/cart`} >
           <button className="relative flex items-center gap-2 rounded-full bg-black px-4 py-2 text-white transition hover:bg-gray-800">
             <ShoppingBag size={18} />
             <span className="hidden sm:inline">Bag</span>
 
             <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs">
-              2
+              {cartItems.length}
             </span>
           </button>
+          </Link>
 
           {/* Mobile Menu Button */}
           <button

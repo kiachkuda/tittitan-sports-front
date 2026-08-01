@@ -40,7 +40,7 @@ const HomePage = () => {
     const [categories, setCategories] = useState<any[]>([]);
     const [products, setProducts] = useState<SingleProduct[]>([]);
 
-    
+
 
     useEffect(() => {
         async function loadCategories() {
@@ -52,7 +52,7 @@ const HomePage = () => {
             }
         }
         loadCategories();
-      
+
     }, []);
 
     const handleCategoryClick = (category: any) => {
@@ -67,26 +67,41 @@ const HomePage = () => {
     return (
         <div className="flex flex-col gap-6">
             {/* Category Cards */}
-            <div className="flex flex-col mx-auto gap-6 px-16 py-6">
+            <div className="flex flex-col mx-auto gap-6 px-4 md:px-16 py-6">
                 <Title title="Home" />
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+                {/* Mobile Slider */}
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 md:hidden scrollbar-hide">
                     {Object.entries(categoryImages).map(([name, src]) => (
-                        <Link href={`/products?category=${name}`}>
-                            <CategoryCard key={name} title={name} image={src} />
+                        <Link
+                            key={name}
+                            href={`/products?category=${name}`}
+                            className="snap-start flex-none w-[calc(50%-8px)]"
+                        >
+                            <CategoryCard title={name} image={src} />
+                        </Link>
+                    ))}
+                </div>
+
+                {/* Tablet/Desktop Grid */}
+                <div className="hidden md:grid grid-cols-3 lg:grid-cols-4 gap-6">
+                    {Object.entries(categoryImages).map(([name, src]) => (
+                        <Link key={name} href={`/products?category=${name}`}>
+                            <CategoryCard title={name} image={src} />
                         </Link>
                     ))}
                 </div>
             </div>
             {/* Products By Categories */}
-            {categories.map((category) => (
-  <ProductSection
-    key={category.category_id}
-    title={category.name}
-    products={category.product_categories.map((pc:any) => pc.products)}
-  />
-))}
+            {categories.slice(0, 4).map((category) => (
+                <ProductSection
+                    key={category.category_id}
+                    title={category.name}
+                    products={category.product_categories.slice(0,6).map((pc: any) => pc.products)}
+                />
+            ))}
         </div>
-    
+
     )
 }
 

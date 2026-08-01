@@ -11,6 +11,19 @@ export type ProductCategory = {
   categories: {name:string}
 }
 
+export interface CartItem extends Product {
+  quantity: number;
+}
+
+export interface CartContextType {
+  cartItems: CartItem[];
+  addToCart: (product: CartItem, quantity?: number) => void;
+  updateQuantity: (id: number, amount: number) => void;
+  removeItem: (id: number) => void;
+  clearCart: () => void;
+  subtotal: number;
+}
+
 export type SingleProduct = {
   product_id: number;
   name: string;
@@ -49,21 +62,13 @@ export type User = {
 }
 
 export interface CartItem {
-  id: number;
+  product_id: number;
   name: string;
   image: string;
   price: number;
   quantity: number;
 }
 
-export interface CartContextType {
-  cartItems: CartItem[];
-  addToCart: (product: CartItem) => void;
-  updateQuantity: (id: number, amount: number) => void;
-  removeItem: (id: number) => void;
-  clearCart: () => void;
-  subtotal: number;
-}
 
 
 

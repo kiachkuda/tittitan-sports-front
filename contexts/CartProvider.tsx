@@ -1,21 +1,7 @@
 "use client";
 
 import { useState, useEffect, useContext, createContext } from "react";
-import {  Product } from "@/app/types/interface";
-
-
-export interface CartItem extends Product {
-  quantity: number;
-}
-
-export interface CartContextType {
-  cartItems: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
-  updateQuantity: (id: number, amount: number) => void;
-  removeItem: (id: number) => void;
-  clearCart: () => void;
-  subtotal: number;
-}
+import { CartContextType, CartItem } from "@/app/types/interface";
 
 const CartContext = createContext<CartContextType>({
   cartItems: [],
@@ -42,7 +28,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (product: Product, quantity: number = 1) => {
+  const addToCart = (product: CartItem, quantity: number = 1) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.product_id === product.product_id);
       if (existing) {
@@ -56,11 +42,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const updateQuantity = (id: number, amount: number) => {
+  const updateQuantity = (product_id: number, amount: number) => {
     setCartItems((prev) =>
       prev
         .map((item) =>
-          item.product_id === id
+          item.product_id === product_id
             ? { ...item, quantity: item.quantity + amount }
             : item
         )
@@ -68,8 +54,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  const removeItem = (id: number) =>
-    setCartItems((prev) => prev.filter((item) => item.product_id !== id));
+  const removeItem = (product_id: number) =>
+    setCartItems((prev) => prev.filter((item) => item.product_id !== product_id));
 
   const clearCart = () => setCartItems([]);
 

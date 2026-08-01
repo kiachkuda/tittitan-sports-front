@@ -14,13 +14,14 @@ import {
   Star,
   ChevronRight,
 } from "lucide-react";
-import { ImageType, SingleProduct, Variant } from "@/app/types/interface";
+import { ImageType, Product, SingleProduct, Variant, CartItem } from "@/app/types/interface";
 import { getProductById } from "@/app/lib/product";
 import { useParams } from "next/navigation";
 import ProductGallery from "@/app/components/products/productImage";
 
-import VariantSelector from "@/app/components/products/variants";
 import { SIZES } from "@/app/types/interface";
+
+import { useCart } from "@/contexts/CartProvider";
 
 
 
@@ -39,14 +40,19 @@ export default function ProductPage() {
   const [sku, setSku] = useState<string>("");
   const [team, setTeam] = useState<string>("");
   const [qty, setQty] = useState(1);
+  const [product, setProduct] = useState<CartItem>({} as CartItem);
   const availableSizes = new Set(
     variants.map((variant: any) => variant.size.toUpperCase())
   );
 
-  useEffect(() => {
+  const { addToCart } = useCart();
 
-    const getproduct = async (id: number) => {
+  useEffect(() => {
+      const getproduct = async (id: number) => {
       const data = await getProductById(id);
+
+      setProduct(data);
+      
 
       setImages(data.product_image ?? []);
       setName(data.name ?? "");
@@ -55,15 +61,8 @@ export default function ProductPage() {
       setVariants(data.product_variants ?? [])
       setSku(data.sku ?? "")
       setTeam(data.team ?? "");
-
-
-
-
     }
-
-
-
-
+    
     getproduct(Number(param.id));
 
   }, [])
@@ -185,7 +184,10 @@ export default function ProductPage() {
 
               </div>
 
-              <button className="flex-1 rounded-full bg-black py-3 font-medium text-white">
+              <button
+                onClick={() => addToCart(product, qty )}
+                className="flex-1 rounded-full bg-black py-3 font-medium text-white"
+              >
                 Add To Bag — KSH{price * qty}
               </button>
 
