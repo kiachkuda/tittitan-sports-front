@@ -20,51 +20,62 @@ import { useParams } from "next/navigation";
 import ProductGallery from "@/app/components/products/productImage";
 
 import VariantSelector from "@/app/components/products/variants";
+import { SIZES } from "@/app/types/interface";
+
+
 
 
 
 export default function ProductPage() {
-  
-    
-    const [images, setImages] = useState<ImageType[]>([]);
-    const [productName, setName] = useState<string>("");
-    const [price, setPrice] = useState<number>(0);
-    const [description, setDescription] = useState<string>("");
-    const [variants, setVariants] = useState<Variant[]>([]);
-    const param = useParams();
-    const [activeImage, setActiveImage] = useState(0);
-    const [sku, setSku] = useState<string>("");
-    const [team, setTeam] = useState<string>("");
-            const [qty, setQty] = useState(1);
 
-    useEffect(() => {
-      
-        const getproduct = async (id: number) => {
-            const data = await getProductById(id);
-            
-            setImages(data.product_image ?? []);
-            setName(data.name ?? "");
-            setDescription(data.description ?? "");
-            setPrice(data.price ?? 0);
-            setVariants(data.product_variants ?? [])
-            setSku(data.sku ?? "")
-            setTeam(data.team ?? "");
-             
-            
-        }
 
-        getproduct(Number(param.id));
-        
-    }, [])
+  const [images, setImages] = useState<ImageType[]>([]);
+  const [productName, setName] = useState<string>("");
+  const [price, setPrice] = useState<number>(0);
+  const [description, setDescription] = useState<string>("");
+  const [variants, setVariants] = useState<Variant[]>([]);
+  const param = useParams();
+  const [activeImage, setActiveImage] = useState(0);
+  const [sku, setSku] = useState<string>("");
+  const [team, setTeam] = useState<string>("");
+  const [qty, setQty] = useState(1);
+  const availableSizes = new Set(
+    variants.map((variant: any) => variant.size.toUpperCase())
+  );
 
-  
+  useEffect(() => {
 
-    
+    const getproduct = async (id: number) => {
+      const data = await getProductById(id);
 
-    return (
+      setImages(data.product_image ?? []);
+      setName(data.name ?? "");
+      setDescription(data.description ?? "");
+      setPrice(data.price ?? 0);
+      setVariants(data.product_variants ?? [])
+      setSku(data.sku ?? "")
+      setTeam(data.team ?? "");
+
+
+
+
+    }
+
+
+
+
+    getproduct(Number(param.id));
+
+  }, [])
+
+
+
+
+
+  return (
     <main className="min-h-screen bg-white text-neutral-900">
       {/* Header */}
-      
+
 
       <section className="mx-auto max-w-7xl px-6 py-10 lg:py-16">
         {/* Breadcrumb */}
@@ -130,32 +141,22 @@ export default function ProductPage() {
 
             {/* Sizes */}
 
-            <div className="mt-10">
+            <div className="flex flex-wrap gap-2">
+              {SIZES.map((size) => {
+                const available = availableSizes.has(size.toUpperCase());
 
-              <div className="mb-3 flex items-center justify-between">
-                <span className="font-medium">
-                  Available Sizes 
-                </span>
-
-  
-              </div>
-
-              <div className="grid grid-cols-5 gap-2">
-
-                {variants.map((s, i) => {
-
-                  return (
-                    <button
-                    className="bg-orange-600 text-white"
-                      key={i}
-      
-                      
-                      >
-                       { s.size}
-                    </button>
-                  );
-                })}
-              </div>
+                return (
+                  <button
+                    key={size}
+                    className={`bg-black rounded-sm border px-2 py-2 transition ${available
+                        ? "border-orange-600 text-white ring-1 ring-red-600"
+                        : "border-white-300 text-white"
+                      }`}
+                  >
+                    {size}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Quantity */}

@@ -19,13 +19,14 @@ export default function ProductCard({
   product_image,
 }: ProductCardProps) {
   return (
-     <Link
+     
+    <div className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl border-1">
+      
+      <div className="relative">
+        <Link
           href={`/products/${product_id}`}
           className="flex items-center justify-between rounded-xl"
         >
-    <div className="group overflow-hidden rounded-3xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-      
-      <div className="relative">
         <Image
           src={product_image.image_path}
           alt={name}
@@ -33,7 +34,7 @@ export default function ProductCard({
           height={250}
           loading="eager"
           className="aspect-square w-full h-full object-cover transition duration-500 group-hover:scale-105"
-        />
+        /></Link>
 
         <button className="absolute right-4 top-4 rounded-full bg-white p-2 shadow transition hover:bg-orange-600 hover:text-white">
           <Heart size={18} />
@@ -46,17 +47,23 @@ export default function ProductCard({
             {name}
           </h3>
 
-          <p className="mt-2 text-lg text-orange-600">
+          <p className="mt-2 text-sm font-black text-orange-500  ">
             KSh {price}
           </p>
         </div>
+        <Link
+          href={`/products/${product_id}`}
+          className="flex items-center justify-between rounded-xl"
+        >
         <div className="flex w-full justify-between">
          <p>View</p>
-           <Eye />
+           <Eye  />
         </div>
+
+        </Link>
       </div>
        
     </div>
-    </Link>
+    
   );
 }

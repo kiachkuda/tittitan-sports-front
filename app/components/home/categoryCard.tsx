@@ -1,10 +1,10 @@
-import { StaticImageData } from "next/image";
+import Image from "next/image";
 
 export default function CategoryCard(props: { image: string; title: string }) {
     return (
         <div className="min-w-full p-3">
             <div className="border">
-                <img src={props.image} alt={props.title}  />
+                <Image src={props.image} alt={props.title} width={300} height={300}  />
             </div>
 
             {props.title}

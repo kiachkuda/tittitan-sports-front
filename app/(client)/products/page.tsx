@@ -101,7 +101,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <section className="mx-auto px-4 ">
+    <section className="mx-auto px-16 py-8">
       {/* Heading */}
       <div className="mb-10">
         <p className="font-semibold uppercase tracking-[0.3em] text-red-600">

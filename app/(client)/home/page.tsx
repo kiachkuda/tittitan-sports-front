@@ -14,74 +14,68 @@ import cat1 from "@/public/images/image-1.jpeg"
 import cat2 from "@/public/images/image-2.jpeg"
 import cat3 from "@/public/images/image-3.jpeg"
 import cat4 from "@/public/images/image-4.jpeg"
-import { StaticImageData } from "next/image"
+import cat5 from "@/public/images/image-4.jpeg"
+import { getAllCategories } from "@/app/lib/category"
 
 
 
 
-// const Images = [cat1, cat2, cat3, cat4];
-// const Titles = [, "Accessories","BasketBall", "Kids Kits"]
+
+const Images = [cat1, cat2, cat3, cat4, cat5];
+const categoryImages: Record<string, string> = {
+  Jerseys: "/categories/jerseys.jpg",
+  Boots: "/categories/boots.jpg",
+  Balls: "/categories/balls.jpg",
+  Accessories: "/categories/accessories.jpg",
+};
 
 
 const HomePage = () => {
-
-    const [categories, setCategories] = useState<ProductCategory[]>([]);
-    const [products, setProducts] = useState<SingleProduct[]>([]);
-
+const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+const [categories, setCategories] = useState<Category[]>([]);
+const [products, setProducts] = useState<SingleProduct[]>([]);
 
 
 
     useEffect(() => {
+    async function loadCategories() {
+        const res = await getAllCategories();
 
-        const getProducts = async () => {
-            const data = await getAllProducts({});
-            const products1 = data.data;
-            setProducts(products1);
+        setCategories(res.data);
 
-           
+        console.log("Categories:", res.data);
 
-            setCategories(products1.product_categories)
-             console.log(products1.product_categories[0])
+        if (res.data.length > 0) {
+            const first = res.data[0];
+
+            setSelectedCategory(first.category_id);
+
+            setProducts(
+                first.product_categories.map((pc:any) => pc.products)
+            );
         }
+    }
 
-
-
-        getProducts();
-
-    }, [])
+    loadCategories();
+}, []);
 
 
     return (
         <>
             <div className="gap-3 p-2">
-
-                {/* {categories.map((category) => (
-    <CategoryProducts
-        key={category.category_id}
-        title={category.name}
-        products={products.filter((p) =>
-            p.categories?.some(
-                (c) => c.name === category.name
-            )
-        )}
-    />
-))} */}
-
                 <Title title="Buy Top-Rated and High-Quality Personalized Jerseys Online" />
                 <div className="grid grid-cols-4 gap-4 px-4">
-
-
                     {
-                        products.map((product: any) => {
+                        categories.map((category: any) => {
                             return <>
-                                <Title title={product.name} />
+                                <Title title={category.name} />
+
+                                <CategoryCard image={category.product_categories[0]?.products?.product_image[0]?.image_path } title={category.name} />
                             </>
                         })
                     }
                 </div>
             </div>
-
-
         </>
     )
 }
