@@ -3,11 +3,12 @@
 import { Product } from "@/app/types/interface";
 import {useRouter} from "next/navigation"
 
-
+const API_URL = process.env.NEXT_PUBLIC_LOCAL_API_URI
+    
 
 export async function createProduct(product: Product) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URI}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +45,7 @@ export async function getAllProducts(filters: ProductFilters = {}) {
     });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URI}/products?${query.toString()}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/products?${query.toString()}`,
       {
         method: "GET",
         headers: {
@@ -69,7 +70,7 @@ export async function getAllProducts(filters: ProductFilters = {}) {
 
 export const  getProductById = async( id: number) => {
   try{
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products/${id}`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +89,7 @@ export const  deleteProductById = async( id: number) => {
   let isDeleted = true;
 
   try{
-     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/products/${id}`, {
+     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -104,6 +105,25 @@ export const  deleteProductById = async( id: number) => {
     throw error;
   }
 }
+
+export const getProductsByCategory = async (category: string) => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/products?category=${category}`, { 
+
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching products by category:", error);
+    throw error;
+  }
+}
+
 
 // const countProduct = async (id: number) => {
 //   try {

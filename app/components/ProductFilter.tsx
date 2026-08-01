@@ -20,7 +20,7 @@ export default function ProductFilter({
   handleSizeChange
 }: ProductFilterProps) {
   return (
-    <aside className="md:block md:h-fit w-fit rounded-3xl bg-white p-6 shadow-sm">
+    <aside className="md:block md:h-fit md:w-fit w-84 mx-auto rounded-3xl p-6 bg-white shadow-sm">
       <div className="mb-8 flex items-center gap-3">
         <Filter className="text-red-600" />
         <h2 className="text-xl font-bold">Filters</h2>

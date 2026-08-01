@@ -28,7 +28,7 @@ export default function ProductCard({
           className="flex items-center justify-between rounded-xl"
         >
         <Image
-          src={product_image.image_path}
+          src={product_image?.image_path}
           alt={name}
           width={250}
           height={250}

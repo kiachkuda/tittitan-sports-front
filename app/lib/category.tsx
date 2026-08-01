@@ -1,9 +1,12 @@
 
+
+
+
 export async function getAllCategories() {
   try {
     
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URI}/categories`,
+      `${process.env.NEXT_PUBLIC_API_URL}/categories`,
       {
         method: "GET",
         headers: {
@@ -14,12 +17,12 @@ export async function getAllCategories() {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch products (${response.status})`);
+      throw new Error(`Failed to fetch categories (${response.status})`);
     }
 
     return await response.json();
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error("Error fetching categories:", error);
     throw error;
   }
 }

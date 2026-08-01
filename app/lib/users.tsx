@@ -1,12 +1,12 @@
 import { json } from "stream/consumers";
 import { User } from "../types/interface";
 
-const base_url = `${process.env.API_URI}`;
+const base_url = `${process.env.NEXT_PUBLIC_API_URL}/users`;
 
 
 export async function getUsers() {
     try {
-        const response = await fetch(`${base_url}/users`, {
+        const response = await fetch(`${base_url}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

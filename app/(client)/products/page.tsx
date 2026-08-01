@@ -22,10 +22,12 @@ export default function ProductsPage() {
   // const searchParams = useSearchParams();
 
   const currentPage = Number(searchParams.get("page") || 1);
+  const currentCategory = searchParams.get("category") || "";
+  const currentSize = searchParams.getAll("size") || [];
 
   useEffect(() => {
     const getproducts = async () => {
-      const result = await getAllProducts({ page: currentPage, category: category });
+      const result = await getAllProducts({ page: currentPage, category: currentCategory, size: currentSize.join(",") });
       const data = result;
       const pagination = data.pagination;
 
@@ -101,7 +103,7 @@ export default function ProductsPage() {
   };
 
   return (
-    <section className="mx-auto px-16 py-8">
+    <section className="mx-auto  px-8 md:px-16 py-8">
       {/* Heading */}
       <div className="mb-10">
         <p className="font-semibold uppercase tracking-[0.3em] text-red-600">
@@ -113,9 +115,9 @@ export default function ProductsPage() {
         </h1>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="grid grid-cols-12 gap-3">
         {/* Sidebar */}
-        <div className="grid-cols-3">
+        <div className="md:cols-span-12 col-span-3">
           <ProductFilter 
             categories={categories} 
             selectedCategory="category" 
@@ -126,7 +128,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Products */}
-        <div className="grid-cols-9">
+        <div className="col-span-12 md:col-span-9" id="products">
           <div className="mb-6 flex items-center justify-between">
             <p className="text-gray-500">
               Showing {products.length} Products
