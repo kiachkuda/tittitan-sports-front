@@ -2,6 +2,7 @@ import { jwtVerify } from "jose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function proxy(request: NextRequest) {
+ 
   const token = request.cookies.get("authToken")?.value;
     console.log("Token from cookies:", token);
     console.log(request.cookies.get("authToken"));
@@ -17,7 +18,7 @@ export async function proxy(request: NextRequest) {
 
     if (
       request.nextUrl.pathname.startsWith("/dashboard") &&
-      payload.role !== "ADMIN"
+      payload.role !== "admin"
     ) {
       return NextResponse.redirect(new URL("/unauthorized", request.url));
     }

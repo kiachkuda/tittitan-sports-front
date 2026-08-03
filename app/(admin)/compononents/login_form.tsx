@@ -10,61 +10,74 @@ export default function LoginForm() {
 
   const [isError, setIsError] = useState(false);
   const [error, setError] = useState('');
-    const [success, setSuccess] = useState(false);
-  
+  const [success, setSuccess] = useState(false);
+
   const router = useRouter();
   const auth = useAuth();
   const setUser = auth?.setUser;
 
-  const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Handle form submission logic here
     e.preventDefault();
     const form = e.currentTarget;
-    
+
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
     const password = (form.elements.namedItem("password") as HTMLInputElement).value;
-    
-    // You can add your authentication logic here
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/auth`, {
+
+    try {
+      // You can add your authentication logic here
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth`, {
         method: "POST",
         credentials: "include",
         headers: {
-            "Content-Type": "application/json", 
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            email,
-            password,
+          email,
+          password,
         }),
-        });
-        
-    if(res.ok && res.status == 200){
+      });
+
+      if (res.ok && res.status == 200) {
         const data = await res.json();
         console.log("Login successful:", data);
         // Redirect or update UI on successful login
         if (setUser) {
           setUser(data.user);
-          
         }
         router.push('/dashboard/home');
         setSuccess(true);
-         setTimeout(() => { setSuccess(false); }, 3000); // 
+        setTimeout(() => { setSuccess(false); }, 3000); // 
         setIsError(false);
-    } else {
+      } else {
         const errorData = await res.json();
         //console.error("Login failed:", errorData);
         // Show error message to the user
         setIsError(true);
         setError(errorData.error);
-        setTimeout(() => { 
-          setIsError(false); 
-          setError(''); }, 
-        5000); // Clear error after 5 seconds
+        setTimeout(() => {
+          setIsError(false);
+          setError('');
+        },
+          5000); // Clear error after 5 seconds
+      }
+    
+    }
+
+    catch (error) {
+      console.error("An error occurred during login:", error);
+      setIsError(true);
+      setError('An unexpected error occurred. Please try again.');
+      setTimeout(() => {
+        setIsError(false);
+        setError('');
+      }, 5000); // Clear error after 5 seconds
     }
   }
 
-  return (
-    <div className="space-y-3" >
-      <div className="flex-1 flex justify-center items-center p-8">
+    return (
+      <div className="space-y-3" >
+        <div className="flex-1 flex justify-center items-center p-8">
 
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-10">
 
@@ -89,7 +102,7 @@ export default function LoginForm() {
               <span className={clsx(" m-auto p-2 text-xl rounded-2xl", isError && " bg-red-500 text-amber-50")}>{isError ? error : success}</span>
               <div className='mt-5'>
 
-                
+
 
                 <label className="block mb-2 text-sm font-medium text-gray-700">
                   Email Address
@@ -172,6 +185,7 @@ export default function LoginForm() {
           </div>
 
         </div>
-    </div>
-  );
-}
+      </div>
+    );
+  }
+  

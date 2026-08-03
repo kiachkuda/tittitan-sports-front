@@ -28,8 +28,8 @@ export default function Home() {
   useEffect(() => {
     const fetchproducts = async () => {
       try {
-        const data = await getAllProducts();
-        setproducts(data.results);
+        const data = await getAllProducts({});
+        setproducts(data.data);
         console.log("Fetched products:", data);
       }
       catch (error) {

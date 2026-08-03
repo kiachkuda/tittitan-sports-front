@@ -27,7 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     // console.log(process.env.NEXT_PUBLIC_API_URI)
     async function loadUser() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/auth`,
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth`,
           {
             method:"GET",
             credentials: "include",
@@ -40,6 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
 
         const data = await response.json();
+        console.log("User loaded:", data);
 
         setUser(data.user);
       } finally {

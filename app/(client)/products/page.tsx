@@ -19,13 +19,16 @@ export default function ProductsPage() {
   const pathname = usePathname();
   const [category, setCategory] = useState<string>();
   const [categories, setCategories] = useState<Category[]>([])
+    const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   // const searchParams = useSearchParams();
 
+  
   const currentPage = Number(searchParams.get("page") || 1);
   const currentCategory = searchParams.get("category") || "";
   const currentSize = searchParams.getAll("size") || [];
 
   useEffect(() => {
+    
     const getproducts = async () => {
       const result = await getAllProducts({ page: currentPage, category: currentCategory, size: currentSize.join(",") });
       const data = result;
@@ -43,7 +46,7 @@ export default function ProductsPage() {
 
     getproducts();
     getCategories();
-  }, [currentPage, category])
+  }, [currentPage, currentCategory]);
 
 
 
@@ -52,15 +55,15 @@ export default function ProductsPage() {
 
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page.toString());
-
+   
     router.push(`${pathname}?${params.toString()}`, {
       scroll: true,
     });
   };
 
   const handleChange = (value: string) => {
-    console.log("Clicked:", value);
-    const params = new URLSearchParams(searchParams);
+   
+    const params = new URLSearchParams(searchParams.toString());
     params.set("category", value || '');
     setCategory(value)
     
@@ -72,7 +75,7 @@ export default function ProductsPage() {
     router.push(`${pathname}/?${params}`)
   }
 
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+
 
   const handleSizeChange = (size: string) => {
     const params = new URLSearchParams(searchParams);
@@ -99,7 +102,7 @@ export default function ProductsPage() {
       params.set("page", "1");
     }
 
-    router.push(`${pathname}?${params.toString()}#products`);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (

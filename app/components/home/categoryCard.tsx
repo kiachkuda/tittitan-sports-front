@@ -7,7 +7,9 @@ export default function CategoryCard(props: { image: string; title: string }) {
                 <Image src={props.image} alt={props.title} width={300} height={300}  />
             </div>
 
-            {props.title}
+            <h4 className="font-bold text-lg">
+                {props.title}
+            </h4>
         </div>
     );
 }
