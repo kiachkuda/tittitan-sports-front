@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import AdminShell from "@/app/(admin)/compononents/admin/AdminShell";
+
 import {
   TrendingUp, TrendingDown, DollarSign, ShoppingBag, Package,
   Users, Clock, AlertTriangle, MoreHorizontal, ArrowUpRight,
