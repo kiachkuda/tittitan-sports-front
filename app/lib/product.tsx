@@ -3,12 +3,18 @@
 import { Product } from "@/app/types/interface";
 import {useRouter} from "next/navigation"
 
-const API_URL = process.env.NEXT_PUBLIC_LOCAL_API_URI
+let API_URL = ""
+
+if(process.env.NODE_ENV === "development"){
+  API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+}else{
+  API_URL = process.env.API_URL || "https://titan-sportke.onrender.com/api/v1";
+}
 
 
 export async function createProduct(product: Product, token:any) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URI}/products`, {
+    const response = await fetch(`${API_URL}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +55,7 @@ export async function getAllProducts(filters: ProductFilters = {}) {
     });
 
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/products?${query.toString()}`,
+      `${API_URL}/products?${query.toString()}`,
       {
         method: "GET",
         headers: {
@@ -74,7 +80,7 @@ export async function getAllProducts(filters: ProductFilters = {}) {
 
 export const  getProductById = async( id: number) => {
   try{
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
+    const response = await fetch(`${API_URL}/products/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +99,7 @@ export const  deleteProductById = async( id: number, token:any) => {
   let isDeleted = false;
 
   try{
-     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
+     const response = await fetch(`${API_URL}/products/${id}`, {
       method: "DELETE",
       headers: {
         "Authorization":`Bearer ${token}`
@@ -115,7 +121,7 @@ export const  deleteProductById = async( id: number, token:any) => {
 
 export const getProductsByCategory = async (category: string) => {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories/products?category=${category}`, { 
+    const response = await fetch(`${API_URL}/categories/products?category=${category}`, { 
 
       method: "GET",
       headers: {
