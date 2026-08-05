@@ -69,9 +69,12 @@ export function AddProductForm() {
     variants.some((v) => v.size && v.quantity > 0),
   ];
   const completion = Math.round((progress.filter(Boolean).length / progress.length) * 100);
-  const token = localStorage.getItem("accessToken");
+ const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
+     const token = localStorage.getItem("accessToken");
+
+     setToken(token);
     const getCategories = async () => {
       const data = await getAllCategories();
       console.log("Fetched categories:", data.data);
