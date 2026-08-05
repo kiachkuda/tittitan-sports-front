@@ -3,7 +3,7 @@ import { Bell, MessageSquare, Search, Sun, Moon, Globe, Plus, ChevronDown, Menu 
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export function TopNav({ onToggleSidebar }: { onToggleSidebar: () => void }) {
+export function TopNav({ onToggleSidebar, user }: { onToggleSidebar: () => void, user:any }) {
   const [dark, setDark] = useState(false);
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -54,10 +54,10 @@ export function TopNav({ onToggleSidebar }: { onToggleSidebar: () => void }) {
 
         <button className="ml-1 flex items-center gap-2 rounded-xl border border-border bg-card p-1 pr-2 transition hover:bg-muted">
           <div className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-primary to-primary/70 text-xs font-bold text-primary-foreground">
-            AM
+           {/* {`${(user?.fname)} ${(user?.lname)}`} */} TS
           </div>
           <div className="hidden text-left leading-tight md:block">
-            <div className="text-xs font-semibold">Alex M.</div>
+            <div className="text-xs font-semibold"> {`${user?.fname} ${(user?.lname)}`}.</div>
             <div className="text-[10px] text-muted-foreground">Admin</div>
           </div>
           <ChevronDown className="hidden h-4 w-4 text-muted-foreground md:block" />

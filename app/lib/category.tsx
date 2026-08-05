@@ -1,3 +1,4 @@
+import { useRouter } from "next/dist/client/components/navigation";
 
 
 
@@ -11,6 +12,7 @@ export async function getAllCategories() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          
         },
         cache: "no-store",
       }
@@ -19,6 +21,8 @@ export async function getAllCategories() {
     if (!response.ok) {
       throw new Error(`Failed to fetch categories (${response.status})`);
     }
+
+    
 
     return await response.json();
   } catch (error) {

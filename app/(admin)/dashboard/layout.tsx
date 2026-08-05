@@ -1,18 +1,36 @@
 "use client"
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { AppSidebar } from "../compononents/admin/AppSidebar";
 import { TopNav } from "../compononents/admin/TopNav";
+import { useAuth } from "@/contexts/AuthProvider";
+import { useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
+   const auth = useAuth();
+   const router = useRouter();
+
+   
+   const loading = auth.loading;
+   const authUser = auth.user;
+
+   const [user, setUser] = useState();
+
+    useEffect(()=>{
+    if(!authUser && !loading || authUser?.role !== "admin") {
+      router.push('/login')
+      console.log(authUser)
+    }
+    setUser(auth.user);
+  })
 
   return (
     <div className="flex min-h-dvh w-full bg-background">
       {/* Desktop sidebar */}
       <div className="hidden md:block">
         <div className="sticky top-0 h-dvh">
-          <AppSidebar open={open} />
+          <AppSidebar user={user} open={open} />
         </div>
       </div>
 
@@ -24,13 +42,14 @@ export default function Layout({ children }: { children: ReactNode }) {
             onClick={() => setMobileOpen(false)}
           />
           <div className="absolute inset-y-0 left-0 animate-slide-in-right">
-            <AppSidebar open={true} onNavigate={() => setMobileOpen(false)} />
+            <AppSidebar user={user} open={true} onNavigate={() => setMobileOpen(false)} />
           </div>
         </div>
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
         <TopNav
+        user={user}
           onToggleSidebar={() => {
             if (window.matchMedia("(min-width: 768px)").matches) setOpen((o) => !o);
             else setMobileOpen(true);

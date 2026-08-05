@@ -74,7 +74,7 @@ export default function Checkout() {
 
   return (
     <div className="flex flex-col-reverse md:flex-row m-auto justify-center p-6 gap-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 justify-center gap-6">
+      <div className="flex flex-col md:flex-row gap-6">
         {/* Cart Items */}
         <CartItems />
  
@@ -84,7 +84,7 @@ export default function Checkout() {
          ) : <></>}
         
       </div>
-      <div className="grid gap-4">
+      <div className="">
        <MpesaPaymentForm />
       </div>
     </div>

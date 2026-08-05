@@ -30,6 +30,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col">
         <TopNav
+        
           onToggleSidebar={() => {
             if (window.matchMedia("(min-width: 768px)").matches) setOpen((o) => !o);
             else setMobileOpen(true);

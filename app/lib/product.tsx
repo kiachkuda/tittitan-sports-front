@@ -4,14 +4,15 @@ import { Product } from "@/app/types/interface";
 import {useRouter} from "next/navigation"
 
 const API_URL = process.env.NEXT_PUBLIC_LOCAL_API_URI
-    
 
-export async function createProduct(product: Product) {
+
+export async function createProduct(product: Product, token:any) {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_LOCAL_API_URI}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization":`Bearer ${token}`
       },
       body: JSON.stringify(product),
     });
@@ -34,7 +35,10 @@ export type ProductFilters = {
   size?: string;
 };
 
+
+
 export async function getAllProducts(filters: ProductFilters = {}) {
+ 
   try {
     const query = new URLSearchParams();
 
@@ -84,20 +88,23 @@ export const  getProductById = async( id: number) => {
   }
 }
 
-export const  deleteProductById = async( id: number) => {
+export const  deleteProductById = async( id: number, token:any) => {
 
-  let isDeleted = true;
+  let isDeleted = false;
 
   try{
      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`, {
       method: "DELETE",
+      headers: {
+        "Authorization":`Bearer ${token}`
+      }
     });
     const data = await response.json();
 
-    if(!data){
-      isDeleted = false;
+    if(data){
+      isDeleted = true;
     }
-
+    
     return isDeleted;
 
   }catch(error){

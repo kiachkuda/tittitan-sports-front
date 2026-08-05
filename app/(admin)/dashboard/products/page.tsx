@@ -53,20 +53,7 @@ export default function Home() {
   const currentPage = Math.min(page, totalPages);
   const paged = filtered.slice((currentPage - 1) * perPage, currentPage * perPage);
 
-  const toggle = (id: number) =>
-    setSelected((s) => {
-      const n = new Set(s);
-      n.has(id) ? n.delete(id) : n.add(id);
-      return n;
-    });
-  const toggleAll = () =>
-    setSelected((s) =>
-      s.size === paged.length ? new Set() : new Set(paged.map((p) => p.product_id))
-    );
-
-    const handleClick = (destination:string) => {
-      router.push(destination);
-    }
+     
 
   const stats = [
     { label: "Total products", value: products.length, delta: "+12", icon: Package, accent: "primary" },
@@ -164,10 +151,9 @@ export default function Home() {
         {view === "table" ? (
           <TableView
             rows={products}
-            
           />
         ) : (
-          <GridView rows={paged} />
+          <GridView rows={products} />
         )}
 
         {/* Pagination */}

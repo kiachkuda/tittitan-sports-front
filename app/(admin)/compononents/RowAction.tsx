@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Plus, Search, Filter, Download, Upload, MoreHorizontal, Pencil, Trash2,
   Copy, Eye, ChevronLeft, ChevronRight, Package, TrendingUp, AlertTriangle,
@@ -8,14 +8,17 @@ import { useRouter } from "next/navigation";
 import { deleteProductById } from "@/app/lib/product";
 
 
-const redirectTo = (destination: string) => {
-  const router = useRouter();
-  router.push(destination);
-};
 
-export function RowActions({id}: { id: number }) {
+
+export function RowActions(props: { id: number}) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+
+  const deleteItem = async(id:number)=>{
+    await deleteProductById(id);
+    router.push("/dashboard/products");
+  }
+ 
 
   return (
     <div className="relative">
@@ -29,11 +32,11 @@ export function RowActions({id}: { id: number }) {
       </button>
       {open && (
         <div className="absolute right-0 z-100 mt-1 w-40 overflow-hidden rounded-xl border border-border bg-popover shadow-[var(--shadow-elevated)]">
-          <MenuItem icon={Eye}  id={id} onButtonClick={()=>router.push(`/dashboard/products/${id}`)}>View</MenuItem>
-          <MenuItem icon={Pencil}   id={id} onButtonClick={()=>router.push(`/dashboard/products/${id}/edit`)}>Edit</MenuItem>
+          <MenuItem icon={Eye}  id={props.id} onButtonClick={()=>router.push(`/dashboard/products/${props.id}`)}>View</MenuItem>
+          <MenuItem icon={Pencil}   id={props.id} onButtonClick={()=>router.push(`/dashboard/products/${props.id}/edit`)}>Edit</MenuItem>
           
           <div className="border-t border-border" />
-          <MenuItem icon={Trash2} id={id} onButtonClick={()=>(deleteProductById(id))} danger>Delete</MenuItem>
+          <MenuItem icon={Trash2} id={props.id} onButtonClick={()=>(deleteItem(props.id))} danger>Delete</MenuItem>
         </div>
       )}
     </div>

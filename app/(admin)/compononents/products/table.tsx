@@ -31,7 +31,7 @@ export function TableView({
             </th> */}
                         <Th>Product <ArrowUpDown className="h-3 w-3" /></Th>
                         <Th>SKU</Th>
-                        <Th>Category</Th>
+                       
                         <Th>Price</Th>
                         <Th>Action</Th>
                         {/* <Th>Stock</Th>

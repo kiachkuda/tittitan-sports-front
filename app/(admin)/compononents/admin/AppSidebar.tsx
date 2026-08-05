@@ -5,6 +5,8 @@ import {
   Users, CreditCard, Ticket, Star, BarChart3, FileText,
   UserCog, Settings, LogOut, Shield,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthProvider";
+import { useEffect } from "react";
 
 const nav = [
   { section: "Overview", items: [
@@ -32,8 +34,12 @@ const nav = [
   ]},
 ];
 
-export function AppSidebar({ open, onNavigate }: { open: boolean; onNavigate?: () => void }) {
+export function AppSidebar({ open, onNavigate, user }: { open: boolean; onNavigate?: () => void ,user:any}) {
   const pathname = usePathname();
+ 
+
+ 
+
 
   return (
     <aside
@@ -106,7 +112,7 @@ export function AppSidebar({ open, onNavigate }: { open: boolean; onNavigate?: (
           </div>
           {open && (
             <div className="min-w-0 flex-1">
-              <div className="truncate text-xs font-semibold">Alex Mwangi</div>
+              <div className="truncate text-xs font-semibold">{`${user?.fname} ${user?.lname}`}</div>
               <div className="truncate text-[11px] text-sidebar-foreground/50">Super Admin</div>
             </div>
           )}

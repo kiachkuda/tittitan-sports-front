@@ -14,6 +14,7 @@ export async function proxy(request: NextRequest) {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
     const { payload } = await jwtVerify(token, secret);
+
     console.log("Decoded JWT payload:", payload);
 
     if (
@@ -25,10 +26,10 @@ export async function proxy(request: NextRequest) {
 
     return NextResponse.next();
   } catch {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/dashboard/home", request.url));
   }
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/admin/:path*"],
+  matcher: [],
 };

@@ -24,13 +24,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // console.log(process.env.NEXT_PUBLIC_API_URI)
+    const token = localStorage.getItem("accessToken")
     async function loadUser() {
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth`,
           {
             method:"GET",
             credentials: "include",
+            headers:{
+              "Authorization":`Bearer ${token}`
+            }
           }
         );
 
@@ -40,7 +43,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
 
         const data = await response.json();
-        console.log("User loaded:", data);
+       console.log(data.user)
 
         setUser(data.user);
       } finally {

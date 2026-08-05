@@ -2,39 +2,42 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowLeft, Upload, X, Plus, Trash2, Save, Eye, Image as ImageIcon,
   Package, Tag, FileText, Layers, Star, CheckCircle2, GripVertical, Info,
 } from "lucide-react";
 
 // imports
-import AdminShell  from "@/app/(admin)/compononents/admin/AdminShell";
+import AdminShell from "@/app/(admin)/compononents/admin/AdminShell";
 import { Section } from "@/app/(admin)/compononents/section";
 import { CheckRow } from "@/app/(admin)/compononents/CheckRow";
 import { Field } from "@/app/(admin)/compononents/Field";
 import { Counter } from "@/app/(admin)/compononents/counter";
 import { Caret } from "@/app/(admin)/compononents/Caret";
+import { getAllCategories } from "@/app/lib/category";
+import { Category } from "@/app/types/interface";
 
-const CATEGORIES = [
-  "Club Jerseys",
-  "National Teams",
-  "Retro",
-  "Equipment",
-  "Training Wear",
-  "Accessories",
-] as const;
 
-const BRANDS = ["Adidas", "Nike", "Puma", "Umbro", "New Balance", "Kappa"] as const;
 
 const SIZE_PRESETS = ["XS", "S", "M", "L", "XL", "XXL"];
 
 type Variant = { id: string; size: string; quantity: number; sku?: string };
-type ImageItem = { id: string; file:File, url: string; name: string };
+type ImageItem = { id: string; file: File, url: string; name: string };
 
 function uid() {
   return Math.random().toString(36).slice(2, 9);
 }
+
+type CategoryType = {
+  name: string;
+  description: string;
+}
+
+type SelectedCategory = {
+  category_id: number;
+  name: string;
+};
 
 export function AddProductForm() {
   const router = useRouter();
@@ -52,6 +55,8 @@ export function AddProductForm() {
   const [variants, setVariants] = useState<Variant[]>([
     { id: uid(), size: "M", quantity: 0 },
   ]);
+  const [selectedCategories, setSelectedCategories] = useState<SelectedCategory[]>([]);
+  const [CATEGORIES, setCategories] = useState<SelectedCategory[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const totalStock = variants.reduce((s, v) => s + (Number(v.quantity) || 0), 0);
@@ -64,9 +69,25 @@ export function AddProductForm() {
     variants.some((v) => v.size && v.quantity > 0),
   ];
   const completion = Math.round((progress.filter(Boolean).length / progress.length) * 100);
+  const token = localStorage.getItem("accessToken");
 
-  const handleClick = (destination:string) => {
-      router.push(destination);
+  useEffect(() => {
+    const getCategories = async () => {
+      const data = await getAllCategories();
+      console.log("Fetched categories:", data.data);
+      setCategories(
+        data.data.map((category: any) => ({
+          ...category,
+          id: category.category_id,
+        }))
+      );
+    };
+    getCategories();
+  }, []);
+
+
+  const handleClick = (destination: string) => {
+    router.push(destination);
   }
 
   function handleFiles(files: FileList | null) {
@@ -74,13 +95,11 @@ export function AddProductForm() {
     const next: ImageItem[] = [];
     Array.from(files).forEach((f) => {
       if (!f.type.startsWith("image/")) return;
-      next.push({ id: uid(), file:f, url: URL.createObjectURL(f), name: f.name });
+      next.push({ id: uid(), file: f, url: URL.createObjectURL(f), name: f.name });
     });
     setImages((prev) => [...prev, ...next]);
   }
 
-  
- 
 
   function removeImage(id: string) {
     setImages((prev) => prev.filter((i) => i.id !== id));
@@ -100,6 +119,25 @@ export function AddProductForm() {
   function addVariant(size?: string) {
     setVariants((v) => [...v, { id: uid(), size: size || "S", quantity: 0 }]);
   }
+
+  function addCategory(category: SelectedCategory) {
+
+    if (
+      selectedCategories.some(
+        (c) => 
+          c.category_id === category.category_id)
+      )
+    {
+      return setSelectedCategories((prevCat) =>
+        (prevCat.length === 1 ? prevCat  
+          :prevCat.filter(
+            (it) => it.category_id !==category.category_id)) )
+    }
+
+    setSelectedCategories((prev) => [...prev, category]);
+   
+  }
+
   function updateVariant(id: string, patch: Partial<Variant>) {
     setVariants((v) => v.map((it) => (it.id === id ? { ...it, ...patch } : it)));
   }
@@ -119,84 +157,99 @@ export function AddProductForm() {
   function validate() {
     const e: Record<string, string> = {};
     if (!name.trim()) e.name = "Product name is required";
-    if (!category) e.category = "Choose a category";
+
     if (!price || Number(price) <= 0) e.price = "Enter a valid price";
     if (description.trim().length < 20) e.description = "Add at least 20 characters";
     if (images.length === 0) e.images = "Upload at least one image";
+
     if (!variants.some((v) => v.size && v.quantity > 0))
       e.variants = "Add at least one variant with stock";
+    if (!selectedCategories.some((v) => v.category_id))
+      e.category = "Add at least one category with stock";
     setErrors(e);
     return Object.keys(e).length === 0;
   }
 
-   async function handleSave() 
- 
- {
- 
+  async function handleSave() {
 
-  if (!validate()) return;
 
-  try {
-    const formData = new FormData();
+    if (!validate()) return;
 
-    // Product Details
-    formData.append("name", name);
-    formData.append("category", category);
-    formData.append("price", price);
-    formData.append("description", description);
-    formData.append("team", team);
-    formData.append("sku", sku);
-    
+    try {
+      const formData = new FormData();
 
-    // Variants
-    formData.set(
-      "variants",
-      JSON.stringify(
-        variants.map((v) => ({
-          size: v.size,
-          quantity: v.quantity,
-          sku: v.sku,
-        }))
-      )
-    );
+      // Product Details
+      formData.append("name", name);
+      formData.append("price", price);
+      formData.append("description", description);
+      formData.append("team", team);
+      formData.append("sku", sku);
 
-    // Images
-    images.forEach((file) => formData.append("files", file.file));
 
-    
+      // Variants
+      formData.set(
+        "variants",
+        JSON.stringify(
+          variants.map((v) => ({
+            size: v.size,
+            quantity: v.quantity,
+            sku: v.sku,
+          }))
+        )
+      );
 
-    const response = await fetch(
-      "http://localhost:5000/api/v1/products",
-      {
-        method: "POST",
-        body: formData,
+      formData.set(
+        "categories",
+        JSON.stringify(
+          selectedCategories.map((c) => ({
+            category: c.category_id,
+            name: c.name,
+          }))
+        )
+      );
+
+
+
+      // Images
+      images.forEach((file) => formData.append("files", file.file));
+
+
+
+      const response = await fetch(
+        "http://localhost:5000/api/v1/products",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            "Authorization":`Bearer ${token}`
+          }
+        }
+      );
+
+
+
+      const data = await response.json();
+
+      if (!response.ok) {
+       
+        return;
       }
-    );
 
-    
 
-    const data = await response.json();
 
-    if (!response.ok) {
-      console.log(data.errors);
-      return;
+      router.push("/dashboard/products")
+
+    } catch (err) {
+      console.error(err);
     }
-
-   
-
-    router.push("/dashboard/products")
-
-  } catch (err) {
-    console.error(err);
-  }
-};
+  };
 
   return (
     <>
       {/* Header */}
-      
+
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
-        
+
         <div className="min-w-0">
           <Link
             href="/products"
@@ -211,7 +264,7 @@ export function AddProductForm() {
             Fill in the details below to publish a new item to the TitanSports catalog.
           </p>
         </div>
-        
+
       </div>
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
@@ -243,16 +296,36 @@ export function AddProductForm() {
               <Field label="Category" required error={errors.category}>
                 <div className="relative">
                   <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className={selectCls(!!errors.category)}
+                    onChange={(e) => {
+                      const category = CATEGORIES.find(
+                        (c: any) => c.category_id === Number(e.target.value)
+                      );
+
+                      if (category) {
+                        addCategory({
+                          category_id: category.category_id,
+                          name: category.name,
+                        });
+                      }
+                    }}
                   >
-                    <option value="">Select a category…</option>
-                    {CATEGORIES.map((c) => (
-                      <option key={c} value={c}>{c}</option>
+                    <option value="">Select Category</option>
+
+                    {CATEGORIES.map((category) => (
+                      <option
+                        key={category.category_id}
+                        value={category.category_id}
+                      >
+                        {category.name}
+                      </option>
                     ))}
                   </select>
                   <Caret />
+                </div>
+                <div className="">
+                  {selectedCategories.map((category) =>
+                    <>category : {category.name}</>
+                  )}
                 </div>
               </Field>
 
@@ -328,13 +401,12 @@ export function AddProductForm() {
                 handleFiles(e.dataTransfer.files);
               }}
               onClick={() => fileInput.current?.click()}
-              className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-6 py-10 text-center transition ${
-                dragOver
+              className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed px-6 py-10 text-center transition ${dragOver
                   ? "border-primary bg-primary/5"
                   : errors.images
-                  ? "border-destructive/50 bg-destructive/5"
-                  : "border-border bg-muted/30 hover:border-primary hover:bg-primary/5"
-              }`}
+                    ? "border-destructive/50 bg-destructive/5"
+                    : "border-border bg-muted/30 hover:border-primary hover:bg-primary/5"
+                }`}
             >
               <div className="grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary">
                 <Upload className="h-5 w-5" />
@@ -433,11 +505,10 @@ export function AddProductForm() {
                       <button
                         key={s}
                         onClick={() => updateVariant(v.id, { size: s })}
-                        className={`h-8 min-w-9 rounded-lg border px-2 text-xs font-bold transition ${
-                          v.size === s
+                        className={`h-8 min-w-9 rounded-lg border px-2 text-xs font-bold transition ${v.size === s
                             ? "border-primary bg-primary text-primary-foreground"
                             : "border-border bg-background text-foreground hover:bg-muted"
-                        }`}
+                          }`}
                       >
                         {s}
                       </button>
@@ -553,23 +624,23 @@ export function AddProductForm() {
 
           {/* Status */}
           <div className="flex flex-wrap items-center gap-2">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
-          >
-            Cancel
-          </Link>
-         
-          <button
-            onClick={() => handleSave()}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110"
-          >
-            <CheckCircle2 className="h-4 w-4" /> Publish product
-          </button>
-        </div>
+            <Link
+              href="/products"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted"
+            >
+              Cancel
+            </Link>
+
+            <button
+              onClick={() => handleSave()}
+              className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110"
+            >
+              <CheckCircle2 className="h-4 w-4" /> Publish product
+            </button>
+          </div>
         </aside>
       </div>
-      
+
     </>
   );
 }
@@ -577,17 +648,15 @@ export function AddProductForm() {
 /* ---------- helpers ---------- */
 
 const inputCls = (err: boolean) =>
-  `h-11 w-full rounded-xl border bg-background px-3.5 text-sm outline-none transition placeholder:text-muted-foreground focus:ring-4 ${
-    err
-      ? "border-destructive focus:border-destructive focus:ring-destructive/10"
-      : "border-border focus:border-primary focus:ring-primary/10"
+  `h-11 w-full rounded-xl border bg-background px-3.5 text-sm outline-none transition placeholder:text-muted-foreground focus:ring-4 ${err
+    ? "border-destructive focus:border-destructive focus:ring-destructive/10"
+    : "border-border focus:border-primary focus:ring-primary/10"
   }`;
 
 const selectCls = (err: boolean) =>
-  `h-11 w-full appearance-none rounded-xl border bg-background pl-3.5 pr-9 text-sm outline-none transition focus:ring-4 ${
-    err
-      ? "border-destructive focus:border-destructive focus:ring-destructive/10"
-      : "border-border focus:border-primary focus:ring-primary/10"
+  `h-11 w-full appearance-none rounded-xl border bg-background pl-3.5 pr-9 text-sm outline-none transition focus:ring-4 ${err
+    ? "border-destructive focus:border-destructive focus:ring-destructive/10"
+    : "border-border focus:border-primary focus:ring-primary/10"
   }`;
 
 

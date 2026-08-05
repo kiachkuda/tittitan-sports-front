@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { ImageType, Product, SingleProduct, Variant, CartItem } from "@/app/types/interface";
 import { getProductById } from "@/app/lib/product";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import ProductGallery from "@/app/components/products/productImage";
 
 import { SIZES } from "@/app/types/interface";
@@ -45,14 +45,16 @@ export default function ProductPage() {
     variants.map((variant: any) => variant.size.toUpperCase())
   );
 
+
+
   const { addToCart } = useCart();
 
   useEffect(() => {
-      const getproduct = async (id: number) => {
+    const getproduct = async (id: number) => {
       const data = await getProductById(id);
 
       setProduct(data);
-      
+
 
       setImages(data.product_image ?? []);
       setName(data.name ?? "");
@@ -62,7 +64,7 @@ export default function ProductPage() {
       setSku(data.sku ?? "")
       setTeam(data.team ?? "");
     }
-    
+
     getproduct(Number(param.id));
 
   }, [])
@@ -79,7 +81,7 @@ export default function ProductPage() {
       <section className="mx-auto max-w-7xl px-6 py-10 lg:py-16">
         {/* Breadcrumb */}
         <nav className="mb-8 text-sm text-neutral-500">
-          <Link href="#">Shop</Link>
+          <Link href={'/products/'}>Shop</Link>
           <span className="mx-2">/</span>
 
           <Link href="#">{team}</Link>
@@ -101,10 +103,10 @@ export default function ProductPage() {
           <div>
 
             <p className="text-sm font-medium uppercase tracking-widest text-red-500">
-              {productName}
+              {team}
             </p>
 
-            <h1 className="mt-2 text-5xl font-semibold">
+            <h1 className="mt-2 text-3xl font-semibold">
               {productName}
             </h1>
 
@@ -120,7 +122,7 @@ export default function ProductPage() {
 
             <div className="mt-6 flex items-center gap-3">
 
-              <span className="text-3xl font-bold">
+              <span className="text-2xl font-medium">
                 {`KSH ${price}`}
               </span>
 
@@ -140,16 +142,16 @@ export default function ProductPage() {
 
             {/* Sizes */}
 
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-5">
               {SIZES.map((size) => {
                 const available = availableSizes.has(size.toUpperCase());
 
                 return (
                   <button
                     key={size}
-                    className={`bg-black rounded-sm border px-2 py-2 transition ${available
-                        ? "border-orange-600 text-white ring-1 ring-red-600"
-                        : "border-white-300 text-white"
+                    className={`bg-black rounded-sm border px-3 py-2 transition ${available
+                      ? "border-orange-600 text-white ring-1 ring-red-600"
+                      : "border-white-300 text-white"
                       }`}
                   >
                     {size}
@@ -162,21 +164,21 @@ export default function ProductPage() {
 
             <div className="mt-8 flex flex-col gap-3">
 
-              <div className="flex items-center w-full rounded-full border">
+              <div className="flex items-center justify-between w-full rounded-md border-1 border-gray-600">
 
                 <button
-                  className="px-4 py-3 w-12 text-3xl"
+                  className="px-4 py-3 w-12 text-3xl bg-orange-500 rounded-md text-white"
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
                 >
                   <Minus />
                 </button>
 
-                <span className="w-12 text-center">
+                <span className="w-12 text-center font-bold">
                   {qty}
                 </span>
 
                 <button
-                  className="px-4 py-3"
+                  className="px-4 py-3 text-3xl rounded-md bg-orange-500 text-white"
                   onClick={() => setQty((q) => q + 1)}
                 >
                   <Plus />
@@ -184,8 +186,32 @@ export default function ProductPage() {
 
               </div>
 
+              <div className="w-full mt-2">
+                <h3 className="font-medium text-xl">Custom</h3>
+
+                <div className="flex items-center gap-5 my-4">
+                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-row items-center gap-2">
+                    <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
+                  
+                    <label htmlFor="printname" className="ml-2 text-gray-700 font-medium text-lg">PRINT NAME
+                      + Ksh 200</label>
+                      
+                  </div>
+                  <div>
+                    <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
+                  
+                    <label htmlFor="printnumber" className="ml-2 text-gray-700 font-medium text-lg">PRINT NUMBER
+                      + Ksh 200</label>
+                      
+                  </div>
+                </div>
+                </div>
+
+              </div>
+
               <button
-                onClick={() => addToCart(product, qty )}
+                onClick={() => addToCart(product, qty)}
                 className="flex-1 rounded-full bg-black py-3 font-medium text-white"
               >
                 Add To Bag — KSH{price * qty}

@@ -4,6 +4,7 @@ import ProductFilter from "@/app/components/ProductFilter";
 import { getAllCategories } from "@/app/lib/category";
 import { getAllProducts } from "@/app/lib/product";
 import { Category, Product } from "@/app/types/interface";
+import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -46,7 +47,7 @@ export default function ProductsPage() {
 
     getproducts();
     getCategories();
-  }, [currentPage, currentCategory]);
+  }, [currentPage, currentCategory,]);
 
 
 
@@ -64,7 +65,7 @@ export default function ProductsPage() {
   const handleChange = (value: string) => {
    
     const params = new URLSearchParams(searchParams.toString());
-    params.set("category", value || '');
+    params.set("category", value.toString());
     setCategory(value)
     
     if (params.get('category') == "") {
@@ -120,7 +121,7 @@ export default function ProductsPage() {
 
       <div className="grid grid-cols-12 gap-3">
         {/* Sidebar */}
-        <div className="md:cols-span-12 col-span-3">
+        <div className="hidden md:block md:cols-span-12 col-span-3">
           <ProductFilter 
             categories={categories} 
             selectedCategory="category" 
@@ -128,6 +129,10 @@ export default function ProductsPage() {
             selectedSizes={selectedSizes}
             handleSizeChange={handleSizeChange}
              />
+        </div>
+        <div className="flex gap-2 col-span-12">
+          <input type="text" name="search" placeholder="search item" className="p-2 w-full" />
+          <div className="border bg-black text-white m-auto p-2 rounded-sm"><Search size={24} /></div>
         </div>
 
         {/* Products */}
