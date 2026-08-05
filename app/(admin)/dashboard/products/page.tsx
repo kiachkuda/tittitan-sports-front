@@ -11,6 +11,7 @@ import {Product}  from "@/app/types/interface";
 import {getAllProducts} from "@/app/lib/product";
 import { RowActions } from "../../compononents/RowAction";
 import { TableView } from "../../compononents/products/table";
+import Link from "next/link";
 
 
 
@@ -77,9 +78,11 @@ export default function Home() {
           <button className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-3.5 py-2.5 text-sm font-semibold text-foreground transition hover:bg-muted">
             <Download className="h-4 w-4" /> Export
           </button>
-          <button onClick={ () => handleClick("/dashboard/products/new")} className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110">
-            <Plus className="h-4 w-4" /> Add Product
-          </button>
+          <Link href="/dashboard/products/new">
+            <button className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_6px_20px_-6px] shadow-primary/60 transition hover:brightness-110">
+              <Plus className="h-4 w-4" /> Add Product
+            </button>
+          </Link>
         </div>
       </div>
 
