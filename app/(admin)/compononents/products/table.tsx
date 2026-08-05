@@ -92,11 +92,7 @@ export function TableView({
     );
 }
 
-async function deleteProduct(id: number) {
-    if (await deleteProductById(id)) {
-        window.location.href = `/dashboard/products`;
-    }
-}
+
 
 function Th({ children }: { children: React.ReactNode }) {
     return (
