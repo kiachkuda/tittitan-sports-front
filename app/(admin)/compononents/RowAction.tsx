@@ -13,9 +13,10 @@ import { deleteProductById } from "@/app/lib/product";
 export function RowActions(props: { id: number}) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const token = localStorage.getItem("accessToken");
 
   const deleteItem = async(id:number)=>{
-    await deleteProductById(id);
+    await deleteProductById(id, token);
     router.push("/dashboard/products");
   }
  
