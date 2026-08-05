@@ -191,21 +191,21 @@ export default function ProductPage() {
 
                 <div className="flex items-center gap-5 my-4">
                   <div className="flex flex-col gap-2">
-                  <div className="flex flex-row items-center gap-2">
-                    <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
-                  
-                    <label htmlFor="printname" className="ml-2 text-gray-700 font-medium text-lg">PRINT NAME
-                      + Ksh 200</label>
-                      
+                    <div className="flex flex-row items-center gap-2">
+                      <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
+
+                      <label htmlFor="printname" className="ml-2 text-gray-700 font-medium text-lg">PRINT NAME
+                        + Ksh 200</label>
+
+                    </div>
+                    <div>
+                      <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
+
+                      <label htmlFor="printnumber" className="ml-2 text-gray-700 font-medium text-lg">PRINT NUMBER
+                        + Ksh 200</label>
+
+                    </div>
                   </div>
-                  <div>
-                    <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
-                  
-                    <label htmlFor="printnumber" className="ml-2 text-gray-700 font-medium text-lg">PRINT NUMBER
-                      + Ksh 200</label>
-                      
-                  </div>
-                </div>
                 </div>
 
               </div>

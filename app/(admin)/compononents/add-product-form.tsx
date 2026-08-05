@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 // imports
-import AdminShell from "@/app/(admin)/compononents/admin/AdminShell";
+
 import { Section } from "@/app/(admin)/compononents/section";
 import { CheckRow } from "@/app/(admin)/compononents/CheckRow";
 import { Field } from "@/app/(admin)/compononents/Field";
