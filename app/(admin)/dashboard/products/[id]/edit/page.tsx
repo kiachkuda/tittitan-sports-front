@@ -13,7 +13,7 @@ import Link from "next/link";
 
 
 
-import AdminShell  from "@/app/(admin)/compononents/admin/AdminShell";
+
 
 import { getProductById } from "@/app/lib/product";
 import { ImageType, SingleProduct, Variant, Category } from "@/app/types/interface";

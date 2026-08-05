@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import  AdminShell  from "@/app/(admin)/compononents/admin/AdminShell";
+
 import { SingleProduct} from "@/app/types/interface";
 import {
   ArrowLeft, Pencil, Copy, Trash2, Share2, Star, Package, TrendingUp,
@@ -10,21 +10,6 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { getProductById } from "@/app/lib/product";
 
-
-function NotFoundView() {
-  return (
-    <AdminShell>
-      <div className="grid place-items-center py-24 text-center">
-        <div className="text-5xl">🔎</div>
-        <h1 className="mt-4 text-2xl font-bold">Product not found</h1>
-        <p className="mt-1 text-sm text-muted-foreground">This product may have been removed or archived.</p>
-        <Link href="/products" className="mt-6 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-          <ArrowLeft className="h-4 w-4" /> Back to products
-        </Link>
-      </div>
-    </AdminShell>
-  );
-}
 
 export default function ProductViewPage() {
 
