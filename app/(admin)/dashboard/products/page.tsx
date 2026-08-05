@@ -1,5 +1,4 @@
 "use client"
-import AdminShell from "@/app/(admin)/compononents/admin/AdminShell";
 import { useEffect, useMemo, useState } from "react";
 import {
   Plus, Search, Filter, Download, Upload, MoreHorizontal, Pencil, Trash2,

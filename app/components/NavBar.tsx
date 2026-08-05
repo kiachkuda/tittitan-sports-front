@@ -38,7 +38,7 @@ export default function Nav() {
               key={link.name}
               href={link.href}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                link.sale
+                link.name === "contact us"
                   ? "bg-red-600 text-white hover:bg-red-700"
                   : "hover:bg-black hover:text-white"
               }`}
@@ -106,7 +106,7 @@ export default function Nav() {
                 href={link.href}
                 onClick={() => setIsOpen(false)}
                 className={`rounded-lg px-4 py-3 transition ${
-                  link.sale
+                  link.name === "contact us"
                     ? "bg-red-600 text-white"
                     : "hover:bg-gray-100"
                 }`}
