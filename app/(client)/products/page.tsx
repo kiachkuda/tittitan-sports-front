@@ -118,8 +118,11 @@ export default function ProductsPage() {
           Shop The Latest Collection
         </h1>
       </div>
-
-      <div className="grid grid-cols-12 gap-3">
+      <div className="flex gap-2 col-span-12">
+          <input type="text" name="search" placeholder="search item" className="p-2 w-full" />
+          <div className="border bg-black text-white m-auto p-2 rounded-sm"><Search size={24} /></div>
+        </div>
+      <div className="flex flex-row gap-3">
         {/* Sidebar */}
         <div className="hidden md:block md:cols-span-12 col-span-3">
           <ProductFilter 
@@ -130,10 +133,7 @@ export default function ProductsPage() {
             handleSizeChange={handleSizeChange}
              />
         </div>
-        <div className="flex gap-2 col-span-12">
-          <input type="text" name="search" placeholder="search item" className="p-2 w-full" />
-          <div className="border bg-black text-white m-auto p-2 rounded-sm"><Search size={24} /></div>
-        </div>
+        
 
         {/* Products */}
         <div className="col-span-12 md:col-span-9" id="products">
