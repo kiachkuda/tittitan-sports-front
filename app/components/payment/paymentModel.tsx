@@ -29,7 +29,7 @@ export default function MpesaPaymentForm() {
         const internationalPhone = convertToInternationalFormat(phoneNumber);
 
         const paymentDetails = {
-            phoneNumber: internationalPhone,
+            phone: internationalPhone,
             amount: 1,
         };
 
