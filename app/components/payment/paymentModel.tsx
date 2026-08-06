@@ -30,16 +30,18 @@ export default function MpesaPaymentForm() {
 
         const paymentDetails = {
             phoneNumber: internationalPhone,
-            amount: subtotal,
+            amount: 1,
         };
 
-        try {
-            const response = await createPayment(paymentDetails);
-            console.log("Payment response:", response);
-            // Handle the response, e.g., show a success message or redirect
-        } catch (error) {
-            console.error("Error processing payment:", error);
-        }
+        console.log("Payment details:", paymentDetails);
+
+        // try {
+        //     const response = await createPayment(paymentDetails);
+        //     console.log("Payment response:", response);
+        //     // Handle the response, e.g., show a success message or redirect
+        // } catch (error) {
+        //     console.error("Error processing payment:", error);
+        // }
     };
 
   return (
