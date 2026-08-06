@@ -27,7 +27,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const token = localStorage.getItem("accessToken")
     async function loadUser() {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth`,
+        const response = await fetch(`${process.env.API_URL}/auth`,
           {
             method:"GET",
             credentials: "include",
