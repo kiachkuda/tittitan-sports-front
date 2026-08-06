@@ -35,13 +35,13 @@ export default function MpesaPaymentForm() {
 
         console.log("Payment details:", paymentDetails);
 
-        // try {
-        //     const response = await createPayment(paymentDetails);
-        //     console.log("Payment response:", response);
-        //     // Handle the response, e.g., show a success message or redirect
-        // } catch (error) {
-        //     console.error("Error processing payment:", error);
-        // }
+        try {
+            const response = await createPayment(paymentDetails);
+            console.log("Payment response:", response);
+            // Handle the response, e.g., show a success message or redirect
+        } catch (error) {
+            console.error("Error processing payment:", error);
+        }
     };
 
   return (
