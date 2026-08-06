@@ -1,40 +1,25 @@
 // lib/mpesa.ts
-export async function getAccessToken() {
-  const key = process.env.MPESA_CONSUMER_KEY!;
-  const secret = process.env.MPESA_CONSUMER_SECRET!;
-  const baseUrl = process.env.MPESA_BASE_URL!;
 
-  const auth = Buffer.from(`${key}:${secret}`).toString("base64");
+import {useRouter} from "next/navigation"
 
-  const res = await fetch(
-    `${baseUrl}/oauth/v1/generate?grant_type=client_credentials`,
-    {
-      method: "GET",
+let API_URL = process.env.NODE_ENV === "development" 
+      ? process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1" 
+      : process.env.API_URL || "https://titan-sportke.onrender.com/api/v1";
+
+export async function createPayment(PaymentDetails: any) {
+  try {
+    const response = await fetch(`${API_URL}/mpesa/stkpush`, {
+      method: "POST",
       headers: {
-        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/json",
+       
       },
-      cache: "no-store",
-    }
-  );
-
-  if (!res.ok) throw new Error("Failed to fetch M-Pesa Access Token");
-  const data = await res.json();
-  return data.access_token as string;
-}
-
-export async function mpesaPost(url: string, body: any) {
-  const baseUrl = process.env.MPESA_BASE_URL!;
-  const token = await getAccessToken();
-
-  const res = await fetch(`${baseUrl}${url}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-    cache: "no-store",
-  });
-
-  return res;
+      body: JSON.stringify(PaymentDetails),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error processing payments:", error);
+    throw error;
+  }
 }

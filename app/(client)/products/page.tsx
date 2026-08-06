@@ -118,7 +118,7 @@ export default function ProductsPage() {
           Shop The Latest Collection
         </h1>
       </div>
-      <div className="flex gap-2 col-span-12">
+      <div className="flex gap-2 col-span-12 my-4">
           <input type="text" name="search" placeholder="search item" className="p-2 w-full" />
           <div className="border bg-black text-white m-auto p-2 rounded-sm"><Search size={24} /></div>
         </div>
