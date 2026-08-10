@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthProvider";
 import { CartProvider } from "@/contexts/CartProvider";
+import { AddressProvider } from "@/contexts/AddressContext";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -31,11 +32,13 @@ export default function RootLayout({
     >
       
       <body className="min-h-full flex flex-col">
-        <CartProvider>
          <AuthProvider>
+        <CartProvider>
+          
           {children}
-        </AuthProvider>
+          
         </CartProvider>
+         </AuthProvider>
       </body>
     </html>
   );

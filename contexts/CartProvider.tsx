@@ -38,6 +38,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
             : item
         );
       }
+     console.log(product)
       return [...prev, { ...product, quantity }];
     });
   };

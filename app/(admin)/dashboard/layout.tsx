@@ -8,21 +8,24 @@ import { useRouter } from "next/navigation";
 export default function Layout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(true);
   const [mobileOpen, setMobileOpen] = useState(false);
-   const auth = useAuth();
+  
    const router = useRouter();
 
-   
+    const auth = useAuth();
    const loading = auth.loading;
-   const authUser = auth.user;
+   const user = auth.user;
+   const logout = auth.logout;
 
-   const [user, setUser] = useState();
+
 
     useEffect(()=>{
-    if(!authUser && !loading || authUser?.role !== "admin") {
-      router.push('/login')
-      console.log(authUser)
-    }
-    setUser(auth.user);
+      if(!loading && !user){
+       router.push("/login")
+      }
+
+      if(user?.role !== "admin"){
+        router.push("/login")
+      }
   })
 
   return (
@@ -30,7 +33,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       {/* Desktop sidebar */}
       <div className="hidden md:block">
         <div className="sticky top-0 h-dvh">
-          <AppSidebar user={user} open={open} />
+          <AppSidebar user={user} open={open} logout={logout} />
         </div>
       </div>
 

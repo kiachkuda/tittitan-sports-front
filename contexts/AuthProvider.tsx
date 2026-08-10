@@ -1,18 +1,34 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import {env} from "node:process"
+import { useRouter } from "next/navigation";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 
-type AuthContextType = {
-  user: any;
-  loading: boolean;
-  setUser: React.Dispatch<React.SetStateAction<any>>;
+type User = {
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  role: string;
 };
 
-export const AuthContext = createContext<AuthContextType>({
+type AuthContextType = {
+  user: User | null;
+  loading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  logout: () => Promise<void>;
+};
+
+const AuthContext = createContext<AuthContextType>({
   user: null,
   loading: true,
-  setUser: (() => {}) as React.Dispatch<React.SetStateAction<any>>
+  setUser: () => {},
+  logout: async () => {},
 });
 
 type AuthProviderProps = {
@@ -20,39 +36,58 @@ type AuthProviderProps = {
 };
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken")
-    async function loadUser() {
+    const loadUser = async () => {
       try {
-        const response = await fetch(`${process.env.API_URL}/auth`,
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
           {
-            method:"GET",
+            method: "GET",
             credentials: "include",
-            headers:{
-              "Authorization":`Bearer ${token}`
-            }
           }
         );
 
         if (!response.ok) {
-          setLoading(false);
-          return; 
+          console.log("Auth failed:", response.status);
+          setUser(null);
+          return;
         }
 
         const data = await response.json();
-       console.log(data.user)
 
+        console.log("Auth response:", data);
+
+        // Change this depending on your API response
         setUser(data.user);
+      } catch (error) {
+        console.error("Failed to load user:", error);
+        setUser(null);
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     loadUser();
   }, []);
+
+  const logout = async () => {
+  try {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
+      method: "POST",
+      credentials: "include",
+    });
+  } catch (error) {
+    console.error(error);
+  } finally {
+    setUser(null);
+    router.push("/login");
+  }
+};
+
 
   return (
     <AuthContext.Provider
@@ -60,6 +95,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
         loading,
         setUser,
+        logout
       }}
     >
       {children}

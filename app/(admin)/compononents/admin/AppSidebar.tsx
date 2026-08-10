@@ -34,13 +34,10 @@ const nav = [
   ]},
 ];
 
-export function AppSidebar({ open, onNavigate, user }: { open: boolean; onNavigate?: () => void ,user:any}) {
+export function AppSidebar({ open, onNavigate, user, logout }: { open: boolean; onNavigate?: () => void ,user:any, logout:() => Promise<void>}) {
   const pathname = usePathname();
  
-
- 
-
-
+  
   return (
     <aside
       className={`flex h-dvh flex-col bg-sidebar text-sidebar-foreground bg-red-500 transition-all duration-300 ${
@@ -112,13 +109,14 @@ export function AppSidebar({ open, onNavigate, user }: { open: boolean; onNaviga
           </div>
           {open && (
             <div className="min-w-0 flex-1">
-              <div className="truncate text-xs font-semibold">{`${user?.fname} ${user?.lname}`}</div>
+              <div className="truncate text-xs font-semibold">{`${user?.firstname} ${user?.lastname}`}</div>
               <div className="truncate text-[11px] text-sidebar-foreground/50">Super Admin</div>
             </div>
           )}
           {open && (
             <button
               aria-label="Log out"
+              onClick={()=>logout}
               className="rounded-lg p-1.5 text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
             >
               <LogOut className="h-4 w-4" />

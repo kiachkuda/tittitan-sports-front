@@ -50,7 +50,7 @@ export default function LoginForm() {
       
       setSuccess(true);
 
-      router.push("/dashboard/home");
+      router.push("/home");
 
     } else {
       const errorData = await res.json();

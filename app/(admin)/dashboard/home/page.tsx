@@ -55,19 +55,12 @@ const orders = [
 export default function Home() {
 
   const auth = useAuth();
-  const user = auth?.user;
-  const loading = auth?.loading ?? false;
+  const user = auth.user;
+  const loading = auth.loading;
   const router = useRouter();
 
-  useEffect(() => {
-    
-    if (!loading && !user) {
-      router.push("/login");
-    }
 
-  }, [loading, user]);
-
-  if (loading) {
+  if (!loading && !user) {
     return <div>Loading...</div>;
   }
 
@@ -80,7 +73,7 @@ export default function Home() {
             Dashboard
           </div>
           <h1 className="mt-1 text-2xl font-bold tracking-tight md:text-3xl">
-            Welcome back, Alex 👋
+            Welcome back, {`${user?.firstname}`} 👋
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Here's what's happening in the TitanSportske store today.

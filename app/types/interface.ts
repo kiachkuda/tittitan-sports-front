@@ -15,6 +15,8 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
+export type StepId = "bag" | "delivery" | "payment" | "review" | "confirmed";
+
 export interface CartContextType {
   cartItems: CartItem[];
   addToCart: (product: CartItem, quantity?: number) => void;
@@ -64,9 +66,62 @@ export type User = {
 export interface CartItem {
   product_id: number;
   name: string;
-  image: string;
+  image_product: ImageType;
   price: number;
   quantity: number;
+  size:string;
+}
+
+export type Address = {
+  address_id?: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  county: string;
+  town: string;
+  street: string;
+  landmark?:string;
+  apartment?:string;
+};
+
+export type DeliveryMethodId = "standard" | "express" | "pickup";
+
+export interface DeliveryMethod {
+  id: DeliveryMethodId;
+  label: string;
+  description: string;
+  price: number;
+  etaLabel: string;
+}
+
+export interface CardDetails {
+  number: string;
+  name: string;
+  expiry: string;
+  cvc: string;
+}
+
+export type PaymentMethodId = "mpesa" | "card"
+
+export interface CheckoutState {
+  step: StepId;
+  items: CartItem[];
+  promoCode: string;
+  promoApplied: boolean;
+  addressId: string | null;
+  newAddress: Address;
+  usingNewAddress: boolean;
+  deliveryMethodId: DeliveryMethodId;
+  paymentMethodId: PaymentMethodId;
+  card: CardDetails;
+  orderNumber: string | null;
+}
+export interface PriceBreakdown {
+  subtotal: number;
+  shipping: number;
+  discount: number;
+  tax: number;
+  total: number;
 }
 
 
