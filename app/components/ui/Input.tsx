@@ -15,7 +15,7 @@ export default function Input({ label, error, id, className = "", ...rest }: Inp
       <input
         id={inputId}
         className={[
-          "h-11 rounded-md border bg-paper px-3.5 text-[15px] text-ink placeholder:text-ink/35",
+          "h-11 rounded-sm border border-orange-500 px-3.5 text-[15px] text-ink placeholder:text-ink/35",
           "transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-accent/40",
           error ? "border-danger focus:border-danger" : "border-line focus:border-ink",
           className,

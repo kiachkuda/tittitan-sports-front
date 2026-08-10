@@ -9,11 +9,14 @@ import PaymentStep from "./steps/PaymentStep";
 import ReviewStep from "./steps/ReviewStep";
 import ConfirmationStep from "./steps/ConfirmationStep";
 
-import { calculatePriceBreakdown, CART_ITEMS, DELIVERY_METHODS, generateOrderNumber } from "@/app/types/constants";
-import { Address, CartItem, DeliveryMethodId, StepId } from "@/app/types/interface";
+import { calculatePriceBreakdown, DELIVERY_METHODS, generateOrderNumber } from "@/app/types/constants";
+import { Address, DeliveryMethodId, StepId } from "@/app/types/interface";
 import { CheckoutState } from "@/app/types/interface";
 
 import { useCart } from "@/contexts/CartProvider";
+import { createAddress } from "@/app/lib/address";
+import { useAuth } from "@/contexts/AuthProvider";
+import { createPayment } from "@/app/lib/payment";
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
 
@@ -23,16 +26,18 @@ const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed
 export default function CheckoutFlow() {
 
   const cart = useCart();
+  const auth = useAuth();
+
+  const user = auth.user;
+
+  
 
   const cartItems = cart.cartItems;
+  const total =cart.subtotal;
 
-  useEffect(()=>{
-    console.log(cartItems)
-  })
 
 const initialState: CheckoutState = {
   step: "bag",
-  items: cartItems,
   promoCode: "",
   promoApplied: false,
   addressId: "",
@@ -41,6 +46,8 @@ const initialState: CheckoutState = {
   deliveryMethodId: "standard" as DeliveryMethodId,
   paymentMethodId: "mpesa",
   card: { number: "", name: "", expiry: "", cvc: "" },
+  mpesaNumber:"",
+  totalPrice:total,
   orderNumber: null,
 };
 
@@ -50,8 +57,8 @@ const initialState: CheckoutState = {
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === state.deliveryMethodId)!;
 
   const breakdown = useMemo(
-    () => calculatePriceBreakdown(state.items, deliveryMethod.price, state.promoApplied),
-    [state.items, deliveryMethod.price, state.promoApplied]
+    () => calculatePriceBreakdown(cartItems, deliveryMethod.price, state.promoApplied),
+    [cartItems, deliveryMethod.price, state.promoApplied]
   );
 
   function goTo(step: StepId) {
@@ -64,12 +71,12 @@ const initialState: CheckoutState = {
   function updateQuantity(id: string, quantity: number) {
     setState((s) => ({
       ...s,
-      items: s.items.map((item) => ( (item.product_id).toString() === id ? { ...item, quantity } : item)),
+      items: cartItems.map((item) => ( (item.product_id).toString() === id ? { ...item, quantity } : item)),
     }));
   }
 
   function removeItem(id: string) {
-    setState((s) => ({ ...s, items: s.items.filter((item) => (item.product_id).toString() !== id) }));
+    setState((s) => ({ ...s, items: cartItems.filter((item) => (item.product_id).toString() !== id) }));
   }
 
   function applyPromo() {
@@ -78,9 +85,47 @@ const initialState: CheckoutState = {
     }
   }
 
-  function placeOrder() {
+  async function placeOrder() {
     const orderNumber = generateOrderNumber();
     setState((s) => ({ ...s, orderNumber }));
+
+    const payload = {
+      items: cartItems.map((item) => ({
+        product_id: item.product_id,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+      address: state.usingNewAddress ? state.newAddress : { addressId: state.addressId },
+      deliveryMethodId: state.deliveryMethodId,
+      paymentMethodId: state.paymentMethodId,
+      mpesaNumber: state.paymentMethodId === "mpesa" ? state.mpesaNumber : undefined,
+      card:
+        state.paymentMethodId === "card"
+          ? { ...state.card, number: state.card.number.replace(/\s/g, "").slice(-4) } // never send full PAN to your own logs/back end unless it's actually PCI-handled
+          : undefined,
+      promoCode: state.promoApplied ? state.promoCode : undefined,
+      totals: breakdown,
+    };
+
+    let addressId;
+    if(state.usingNewAddress){
+      const addRes = await createAddress(state.newAddress);
+      addressId = addRes.data.address_id; 
+    }
+
+    const payment = createPayment({
+      phone:state.mpesaNumber
+    })
+
+     const data = {
+      address_id: addressId,
+      items: cartItems.map((item) => ({
+        variant_id: item.size, 
+        quantity: item.quantity,
+      })),
+    };
+    
+
     goTo("confirmed");
   }
 
@@ -109,7 +154,7 @@ const initialState: CheckoutState = {
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1fr_380px]">
         <div className="max-w-2xl">
           {state.step === "bag" && (
-            <BagStep items={state.items} onContinue={() => goTo("delivery")} />
+            <BagStep items={cartItems} onContinue={() => goTo("delivery")} />
           )}
 
           {state.step === "delivery" && (
@@ -133,8 +178,10 @@ const initialState: CheckoutState = {
 
           {state.step === "payment" && (
             <PaymentStep
+              mpesaNumber={state.mpesaNumber}
               paymentMethodId={state.paymentMethodId}
               card={state.card}
+              onMpesaNumberChange={(mpesaNumber) => setState((s) => ({ ...s, mpesaNumber }))}
               onPaymentMethodChange={(paymentMethodId) =>
                 setState((s) => ({ ...s, paymentMethodId }))
               }
@@ -151,6 +198,8 @@ const initialState: CheckoutState = {
               newAddress={state.newAddress}
               deliveryMethodId={state.deliveryMethodId}
               paymentMethodId={state.paymentMethodId}
+              mpesaNumber={state.mpesaNumber}
+              totalPrice={total}
               card={state.card}
               onEditStep={goTo}
               onBack={() => goTo("payment")}
@@ -160,7 +209,7 @@ const initialState: CheckoutState = {
         </div>
 
         <OrderSummary
-          items={state.items}
+          items={cartItems}
           breakdown={breakdown}
           promoCode={state.promoCode}
           promoApplied={state.promoApplied}

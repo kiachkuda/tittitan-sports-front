@@ -37,15 +37,18 @@ export default function DeliveryStep({
   const newAddressErrors = useMemo(() => {
     if (!usingNewAddress || !submitted) return {};
     const errors: Partial<Record<keyof Address, string>> = {};
-    if (!newAddress.firstname) errors.firstname = "Enter the recipient's name";
-    if (!newAddress.street) errors.street = "Enter a street address";
-    if (!newAddress.county) errors.county = "Enter a city";
-    if (!newAddress.phone) errors.phone = "Enter a phone number";
+
+    if (!newAddress.first_name) errors.first_name = "Enter the recipient's name";
+    
+    if (!newAddress.street_address) errors.street_address = "Enter a street_address address";
+    if (!newAddress.county) errors.county = "Enter a county";
+    if (!newAddress.county) errors.city = "Enter a Town to Delivery ";
+    if (!newAddress.phone_number) errors.phone_number = "Enter a phone_number number";
     return errors;
   }, [usingNewAddress, newAddress, submitted]);
 
   const isValid = usingNewAddress
-    ? Boolean(newAddress.firstname && newAddress.lastname && newAddress.street && newAddress.county && newAddress.phone)
+    ? Boolean(newAddress.first_name && newAddress.last_name && newAddress.street_address && newAddress.county && newAddress.phone_number)
     : Boolean(addressId);
 
   function handleContinue() {
@@ -75,8 +78,8 @@ export default function DeliveryStep({
             value={`${(addr.address_id)?.toString()}`}
             checked={!usingNewAddress && addressId === addr.address_id}
             onChange={onAddressSelect}
-            title={addr.firstname}
-            subtitle={`${addr.street}, ${addr.town}, ${addr.county}`}
+            title={addr.first_name}
+            subtitle={`${addr.street_address}, ${addr.city}, ${addr.county}`}
           />
         ))}
         <RadioCard
@@ -91,34 +94,26 @@ export default function DeliveryStep({
           <div className="grid grid-cols-1 gap-4 rounded-lg border border-blue-900 border-line p-4 sm:grid-cols-2">
             <Input
               label="First name"
-              value={newAddress.firstname ?? ""}
-              onChange={(e) => onNewAddressChange({ ...newAddress, firstname: e.target.value })}
-              error={newAddressErrors.firstname}
+              value={newAddress.first_name ?? ""}
+              onChange={(e) => onNewAddressChange({ ...newAddress, first_name: e.target.value })}
+              error={newAddressErrors.first_name}
               placeholder="Jane Doe"
             />
             <Input
               label="Last name"
-              value={newAddress.lastname ?? ""}
-              onChange={(e) => onNewAddressChange({ ...newAddress, lastname: e.target.value })}
-              error={newAddressErrors.lastname}
+              value={newAddress.last_name ?? ""}
+              onChange={(e) => onNewAddressChange({ ...newAddress, last_name: e.target.value })}
+              error={newAddressErrors.last_name}
               placeholder="Jane Doe"
             />
             <Input
               label="Phone number"
-              value={newAddress.phone ?? ""}
-              onChange={(e) => onNewAddressChange({ ...newAddress, phone: e.target.value })}
-              error={newAddressErrors.phone}
+              value={newAddress.phone_number ?? ""}
+              onChange={(e) => onNewAddressChange({ ...newAddress, phone_number: e.target.value })}
+              error={newAddressErrors.phone_number}
               placeholder="+254 700 000 000"
             />
-            <div className="sm:col-span-2">
-              <Input
-                label="Street address"
-                value={newAddress.street ?? ""}
-                onChange={(e) => onNewAddressChange({ ...newAddress, street: e.target.value })}
-                error={newAddressErrors.street}
-                placeholder="Street, building, apartment"
-              />
-            </div>
+            
             <Input
               label="County"
               value={newAddress.county ?? "Nairobi"}
@@ -127,12 +122,36 @@ export default function DeliveryStep({
               placeholder="Nairobi"
             />
             <Input
-              label="Country"
-              value={newAddress.town ?? "Nairobi"}
-              onChange={(e) => onNewAddressChange({ ...newAddress, town: e.target.value })}
+              label="City"
+              value={newAddress.city ?? ""}
+              onChange={(e) => onNewAddressChange({ ...newAddress, city: e.target.value })}
               placeholder="Kenya"
             />
+            <div className="sm:col-span-2">
+              <Input
+                label="Street address"
+                value={newAddress.street_address ?? ""}
+                onChange={(e) => onNewAddressChange({ ...newAddress, street_address: e.target.value })}
+                error={newAddressErrors.street_address}
+                placeholder="Street, building, apartment"
+              />
+            </div>
+             <Input
+              label="Landmark"
+              value={newAddress.landmark ?? ""}
+              onChange={(e) => onNewAddressChange({ ...newAddress, landmark: e.target.value })}
+              placeholder="Public School"
+            />
+             <Input
+              label="Apartment/Building"
+              value={newAddress.apartment ?? ""}
+              onChange={(e) => onNewAddressChange({ ...newAddress, apartment: e.target.value })}
+              placeholder="Block 5"
+            />
+           
+            
           </div>
+
         )}
       </section>
 

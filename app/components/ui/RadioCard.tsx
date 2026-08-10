@@ -25,7 +25,7 @@ export default function RadioCard({
     <label
       className={[
         "flex cursor-pointer items-start gap-3 rounded-lg border border-orange-300 p-4 transition-colors duration-150",
-        checked ? "border-ink bg-ink/[0.03]" : "border-line hover:border-ink/40",
+        checked ? "border-ink bg-ink/[0.3] bg-gray-200" : "border-line hover:border-ink/40",
       ].join(" ")}
     >
       <input
@@ -34,7 +34,7 @@ export default function RadioCard({
         value={value}
         checked={checked}
         onChange={() => onChange(value)}
-        className="mt-1 h-4 w-4 accent-accent"
+        className="mt-1 h-4 w-4 accent-accent outline-red-300"
       />
       {icon && <span className="mt-0.5 text-ink/60">{icon}</span>}
       <span className="flex-1">

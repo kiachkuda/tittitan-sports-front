@@ -7,44 +7,71 @@ import Input from "../../ui/Input";
 import RadioCard from "../../ui/RadioCard";
 import { CardDetails, PaymentMethodId } from "@/app/types/interface";
 
-
 interface PaymentStepProps {
   paymentMethodId: string;
   card: CardDetails;
+  mpesaNumber: string;
   onPaymentMethodChange: (id: PaymentMethodId) => void;
   onCardChange: (card: CardDetails) => void;
+  onMpesaNumberChange: (value: string) => void;
   onBack: () => void;
   onContinue: () => void;
 }
 
+// Accepts 07XXXXXXXX, 01XXXXXXXX, +2547XXXXXXXX, 2547XXXXXXXX etc.
+const KENYAN_PHONE_REGEX = /^(?:\+254|254|0)?(7|1)\d{8}$/;
+
 export default function PaymentStep({
   paymentMethodId,
   card,
+  mpesaNumber,
   onPaymentMethodChange,
   onCardChange,
+  onMpesaNumberChange,
   onBack,
   onContinue,
 }: PaymentStepProps) {
   const [submitted, setSubmitted] = useState(false);
   const isCard = paymentMethodId === "card";
-  const [mpesa, setMpesa] = useState("");
+  const isMpesa = paymentMethodId === "mpesa";
 
   const errors = useMemo(() => {
-    if (!isCard || !submitted || !mpesa) {return {mpesa:mpesa}};
     const e: Partial<Record<keyof CardDetails, string>> = {};
-    if (!/^\d{16}$/.test(card.number.replace(/\s/g, ""))) e.number = "Enter a valid 16-digit card number";
-    if (!card.name) e.name = "Enter the name on card";
-    if (!/^\d{2}\/\d{2}$/.test(card.expiry)) e.expiry = "Use MM/YY format";
-    if (!/^\d{3,4}$/.test(card.cvc)) e.cvc = "Enter a valid CVC";
-   
+    if (isCard && submitted) {
+      if (!/^\d{16}$/.test(card.number.replace(/\s/g, ""))) e.number = "Enter a valid 16-digit card number";
+      if (!card.name) e.name = "Enter the name on card";
+      if (!/^\d{2}\/\d{2}$/.test(card.expiry)) e.expiry = "Use MM/YY format";
+      if (!/^\d{3,4}$/.test(card.cvc)) e.cvc = "Enter a valid CVC";
+    }
     return e;
   }, [isCard, submitted, card]);
 
-  const isValid = !isCard || Object.keys(errors).length === 0;
+  const mpesaError = useMemo(() => {
+    if (!isMpesa || !submitted) return undefined;
+    if (!mpesaNumber.trim()) return "Enter your M-Pesa phone number";
+    if (!KENYAN_PHONE_REGEX.test(mpesaNumber.replace(/\s/g, ""))) return "Enter a valid phone number";
+    return undefined;
+  }, [isMpesa, submitted, mpesaNumber]);
+
+  // Drives the disabled state live, not just after a submit attempt
+  const canContinue = useMemo(() => {
+    if (isCard) {
+      return (
+        /^\d{16}$/.test(card.number.replace(/\s/g, "")) &&
+        !!card.name &&
+        /^\d{2}\/\d{2}$/.test(card.expiry) &&
+        /^\d{3,4}$/.test(card.cvc)
+      );
+    }
+    if (isMpesa) {
+      return KENYAN_PHONE_REGEX.test(mpesaNumber.replace(/\s/g, ""));
+    }
+    return true; // cod, other methods with no extra fields
+  }, [isCard, isMpesa, card, mpesaNumber]);
 
   function handleContinue() {
     setSubmitted(true);
-    if (!isCard || (card.number && card.name && card.expiry && card.cvc && isValid)) {
+    if (canContinue) {
       onContinue();
     }
   }
@@ -67,29 +94,30 @@ export default function PaymentStep({
 
       <section className="flex flex-col gap-3">
         {PAYMENT_METHODS.map((method) => (
-          <>
-            <RadioCard
-              key={method.id}
-              name="payment-method"
-              value={method.id}
-              checked={paymentMethodId === method.id}
-              onChange={(id) => onPaymentMethodChange(id as PaymentMethodId)}
-              title={method.name}
-              subtitle={method.description}
-            />
-            {paymentMethodId === method.id &&
-
-              <Input
-                label="mpesa number"
-
-
-              />
-            }
-
-          </>
+          <RadioCard
+            key={method.id}
+            name="payment-method"
+            value={method.id}
+            checked={paymentMethodId === method.id}
+            onChange={(id) => onPaymentMethodChange(id as PaymentMethodId)}
+            title={method.name}
+            subtitle={method.description}
+          />
         ))}
-
       </section>
+
+      {isMpesa && (
+        <section className="rounded-lg border border-line p-4">
+          <Input
+            label="M-Pesa phone number"
+            inputMode="numeric"
+            value={mpesaNumber}
+            onChange={(e) => onMpesaNumberChange(e.target.value.replace(/[^\d+]/g, ""))}
+            error={mpesaError}
+            placeholder="07XX XXX XXX"
+          />
+        </section>
+      )}
 
       {isCard && (
         <section className="grid grid-cols-1 gap-4 rounded-lg border border-line p-4 sm:grid-cols-2">
@@ -134,12 +162,6 @@ export default function PaymentStep({
         </section>
       )}
 
-      {paymentMethodId === "mobile-money" && (
-        <p className="rounded-lg bg-accent-soft px-4 py-3 text-[13.5px] text-ink/70">
-          You'll get a payment prompt on your phone once you place the order.
-        </p>
-      )}
-
       {paymentMethodId === "cod" && (
         <p className="rounded-lg bg-accent-soft px-4 py-3 text-[13.5px] text-ink/70">
           Have the exact amount ready for the courier on delivery.
@@ -150,7 +172,7 @@ export default function PaymentStep({
         <Button variant="secondary" onClick={onBack}>
           Back
         </Button>
-        <Button onClick={handleContinue} fullWidth>
+        <Button onClick={handleContinue} fullWidth disabled={!canContinue}>
           Review order
         </Button>
       </div>

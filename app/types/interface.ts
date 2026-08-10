@@ -73,13 +73,13 @@ export interface CartItem {
 }
 
 export type Address = {
-  address_id?: string;
-  firstname: string;
-  lastname: string;
-  phone: string;
+  address_id:string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
   county: string;
-  town: string;
-  street: string;
+  city: string;
+  street_address: string;
   landmark?:string;
   apartment?:string;
 };
@@ -105,7 +105,6 @@ export type PaymentMethodId = "mpesa" | "card"
 
 export interface CheckoutState {
   step: StepId;
-  items: CartItem[];
   promoCode: string;
   promoApplied: boolean;
   addressId: string | null;
@@ -114,6 +113,8 @@ export interface CheckoutState {
   deliveryMethodId: DeliveryMethodId;
   paymentMethodId: PaymentMethodId;
   card: CardDetails;
+  mpesaNumber:string;
+  totalPrice:number;
   orderNumber: string | null;
 }
 export interface PriceBreakdown {
