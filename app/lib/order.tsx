@@ -1,15 +1,19 @@
 import { API_URL } from "../types/constants";
-import { Address } from "../types/interface";
+import { CartItem } from "../types/interface";
+export type Orders = {
+  address_id:number,
+  items : CartItem[]
+}
 
-export async function createOrder(address: Address) {
+export async function createOrder(order: any) {
   try {
-    const response = await fetch(`${API_URL}/address`, {
+    const response = await fetch(`${API_URL}/orders`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(address),
+      body: JSON.stringify(order),
     });
     const data = await response.json();
     return data;

@@ -17,6 +17,7 @@ import { useCart } from "@/contexts/CartProvider";
 import { createAddress } from "@/app/lib/address";
 import { useAuth } from "@/contexts/AuthProvider";
 import { createPayment } from "@/app/lib/payment";
+import { createOrder } from "@/app/lib/order";
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
 
@@ -120,12 +121,16 @@ const initialState: CheckoutState = {
      const data = {
       address_id: addressId,
       items: cartItems.map((item) => ({
-        variant_id: item.size, 
+        variant_id: item.variant_id, 
         quantity: item.quantity,
+        subtotal: (item.quantity * item.price),
+        product_name: item.product_name
       })),
     };
     
+    const order = createOrder(data);
 
+    console.log(order)
     goTo("confirmed");
   }
 

@@ -32,13 +32,13 @@ export default function RootLayout({
     >
       
       <body className="min-h-full flex flex-col">
-         <AuthProvider>
+        <AuthProvider>
         <CartProvider>
           
           {children}
           
         </CartProvider>
-         </AuthProvider>
+        </AuthProvider>
       </body>
     </html>
   );

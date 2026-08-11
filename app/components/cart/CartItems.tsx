@@ -4,7 +4,9 @@ import { useCart } from '@/contexts/CartProvider'
 import { Trash2 } from 'lucide-react';
 
 function CartItems() {
+    
     const {updateQuantity, cartItems, removeItem} = useCart();
+    console.log(cartItems)
   return (
   
             <div className="w-full md:col-span-2 bg-white p-5 rounded-2xl shadow-sm">

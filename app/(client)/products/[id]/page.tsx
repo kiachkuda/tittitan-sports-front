@@ -22,6 +22,7 @@ import ProductGallery from "@/app/components/products/productImage";
 import { SIZES } from "@/app/types/interface";
 
 import { useCart } from "@/contexts/CartProvider";
+import { data } from "framer-motion/m";
 
 
 
@@ -44,6 +45,7 @@ export default function ProductPage() {
   const availableSizes = new Set(
     variants.map((variant: any) => variant.size.toUpperCase())
   );
+  const [selectedSize, setSelectedSize] = useState<number>();
 
 
 
@@ -54,8 +56,6 @@ export default function ProductPage() {
       const data = await getProductById(id);
 
       setProduct(data);
-
-
       setImages(data.product_image ?? []);
       setName(data.name ?? "");
       setDescription(data.description ?? "");
@@ -63,7 +63,13 @@ export default function ProductPage() {
       setVariants(data.product_variants ?? [])
       setSku(data.sku ?? "")
       setTeam(data.team ?? "");
+
+      const v = data.product_variants[0];
+
+    //  console.log(v.variant_id, v.size )
+    //  setSelectedSize(v.variant_id)
     }
+    
 
     getproduct(Number(param.id));
 
@@ -141,20 +147,25 @@ export default function ProductPage() {
             </p>
 
             {/* Sizes */}
-
+            <div className="mt-2 p-2"> 
+              <h3 className="font-medium text-2xl">Available Sizes</h3>
+            </div>
             <div className="flex flex-wrap gap-2 mt-5">
-              {SIZES.map((size) => {
-                const available = availableSizes.has(size.toUpperCase());
-
+              
+              {variants.map((v) => {
+                // const available = availableSizes.has(size.toUpperCase());
+                const selected = v.variant_id == selectedSize;
                 return (
                   <button
-                    key={size}
-                    className={`bg-black rounded-sm border px-3 py-2 transition ${available
-                      ? "border-orange-600 text-white ring-1 ring-red-600"
-                      : "border-white-300 text-white"
+                    key={v.size}
+                    onClick={()=>{setSelectedSize(v.variant_id); console.log(selectedSize)}}
+                    className={`bg-black rounded-lg text-white  px-4 md:px-8 py-2 font-medium text-2xl transition
+                       ${selected ? "border border-gray-200 bg-orange-400 text-gray-200" : ""}
+                    
+                      
                       }`}
                   >
-                    {size}
+                    {v.size}
                   </button>
                 );
               })}
@@ -164,21 +175,21 @@ export default function ProductPage() {
 
             <div className="mt-8 flex flex-col gap-3">
 
-              <div className="flex items-center justify-between w-full rounded-md border-1 border-gray-600">
+              <div className="flex items-center justify-between w-full rounded-md border-gray-600">
 
                 <button
-                  className="px-4 py-3 w-12 text-3xl bg-orange-500 rounded-md text-white"
+                  className="px-4 py-3 w-12 text-3xl bg-black border border-white text-2xl rounded-md text-white"
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
                 >
                   <Minus />
                 </button>
 
-                <span className="w-12 text-center font-bold">
+                <span className="w-12 text-center text-2xl font-bold">
                   {qty}
                 </span>
 
                 <button
-                  className="px-4 py-3 text-3xl rounded-md bg-orange-500 text-white"
+                  className="px-4 py-3 text-3xl rounded-md bg-black text-white"
                   onClick={() => setQty((q) => q + 1)}
                 >
                   <Plus />
@@ -211,7 +222,7 @@ export default function ProductPage() {
               </div>
 
               <button
-                onClick={() => addToCart(product, qty)}
+                onClick={() => addToCart(product, qty, selectedSize)}
                 className="flex-1 rounded-full bg-black py-3 font-medium text-white"
               >
                 Add To Bag — KSH{price * qty}
