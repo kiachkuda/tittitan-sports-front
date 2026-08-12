@@ -45,7 +45,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             onClick={() => setMobileOpen(false)}
           />
           <div className="absolute inset-y-0 left-0 animate-slide-in-right">
-            <AppSidebar user={user} open={true} onNavigate={() => setMobileOpen(false)} />
+            <AppSidebar logout={logout} user={user} open={true} onNavigate={() => setMobileOpen(false)} />
           </div>
         </div>
       )}

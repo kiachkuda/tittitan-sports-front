@@ -155,10 +155,12 @@ export default function ProductPage() {
               {variants.map((v) => {
                 // const available = availableSizes.has(size.toUpperCase());
                 const selected = v.variant_id == selectedSize;
+                const quantity = v.stock_quantity;
                 return (
-                  <button
+                  quantity > 0 && (
+ <button
                     key={v.size}
-                    onClick={()=>{setSelectedSize(v.variant_id); console.log(selectedSize)}}
+                    onClick={()=>{setSelectedSize(v.variant_id);}}
                     className={`bg-black rounded-lg text-white  px-4 md:px-8 py-2 font-medium text-2xl transition
                        ${selected ? "border border-gray-200 bg-orange-400 text-gray-200" : ""}
                     
@@ -167,6 +169,8 @@ export default function ProductPage() {
                   >
                     {v.size}
                   </button>
+                  )
+                 
                 );
               })}
             </div>
