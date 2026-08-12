@@ -1,6 +1,6 @@
 
 export type Category = {category_id:number, name:string}
-export type Variant = {  variant_id:number, size: string; stock_quantity: number; sku: string };
+export type Variant = {  variant_id?:number, size: string; stock_quantity: number; sku: string };
 export type ImageType = {product_id: number; image_path: string, file:File, is_cover:boolean, id:number}
 
 export const SIZES = ["XS","S","M","L","XL","2xl"];
