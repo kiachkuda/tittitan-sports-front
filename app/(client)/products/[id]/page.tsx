@@ -22,7 +22,7 @@ import ProductGallery from "@/app/components/products/productImage";
 import { SIZES } from "@/app/types/interface";
 
 import { useCart } from "@/contexts/CartProvider";
-import { data } from "framer-motion/m";
+
 
 
 
@@ -49,7 +49,8 @@ export default function ProductPage() {
 
 
 
-  const { addToCart } = useCart();
+  const cart = useCart();
+  const addToCart = cart.addToCart;
 
   useEffect(() => {
     const getproduct = async (id: number) => {
