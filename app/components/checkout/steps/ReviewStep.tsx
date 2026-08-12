@@ -11,7 +11,8 @@ import Button from "../../ui/Button";
 interface ReviewStepProps {
   addressId: string | null;
   usingNewAddress: boolean;
-  newAddress: Partial<Address>;
+  savedAddress:Address[];
+  newAddress: Address;
   deliveryMethodId: DeliveryMethodId;
   paymentMethodId: PaymentMethodId;
   totalPrice: number;
@@ -24,6 +25,7 @@ interface ReviewStepProps {
 
 export default function ReviewStep({
   addressId,
+  savedAddress,
   usingNewAddress,
   newAddress,
   deliveryMethodId,
@@ -46,9 +48,11 @@ export default function ReviewStep({
 
   const address = usingNewAddress
     ? newAddress
-    : SAVED_ADDRESSES.find((a) => a.address_id === addressId);
+    : savedAddress.find((a) => {(a.address_id).toString() === addressId; } );
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === deliveryMethodId)!;
   const paymentMethod = PAYMENT_METHODS.find((m) => m.id === paymentMethodId)!;
+
+ console.log(savedAddress)
 
   function handlePlaceOrder() {
     setPlacing(true);

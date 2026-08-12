@@ -2,10 +2,11 @@
 
 import { DELIVERY_METHODS, formatCurrency, SAVED_ADDRESSES } from "@/app/types/constants";
 import { Address, DeliveryMethodId} from "@/app/types/interface";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Button from "../../ui/Button";
 import Input from "../../ui/Input";
 import RadioCard from "../../ui/RadioCard";
+import { getAddress } from "@/app/lib/address";
 
 interface DeliveryStepProps {
   addressId: string | null;
@@ -18,11 +19,13 @@ interface DeliveryStepProps {
   onDeliveryMethodChange: (id: DeliveryMethodId) => void;
   onBack: () => void;
   onContinue: () => void;
+  savedAddress: Address[]
 }
 
 export default function DeliveryStep({
   addressId,
   usingNewAddress,
+  savedAddress,
   newAddress,
   deliveryMethodId,
   onAddressSelect,
@@ -33,7 +36,7 @@ export default function DeliveryStep({
   onContinue,
 }: DeliveryStepProps) {
   const [submitted, setSubmitted] = useState(false);
-
+  
   const newAddressErrors = useMemo(() => {
     if (!usingNewAddress || !submitted) return {};
     const errors: Partial<Record<keyof Address, string>> = {};
@@ -46,6 +49,8 @@ export default function DeliveryStep({
     if (!newAddress.phone_number) errors.phone_number = "Enter a phone_number number";
     return errors;
   }, [usingNewAddress, newAddress, submitted]);
+
+   
 
   const isValid = usingNewAddress
     ? Boolean(newAddress.first_name && newAddress.last_name && newAddress.street_address && newAddress.county && newAddress.phone_number)
@@ -71,7 +76,7 @@ export default function DeliveryStep({
         <h2 className="text-[13px] font-semibold uppercase tracking-wide text-ink/45">
           Shipping address
         </h2>
-        {SAVED_ADDRESSES.map((addr) => (
+        {savedAddress.map((addr) => (
           <RadioCard
             key={addr.address_id}
             name="address"

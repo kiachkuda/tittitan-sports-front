@@ -9,22 +9,23 @@ import PaymentStep from "./steps/PaymentStep";
 import ReviewStep from "./steps/ReviewStep";
 import ConfirmationStep from "./steps/ConfirmationStep";
 
-import { calculatePriceBreakdown, DELIVERY_METHODS, generateOrderNumber } from "@/app/types/constants";
+import { calculatePriceBreakdown, DELIVERY_METHODS, generateOrderNumber, SAVED_ADDRESSES } from "@/app/types/constants";
 import { Address, DeliveryMethodId, StepId } from "@/app/types/interface";
 import { CheckoutState } from "@/app/types/interface";
 
 import { useCart } from "@/contexts/CartProvider";
-import { createAddress } from "@/app/lib/address";
+import { createAddress, getAddress } from "@/app/lib/address";
 import { useAuth } from "@/contexts/AuthProvider";
 import { createPayment } from "@/app/lib/payment";
 import { createOrder } from "@/app/lib/order";
+import { address } from "framer-motion/client";
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
 
 
 
 
-export default function CheckoutFlow() {
+export default function CheckoutFlow(props:{savedAddress:Address[]}) {
 
   const cart = useCart();
   const auth = useAuth();
@@ -36,7 +37,11 @@ export default function CheckoutFlow() {
   const cartItems = cart.cartItems;
   const total =cart.subtotal;
 
+  const [selectedId, setSelectedId] = useState<string>();
+ 
 
+
+const [savedAdd, setSavedAdd] = useState<Address[]>(SAVED_ADDRESSES)
 const initialState: CheckoutState = {
   step: "bag",
   promoCode: "",
@@ -52,6 +57,7 @@ const initialState: CheckoutState = {
   orderNumber: null,
 };
 
+
   const [state, setState] = useState<CheckoutState>(initialState);
   const [furthestStepIndex, setFurthestStepIndex] = useState(0);
 
@@ -62,6 +68,15 @@ const initialState: CheckoutState = {
     [cartItems, deliveryMethod.price, state.promoApplied]
   );
 
+ useEffect(()=>{
+  const saved = async()=>{
+    let data = await getAddress();
+    setSavedAdd(data.data)
+    setState((s)=>({...s, }))
+  }
+  saved();
+ },[])
+
   function goTo(step: StepId) {
     const index = STEP_ORDER.indexOf(step);
     setFurthestStepIndex((prev) => Math.max(prev, index));
@@ -69,16 +84,7 @@ const initialState: CheckoutState = {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
-  function updateQuantity(id: string, quantity: number) {
-    setState((s) => ({
-      ...s,
-      items: cartItems.map((item) => ( (item.product_id).toString() === id ? { ...item, quantity } : item)),
-    }));
-  }
 
-  function removeItem(id: string) {
-    setState((s) => ({ ...s, items: cartItems.filter((item) => (item.product_id).toString() !== id) }));
-  }
 
   function applyPromo() {
     if (state.promoCode.trim().length > 0) {
@@ -90,7 +96,21 @@ const initialState: CheckoutState = {
     const orderNumber = generateOrderNumber();
     setState((s) => ({ ...s, orderNumber }));
 
-    const payload = {
+   
+
+    let addressId;
+    if(state.usingNewAddress){
+      const addRes = await createAddress(state.newAddress);
+      addressId = addRes.data.address_id; 
+    }else{
+      addressId = selectedId;
+    }
+
+    const payment = createPayment({
+      phone:state.mpesaNumber
+    })
+
+     const payload = {
       items: cartItems.map((item) => ({
         product_id: item.product_id,
         quantity: item.quantity,
@@ -105,19 +125,8 @@ const initialState: CheckoutState = {
           ? { ...state.card, number: state.card.number.replace(/\s/g, "").slice(-4) } // never send full PAN to your own logs/back end unless it's actually PCI-handled
           : undefined,
       promoCode: state.promoApplied ? state.promoCode : undefined,
-      totals: breakdown,
+      totals: state.totalPrice,
     };
-
-    let addressId;
-    if(state.usingNewAddress){
-      const addRes = await createAddress(state.newAddress);
-      addressId = addRes.data.address_id; 
-    }
-
-    const payment = createPayment({
-      phone:state.mpesaNumber
-    })
-
      const data = {
       address_id: addressId,
       items: cartItems.map((item) => ({
@@ -126,6 +135,7 @@ const initialState: CheckoutState = {
         subtotal: (item.quantity * item.price),
         product_name: item.product_name
       })),
+      subtotal:state.totalPrice,
     };
     
     const order = createOrder(data);
@@ -165,13 +175,16 @@ const initialState: CheckoutState = {
           {state.step === "delivery" && (
             <DeliveryStep
               addressId={state.addressId}
+              savedAddress={savedAdd}
               usingNewAddress={state.usingNewAddress}
               newAddress={state.newAddress}
               deliveryMethodId={state.deliveryMethodId}
-              onAddressSelect={(id) =>
-                setState((s) => ({ ...s, addressId: id, usingNewAddress: false }))
+              onAddressSelect={
+                (id) => {setSelectedId(id); setState((s) => ({...s, addressId:id, usingNewAddress: false})); }
+                
+              
               }
-              onUseNewAddress={() => setState((s) => ({ ...s, usingNewAddress: true }))}
+              onUseNewAddress={() => { setState((s) => ({ ...s, usingNewAddress: true }));  }}
               onNewAddressChange={(newAddress:Address) => setState((s) => ({ ...s, newAddress }))}
               onDeliveryMethodChange={(deliveryMethodId) =>
                 setState((s) => ({ ...s, deliveryMethodId }))
@@ -200,6 +213,7 @@ const initialState: CheckoutState = {
             <ReviewStep
               addressId={state.addressId}
               usingNewAddress={state.usingNewAddress}
+              savedAddress={savedAdd}
               newAddress={state.newAddress}
               deliveryMethodId={state.deliveryMethodId}
               paymentMethodId={state.paymentMethodId}
@@ -221,8 +235,8 @@ const initialState: CheckoutState = {
           onPromoCodeChange={(promoCode) => setState((s) => ({ ...s, promoCode }))}
           onApplyPromo={applyPromo}
           editableItems={state.step === "bag"}
-          onQuantityChange={updateQuantity}
-          onRemoveItem={removeItem}
+          onQuantityChange={cart.updateQuantity}
+          onRemoveItem={cart.removeItem}
         />
       </div>
     </div>

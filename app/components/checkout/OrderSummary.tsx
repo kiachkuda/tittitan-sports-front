@@ -13,8 +13,8 @@ interface OrderSummaryProps {
   onPromoCodeChange: (code: string) => void;
   onApplyPromo: () => void;
   editableItems?: boolean;
-  onQuantityChange?: (id: string, quantity: number) => void;
-  onRemoveItem?: (id: string) => void;
+  onQuantityChange?: (id: number, quantity: number) => void;
+  onRemoveItem?: (id: number) => void;
 }
 
 export default function OrderSummary({
@@ -72,7 +72,7 @@ export default function OrderSummary({
                         <button
                           type="button"
                           aria-label={`Decrease quantity of ${item.name}`}
-                          onClick={() => onQuantityChange?.((item.product_id).toString(), Math.max(1, item.quantity - 1))}
+                          onClick={() => onQuantityChange?.((item.product_id), Math.max(1, item.quantity - 1))}
                           className="flex h-6 w-6 items-center justify-center rounded border border-line text-ink/60 hover:border-ink"
                         >
                           −
@@ -81,7 +81,7 @@ export default function OrderSummary({
                         <button
                           type="button"
                           aria-label={`Increase quantity of ${item.name}`}
-                          onClick={() => onQuantityChange?.((item.product_id).toString(), item.quantity + 1)}
+                          onClick={() => onQuantityChange?.((item.product_id), item.quantity + 1)}
                           className="flex h-6 w-6 items-center justify-center rounded border border-line text-ink/60 hover:border-ink"
                         >
                           +
@@ -97,7 +97,7 @@ export default function OrderSummary({
                   {editableItems && (
                     <button
                       type="button"
-                      onClick={() => onRemoveItem?.((item.product_id).toString())}
+                      onClick={() => onRemoveItem?.((item.product_id))}
                       className="mt-1 text-[12px] text-ink/40 underline decoration-dotted hover:text-danger"
                     >
                       Remove

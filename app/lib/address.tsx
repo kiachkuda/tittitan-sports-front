@@ -29,7 +29,8 @@ export async function getAddress() {
             credentials: "include",
         })
 
-        return response.json();
+        const data = await response.json();
+        return data;
     } catch (error) {
         console.error("Error creating product:", error);
         throw error;
