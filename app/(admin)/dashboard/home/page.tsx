@@ -73,7 +73,7 @@ export default function Home() {
             Dashboard
           </div>
           <h1 className="mt-1 text-2xl font-bold tracking-tight md:text-3xl">
-            Welcome back, {`${user?.firstname}`} 👋
+            Welcome back, {`${user?.first_name}`} 👋
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Here's what's happening in the TitanSportske store today.
