@@ -19,7 +19,7 @@ export type StepId = "bag" | "delivery" | "payment" | "review" | "confirmed";
 
 export interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: CartItem, quantity: number, variant_id:number) => void;
+  addToCart: (product: CartItem, quantity: number, variant_id?:number) => void;
   updateQuantity: (id: number, amount: number) => void;
   removeItem: (id: number) => void;
   clearCart: () => void;
