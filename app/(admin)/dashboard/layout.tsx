@@ -20,13 +20,17 @@ export default function Layout({ children }: { children: ReactNode }) {
 
     useEffect(()=>{
       if(!loading && !user){
-       router.push("/login")
+       router.push("/signin")
+      }
+      console.log(user);
+      if(user?.role !== "admin"){
+        router.push("/signin")
+      }else{
+        router.push("/dashboard/home")
       }
 
-      if(user?.role !== "admin"){
-        router.push("/login")
-      }
-  })
+      
+  },[])
 
   return (
     <div className="flex min-h-dvh w-full bg-background">
@@ -58,7 +62,9 @@ export default function Layout({ children }: { children: ReactNode }) {
             else setMobileOpen(true);
           }}
         />
-        <main className="flex-1 p-4 md:p-8">{children}</main>
+        <main className="flex-1 p-4 md:p-8">
+          {children}
+        </main>
       </div>
     </div>
   );

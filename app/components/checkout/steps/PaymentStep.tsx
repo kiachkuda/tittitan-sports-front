@@ -169,10 +169,10 @@ export default function PaymentStep({
       )}
 
       <div className="flex gap-3">
-        <Button variant="secondary" onClick={onBack}>
+        <Button className="bg-[#000022] hover:bg-[#000055] text-white" onClick={onBack}>
           Back
         </Button>
-        <Button onClick={handleContinue} fullWidth disabled={!canContinue}>
+        <Button className="bg-orange-400" onClick={handleContinue} fullWidth disabled={!canContinue}>
           Review order
         </Button>
       </div>

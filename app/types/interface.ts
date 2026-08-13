@@ -19,7 +19,7 @@ export type StepId = "bag" | "delivery" | "payment" | "review" | "confirmed";
 
 export interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: CartItem, quantity: number, variant_id?:number) => void;
+  addToCart: (product: CartItem, quantity: number, variant_id?:number, printing_cost?:number) => void;
   updateQuantity: (id: number, amount: number) => void;
   removeItem: (id: number) => void;
   clearCart: () => void;
@@ -39,8 +39,6 @@ export type SingleProduct = {
   product_categories:ProductCategory[] 
 };
 
-
-
 export type Product = {
   product_id: number;
   name: string;
@@ -51,8 +49,6 @@ export type Product = {
   product_image: ImageType[];
   description?: string;
 };
-
-
 
 export type User = {
   user_id: Number,
@@ -70,6 +66,7 @@ export interface CartItem {
   price: number;
   quantity: number;
   variant_id:number;
+  printing_cost:number;
 }
 
 export type Address = {

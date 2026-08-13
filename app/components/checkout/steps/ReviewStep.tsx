@@ -52,8 +52,6 @@ export default function ReviewStep({
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === deliveryMethodId)!;
   const paymentMethod = PAYMENT_METHODS.find((m) => m.id === paymentMethodId)!;
 
- console.log(savedAddress)
-
   function handlePlaceOrder() {
     setPlacing(true);
     
@@ -120,7 +118,7 @@ export default function ReviewStep({
      
 
       <div className="flex gap-3">
-        <Button className="bg-blue-300 p-2" onClick={onBack} disabled={placing}>
+        <Button className="bg-[#000022] text-white p-2 hover:bg-[#000055]" onClick={onBack} disabled={placing}>
           Back
         </Button>
         <Button className="p-2 bg-orange-400" onClick={handlePlaceOrderClick} fullWidth disabled={placing}>
@@ -150,7 +148,7 @@ export default function ReviewStep({
 
             <div className="mt-6 flex gap-3">
               <Button
-                variant="secondary"
+                className="bg-[#000022] text-white"
                 onClick={() => setConfirmOpen(false)}
                 disabled={placing}
               >

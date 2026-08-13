@@ -179,7 +179,7 @@ export default function DeliveryStep({
       </section>
 
       <div className="flex gap-3">
-        <Button variant="secondary" onClick={onBack}>
+        <Button className="bg-[#000022] hover:bg-[#000055] text-white"  onClick={onBack}>
           Back
         </Button>
         <Button className="p-2 bg-orange-400" onClick={handleContinue} fullWidth>

@@ -46,6 +46,8 @@ export default function ProductPage() {
     variants.map((variant: any) => variant.size.toUpperCase())
   );
   const [selectedSize, setSelectedSize] = useState<number>();
+  const [isPrinting, setIsPrinting] = useState<boolean>(false);
+  const [printingCost, setPrintingCost] = useState<number>(0);
 
 
 
@@ -75,10 +77,6 @@ export default function ProductPage() {
     getproduct(Number(param.id));
 
   }, [])
-
-
-
-
 
   return (
     <main className="min-h-screen bg-white text-neutral-900">
@@ -208,29 +206,32 @@ export default function ProductPage() {
                 <div className="flex items-center gap-5 my-4">
                   <div className="flex flex-col gap-2">
                     <div className="flex flex-row items-center gap-2">
-                      <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
+                      <input type="checkbox"
+                       onChange={()=>{
+                          setIsPrinting( (prev) => !prev);
+                          
+                          setPrintingCost(400);
+                        }}
+                         name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
 
-                      <label htmlFor="printname" className="ml-2 text-gray-700 font-medium text-lg">PRINT NAME
-                        + Ksh 200</label>
+                      <label htmlFor="printname"
+                         className="ml-2 text-gray-700 font-medium text-lg"
+                        
+                        >PRINT NAME & NUMBER
+                        + Ksh 400</label>
 
                     </div>
-                    <div>
-                      <input type="checkbox" name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
-
-                      <label htmlFor="printnumber" className="ml-2 text-gray-700 font-medium text-lg">PRINT NUMBER
-                        + Ksh 200</label>
-
-                    </div>
+                    
                   </div>
                 </div>
 
               </div>
 
               <button
-                onClick={() => addToCart(product, qty, selectedSize)}
+                onClick={() => addToCart(product, qty, selectedSize, printingCost)}
                 className="flex-1 rounded-full bg-black py-3 font-medium text-white"
               >
-                Add To Bag — KSH{price * qty}
+                Add To Bag — KSH{price * qty + printingCost}
               </button>
 
             </div>

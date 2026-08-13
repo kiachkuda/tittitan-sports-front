@@ -83,7 +83,7 @@ export function generateOrderNumber(): string {
 export const CART_ITEMS:CartItem[] = [];
 
 export function calculateSubtotal(items: CartItem[]): number {
-  return items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  return items.reduce((sum, item) => sum + (item.price * item.quantity + item.printing_cost), 0);
 }
 
 

@@ -109,12 +109,13 @@ const initialState: CheckoutState = {
     const payment = createPayment({
       phone:state.mpesaNumber
     })
-
+    console.log(cartItems)
      const payload = {
       items: cartItems.map((item) => ({
         product_id: item.product_id,
         quantity: item.quantity,
         price: item.price,
+       
       })),
       address: state.usingNewAddress ? state.newAddress : { addressId: state.addressId },
       deliveryMethodId: state.deliveryMethodId,
@@ -127,20 +128,24 @@ const initialState: CheckoutState = {
       promoCode: state.promoApplied ? state.promoCode : undefined,
       totals: state.totalPrice,
     };
+    
      const data = {
       address_id: addressId,
       items: cartItems.map((item) => ({
         variant_id: item.variant_id, 
         quantity: item.quantity,
-        subtotal: (item.quantity * item.price),
-        product_name: item.product_name
+        subtotal: (item.quantity * item.price + item.printing_cost),
+        product_name: item.product_name,
+        printing_cost:item.printing_cost,
       })),
-      subtotal:state.totalPrice,
+      subtotal:breakdown.subtotal,
+      shipping_cost: breakdown.shipping,
+      total_amount:breakdown.total
     };
-    
-    const order = createOrder(data);
+     console.log(breakdown)
+     createOrder(data);
 
-    console.log(order)
+    
     goTo("confirmed");
   }
 

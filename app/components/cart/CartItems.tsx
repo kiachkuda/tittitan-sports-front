@@ -6,7 +6,7 @@ import { Trash2 } from 'lucide-react';
 function CartItems() {
     
     const {updateQuantity, cartItems, removeItem} = useCart();
-    console.log(cartItems)
+    
   return (
   
             <div className="w-full md:col-span-2 bg-white p-5 rounded-2xl shadow-sm">
@@ -16,9 +16,9 @@ function CartItems() {
                 cartItems.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center flex-col md:flex-row gap-6 md:justify-between border-b border-gray-200 py-4"
+                    className="flex items-center gap-6 md:justify-between justify-center border-b border-gray-200 py-4"
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex justify-between items-center gap-2 md:gap-4">
                       <Image
                         src={`${item.product_image[0].image_path}`}
                         alt={item.name}
@@ -27,20 +27,24 @@ function CartItems() {
                         className="rounded-xl object-cover hidden md:block"
                       />
                        <Image
-                        src={`/${item.product_image[0]}`}
+                        src={`${item.product_image[0].image_path}`}
                         alt={item.name}
                         width={50}
                         height={50}
                         className="rounded-xl object-cover md:hidden"
                       />
                       <div>
-                        <h3 className="md:text-lg  md:font-medium  text-gray-800">
+                        <h3 className="md:text-lg  hidden md:block md:font-medium  text-gray-800">
                           {item.name}
                         </h3>
                         
                         <p className="text-sm text-gray-600">${item.price}</p>
                       </div>
+                       <div>
+                     <p className='font-bold'>Printing Cost: </p> { item.printing_cost }
                     </div>
+                    </div>
+                   
     
                     {/* Quantity Controls */}
                     <div className="flex justify-between items-center gap-4">
@@ -64,7 +68,7 @@ function CartItems() {
                     {/* Total & Remove */}
                     <div className="flex items-center ml-2 md:ml-0 gap-2">
                       <p className="font-semibold text-gray-800">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        ${(item.printing_cost + item.price * item.quantity).toFixed(2) }
                       </p>
                       <Trash2
                         size={18}

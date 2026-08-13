@@ -28,19 +28,19 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (product: CartItem, quantity: number = 1, variant_id: number = 0) => {
+  const addToCart = (product: CartItem, quantity: number = 1, variant_id: number = 0, printing_cost:number = 0) => {
     if(variant_id == 0) return;
     setCartItems((prev) => {
       const existing = prev.find((item) => item.product_id === product.product_id);
       if (existing) {
         return prev.map((item) =>
           item.product_id === product.product_id
-            ? { ...item, quantity: item.quantity + quantity, variant_id:variant_id }
+            ? { ...item, quantity: item.quantity + quantity, variant_id:variant_id, printing_cost:printing_cost }
             : item
         );
       }
      console.log(prev)
-      return [...prev, { ...product, quantity, variant_id }];
+      return [...prev, { ...product, quantity, variant_id, printing_cost }];
     });
   };
 

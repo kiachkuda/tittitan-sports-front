@@ -50,7 +50,7 @@ export default function ConfirmationStep({
         </div>
       </div>
 
-      <Button fullWidth onClick={() => (window.location.href = "/")}>
+      <Button className="bg-orange-400 hover:bg-orange-300" fullWidth onClick={() => (window.location.href = "/")}>
         Continue shopping
       </Button>
     </div>
