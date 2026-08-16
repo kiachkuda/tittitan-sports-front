@@ -72,6 +72,7 @@ const initialState: CheckoutState = {
   const saved = async()=>{
     let data = await getAddress();
     setSavedAdd(data.data)
+    console.log("data")
     setState((s)=>({...s, }))
   }
   saved();

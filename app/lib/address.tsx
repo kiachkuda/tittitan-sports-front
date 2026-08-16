@@ -5,7 +5,7 @@ import { Address } from "../types/interface";
 
 export async function createAddress(address: Address) {
     try {
-        const response = await fetch(`${API_URL}/address`, {
+        const response = await fetch(`${process.env.API_URL}/address`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -24,7 +24,7 @@ export async function createAddress(address: Address) {
 export async function getAddress() {
 
     try {
-        const response = await fetch(`${API_URL}/address`, {
+        const response = await fetch(`${process.env.API_URL}/address`, {
             method: "GET",
             credentials: "include",
         })
