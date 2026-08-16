@@ -1,6 +1,13 @@
-import { API_URL } from "../types/constants";
+
 import { Address } from "../types/interface";
 
+let API_URL = ""
+
+if(process.env.NODE_ENV === "development"){
+  API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+}else{
+  API_URL = process.env.API_URL || "https://titan-sportke.onrender.com/api/v1";
+}
 
 
 export async function createAddress(address: Address) {
