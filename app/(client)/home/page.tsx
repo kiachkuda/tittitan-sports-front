@@ -44,7 +44,7 @@ const HomePage = () => {
 
     useEffect(() => {
 
-       console.log( "env file:", process.env.API_URL)
+       console.log( "env file:", process.env)
 
         async function loadCategories() {
             const res = await getAllCategories();
