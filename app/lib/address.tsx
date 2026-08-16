@@ -1,13 +1,13 @@
 
 import { Address } from "../types/interface";
 
-const base_url = `${process.env.API_URL}`;
+const base_url = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 
 
 export async function createAddress(address: Address) {
     try {
-        const response = await fetch(`${process.env.API_URL}/address`, {
+        const response = await fetch(`${base_url}/address`, {
             method: "POST",
             credentials: "include",
             headers: {
