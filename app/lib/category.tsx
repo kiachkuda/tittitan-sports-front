@@ -1,14 +1,11 @@
 import { useRouter } from "next/dist/client/components/navigation";
 
 
-let base_url = `${process.env.API_URL}`
-
-
 export async function getAllCategories() {
   try {
     
     const response = await fetch(
-      `${base_url}/categories`,
+      `${process.env.API_URL}/categories`,
       {
         method: "GET",
         headers: {
@@ -22,8 +19,6 @@ export async function getAllCategories() {
     if (!response.ok) {
       throw new Error(`Failed to fetch categories (${response.status})`);
     }
-
-    
 
     return await response.json();
   } catch (error) {
