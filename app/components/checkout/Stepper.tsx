@@ -1,6 +1,7 @@
 "use client";
 
-import { StepId } from "@/lib/types";
+import { StepId } from "@/app/types/interface";
+
 
 const STEPS: { id: StepId; label: string }[] = [
   { id: "bag", label: "Bag" },
