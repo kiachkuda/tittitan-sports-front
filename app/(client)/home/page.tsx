@@ -43,6 +43,9 @@ const HomePage = () => {
 
 
     useEffect(() => {
+
+       console.log( `${process.env.API_URL}`)
+
         async function loadCategories() {
             const res = await getAllCategories();
             setCategories(res.data);
