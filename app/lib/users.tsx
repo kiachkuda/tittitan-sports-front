@@ -1,7 +1,7 @@
 import { json } from "stream/consumers";
 import { User } from "../types/interface";
 
-const base_url = `${process.env.NEXT_PUBLIC_API_URL}/users`;
+const base_url = `${process.env.API_URL}/users`;
 
 
 export async function getUsers() {

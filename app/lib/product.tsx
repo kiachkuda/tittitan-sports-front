@@ -3,14 +3,7 @@
 import { Product } from "@/app/types/interface";
 import {useRouter} from "next/navigation"
 
-let API_URL = ""
-
-if(process.env.NODE_ENV === "development"){
-  API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
-}else{
-  API_URL = process.env.API_URL || "https://titan-sportke.onrender.com/api/v1";
-}
-
+let API_URL = process.env.API_URL || "https://titan-sportke.onrender.com/api/v1";
 
 export async function createProduct(product: Product, token:any) {
   try {
