@@ -1,7 +1,7 @@
 
 import { Address } from "../types/interface";
 
-const base_url = `${process.env.API_URL}/address`;
+const base_url = `${process.env.API_URL}`;
 
 
 
