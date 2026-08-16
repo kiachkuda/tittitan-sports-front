@@ -5,7 +5,7 @@ export async function getAllCategories() {
   try {
     
     const response = await fetch(
-      `${process.env.API_URL}/categories`,
+      `${process.env.NEXT_PUBLIC_API_URL}/categories`,
       {
         method: "GET",
         headers: {
