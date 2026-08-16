@@ -1,7 +1,7 @@
 import { useRouter } from "next/dist/client/components/navigation";
 
 
-let base_url = `${process.env.API_URL}/`
+let base_url = `${process.env.API_URL}`
 
 
 export async function getAllCategories() {
