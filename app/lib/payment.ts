@@ -3,7 +3,7 @@
 import {useRouter} from "next/navigation"
 
 
-let API_URL = ""
+let API_URL = `${process.env.API_URL}`;
 
 export async function createPayment(PaymentDetails: any) {
   try {

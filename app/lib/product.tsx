@@ -3,7 +3,7 @@
 import { Product } from "@/app/types/interface";
 import {useRouter} from "next/navigation"
 
-let API_URL = process.env.API_URL || "https://titan-sportke.onrender.com/api/v1";
+let API_URL = `${process.env.API_URL}`;
 
 export async function createProduct(product: Product, token:any) {
   try {

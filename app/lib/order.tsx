@@ -7,11 +7,10 @@ export type Orders = {
 
 
 
-let API_URL =
- "process.env.API_URL";
+let base_url = `${process.env.API_URL}/`
 export async function createOrder(order: any) {
   try {
-    const response = await fetch(`${API_URL}/orders`, {
+    const response = await fetch(`${base_url}/orders`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -29,7 +28,7 @@ export async function createOrder(order: any) {
 
 export async function getAllOrders() {
   try {
-    const response = await fetch(`${API_URL}/orders`,
+    const response = await fetch(`${base_url}/orders`,
       {
         method: "GET",
         credentials: "include",
