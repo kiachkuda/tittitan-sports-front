@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -13,6 +13,8 @@ import {
 } from "recharts";
 
 import { useAuth } from "@/contexts/AuthProvider";
+import { getAllOrders } from "@/app/lib/order";
+import { getUsers } from "@/app/lib/users";
 
 
 const revenueData = [
@@ -58,7 +60,28 @@ export default function Home() {
   const user = auth.user;
   const loading = auth.loading;
   const router = useRouter();
+  const [users, setUsers] = useState([]);
+  const [orders, setOrders] = useState([]);
 
+
+  useEffect( () =>{
+
+    const getOrders = async ()=>{
+     let response = await getAllOrders();
+      let users = await getUsers();
+
+      let orders = response.data;
+      setUsers(users);
+      setOrders(orders)
+      
+    }
+
+    
+
+    getOrders();
+    
+
+  }, [])
 
   if (!loading && !user) {
     return <div>Loading...</div>;
@@ -73,7 +96,7 @@ export default function Home() {
             Dashboard
           </div>
           <h1 className="mt-1 text-2xl font-bold tracking-tight md:text-3xl">
-            Welcome back, {`${user?.first_name}`} 👋
+            Welcome back, {`${user?.firstname}`} 👋
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             Here's what's happening in the TitanSportske store today.
@@ -90,7 +113,7 @@ export default function Home() {
         <Kpi label="Total Revenue" value="KES 1,245,600" delta="+12.4%" up icon={DollarSign} accent="primary" big />
         <Kpi label="Orders" value="1,245" delta="+8.2%" up icon={ShoppingBag} accent="info" />
         <Kpi label="Products" value="542" delta="+3.1%" up icon={Package} accent="success" />
-        <Kpi label="Customers" value="980" delta="+15.7%" up icon={Users} accent="warning" />
+        <Kpi label="Customers" value={`${users?.length}`} delta="+15.7%" up icon={Users} accent="warning" />
         <Kpi label="Pending Orders" value="18" delta="-4" icon={Clock} accent="warning" />
         <Kpi label="Out of Stock" value="7" delta="+2" icon={AlertTriangle} accent="danger" />
       </div>
@@ -242,25 +265,25 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              {orders.map((o) => (
-                <tr key={o.id} className="border-b border-border last:border-0 hover:bg-muted/30">
-                  <td className="px-5 py-4 font-semibold">{o.id}</td>
+              {orders.map((o:any) => (
+                <tr key={o?.order_id} className="border-b border-border last:border-0 hover:bg-muted/30">
+                  <td className="px-5 py-4 font-semibold">{o.order_id}</td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-2.5">
                       <div className="grid h-8 w-8 place-items-center rounded-full bg-primary/15 text-[11px] font-bold text-primary">
-                        {o.customer.split(" ").map((n) => n[0]).join("")}
+                        {o.user_id}
                       </div>
-                      <span className="font-medium">{o.customer}</span>
+                      <span className="font-medium">{o.user_id}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-muted-foreground">{o.jersey}</td>
-                  <td className="px-5 py-4">{o.qty}</td>
+                  
+                  <td className="px-5 py-4">{}</td>
                   <td className="px-5 py-4">
                     <span className="rounded-md bg-muted px-2 py-1 text-xs font-medium">{o.pay}</span>
                   </td>
                   <td className="px-5 py-4"><StatusBadge status={o.status} /></td>
-                  <td className="px-5 py-4 font-semibold">{o.total}</td>
-                  <td className="px-5 py-4 text-muted-foreground">{o.date}</td>
+                  <td className="px-5 py-4 font-semibold">{o.total_amount}</td>
+                  <td className="px-5 py-4 text-muted-foreground">{o.created_at}</td>
                   <td className="px-5 py-4">
                     <button aria-label="Actions" className="rounded-lg p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground">
                       <MoreHorizontal className="h-4 w-4" />

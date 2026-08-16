@@ -22,3 +22,24 @@ export async function createOrder(order: any) {
     throw error;
   }
 }
+
+export async function getAllOrders() {
+  try {
+    const response = await fetch(`${API_URL}/orders`,
+      {
+        method: "GET",
+        credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      }
+    )
+
+    
+    return response.json();
+
+  } catch (error) {
+    
+  }
+}

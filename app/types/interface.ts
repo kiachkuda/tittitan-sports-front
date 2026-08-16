@@ -122,6 +122,16 @@ export interface PriceBreakdown {
   total: number;
 }
 
+export interface Order {
+  order_id : string;
+  customer: string;
+  items?: CartItem[];
+  total_amount: number;
+  quantity: number;
+  pay:string;
+  status:string;
+}
+
 
 
 

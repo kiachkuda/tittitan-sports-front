@@ -50,7 +50,13 @@ export default function LoginForm() {
       
       setSuccess(true);
 
-      router.push("/dashboard/home");
+      if(data.user.role === "admin"){
+        router.push("/dashboard");
+      }else{
+        router.push("/home");
+      }
+
+      
 
     } else {
       const errorData = await res.json();
