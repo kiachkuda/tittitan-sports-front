@@ -7,7 +7,7 @@ const base_url = `${process.env.NEXT_PUBLIC_API_URL}`;
 
 export async function createAddress(address: Address) {
     try {
-        const response = await fetch(`${base_url}/address`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -26,7 +26,7 @@ export async function createAddress(address: Address) {
 export async function getAddress() {
 
     try {
-        const response = await fetch(`${base_url}/address`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/address`, {
             method: "GET",
             credentials: "include",
             headers: {

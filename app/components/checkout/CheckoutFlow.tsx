@@ -37,10 +37,8 @@ export default function CheckoutFlow(props:{savedAddress:Address[]}) {
   const cartItems = cart.cartItems;
   const total =cart.subtotal;
 
-  const [selectedId, setSelectedId] = useState<string>();
+const [selectedId, setSelectedId] = useState<string>();
  
-
-
 const [savedAdd, setSavedAdd] = useState<Address[]>(SAVED_ADDRESSES)
 const initialState: CheckoutState = {
   step: "bag",
@@ -108,9 +106,11 @@ const initialState: CheckoutState = {
     }
 
     const payment = createPayment({
-      phone:state.mpesaNumber
+      phone:state.mpesaNumber,
+      amount: breakdown.total
     })
-    console.log(cartItems)
+    
+    console.log(cartItems, state.mpesaNumber)
      const payload = {
       items: cartItems.map((item) => ({
         product_id: item.product_id,
@@ -141,8 +141,11 @@ const initialState: CheckoutState = {
       })),
       subtotal:breakdown.subtotal,
       shipping_cost: breakdown.shipping,
-      total_amount:breakdown.total
+      total_amount:breakdown.total,
+      phone:state.mpesaNumber,
+      amount:breakdown.total
     };
+
      console.log(breakdown)
      createOrder(data);
 
