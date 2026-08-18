@@ -146,7 +146,7 @@ const initialState: CheckoutState = {
       amount:breakdown.total
     };
 
-     console.log(breakdown)
+     console.log(data)
      createOrder(data);
 
     
