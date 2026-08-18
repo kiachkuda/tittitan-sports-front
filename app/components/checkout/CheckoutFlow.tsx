@@ -71,7 +71,8 @@ const initialState: CheckoutState = {
 
     let data = await getAddress();
     setSavedAdd(data.data)
-    console.log("data")
+    
+  
     setState((s)=>({...s, }))
 
 
@@ -147,10 +148,10 @@ const initialState: CheckoutState = {
       amount:breakdown.total
     };
 
-     console.log(data)
-     const order = createOrder(data);
+    
+     const order = await createOrder(data);
 
-     console.log(order)
+     console.log("Hello ",order)
 
     
     goTo("confirmed");
