@@ -68,10 +68,13 @@ const initialState: CheckoutState = {
 
  useEffect(()=>{
   const saved = async()=>{
+
     let data = await getAddress();
     setSavedAdd(data.data)
     console.log("data")
     setState((s)=>({...s, }))
+
+
   }
   saved();
  },[])
@@ -95,8 +98,6 @@ const initialState: CheckoutState = {
     const orderNumber = generateOrderNumber();
     setState((s) => ({ ...s, orderNumber }));
 
-   
-
     let addressId;
     if(state.usingNewAddress){
       const addRes = await createAddress(state.newAddress);
@@ -110,25 +111,25 @@ const initialState: CheckoutState = {
       amount: breakdown.total
     })
     
-    console.log(cartItems, state.mpesaNumber)
-     const payload = {
-      items: cartItems.map((item) => ({
-        product_id: item.product_id,
-        quantity: item.quantity,
-        price: item.price,
+    // console.log(cartItems, state.mpesaNumber)
+    //  const payload = {
+    //   items: cartItems.map((item) => ({
+    //     product_id: item.product_id,
+    //     quantity: item.quantity,
+    //     price: item.price,
        
-      })),
-      address: state.usingNewAddress ? state.newAddress : { addressId: state.addressId },
-      deliveryMethodId: state.deliveryMethodId,
-      paymentMethodId: state.paymentMethodId,
-      mpesaNumber: state.paymentMethodId === "mpesa" ? state.mpesaNumber : undefined,
-      card:
-        state.paymentMethodId === "card"
-          ? { ...state.card, number: state.card.number.replace(/\s/g, "").slice(-4) } // never send full PAN to your own logs/back end unless it's actually PCI-handled
-          : undefined,
-      promoCode: state.promoApplied ? state.promoCode : undefined,
-      totals: state.totalPrice,
-    };
+    //   })),
+    //   address: state.usingNewAddress ? state.newAddress : { addressId: state.addressId },
+    //   deliveryMethodId: state.deliveryMethodId,
+    //   paymentMethodId: state.paymentMethodId,
+    //   mpesaNumber: state.paymentMethodId === "mpesa" ? state.mpesaNumber : undefined,
+    //   card:
+    //     state.paymentMethodId === "card"
+    //       ? { ...state.card, number: state.card.number.replace(/\s/g, "").slice(-4) } // never send full PAN to your own logs/back end unless it's actually PCI-handled
+    //       : undefined,
+    //   promoCode: state.promoApplied ? state.promoCode : undefined,
+    //   totals: state.totalPrice,
+    // };
     
      const data = {
       address_id: addressId,
@@ -147,7 +148,9 @@ const initialState: CheckoutState = {
     };
 
      console.log(data)
-     createOrder(data);
+     const order = createOrder(data);
+
+     console.log(order)
 
     
     goTo("confirmed");
@@ -160,6 +163,7 @@ const initialState: CheckoutState = {
           orderNumber={state.orderNumber}
           total={breakdown.total}
           deliveryMethod={deliveryMethod}
+          paymentStatus={"PENDING"}
         />
       </div>
     );
