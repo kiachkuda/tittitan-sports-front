@@ -4,7 +4,7 @@ import Button from "../../ui/Button";
 import { formatCurrency } from "@/app/types/constants";
 import { DeliveryMethod } from "@/app/types/interface";
 
-type PaymentStatus = "PENDING" | "PAID" | "CANCELLED" | "FAILED";
+type PaymentStatus = "PENDING" | "SUCCESS" | "CANCELLED" | "FAILED";
 
 interface ConfirmationStepProps {
   orderNumber: string;
@@ -23,7 +23,7 @@ export default function ConfirmationStep({
   onContinueShopping,
 }: ConfirmationStepProps) {
   const isPending = paymentStatus === "PENDING";
-  const isPaid = paymentStatus === "PAID";
+  const isPaid = paymentStatus === "SUCCESS";
   const isCancelled =
     paymentStatus === "CANCELLED" ||
     paymentStatus === "FAILED";

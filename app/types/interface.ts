@@ -113,6 +113,7 @@ export interface CheckoutState {
   mpesaNumber:string;
   totalPrice:number;
   orderNumber: string | null;
+  orderId: string | null
 }
 export interface PriceBreakdown {
   subtotal: number;

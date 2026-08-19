@@ -17,8 +17,9 @@ import { useCart } from "@/contexts/CartProvider";
 import { createAddress, getAddress } from "@/app/lib/address";
 import { useAuth } from "@/contexts/AuthProvider";
 import { createPayment } from "@/app/lib/payment";
-import { createOrder } from "@/app/lib/order";
+import { createOrder, getOrderStatus } from "@/app/lib/order";
 import { address } from "framer-motion/client";
+import { PaymentStatus } from "@/titan-sportke/prisma/generated";
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
 
@@ -53,6 +54,7 @@ const initialState: CheckoutState = {
   mpesaNumber:"",
   totalPrice:total,
   orderNumber: null,
+  orderId: null,
 };
 
 
@@ -66,19 +68,71 @@ const initialState: CheckoutState = {
     [cartItems, deliveryMethod.price, state.promoApplied]
   );
 
+
+  const [status, setStatus] = useState<PaymentStatus>("PENDING");
+
  useEffect(()=>{
   const saved = async()=>{
 
     let data = await getAddress();
     setSavedAdd(data.data)
-    
-  
     setState((s)=>({...s, }))
 
 
   }
   saved();
  },[])
+
+ useEffect(() => {
+  if (!state.orderId) return;
+
+  if (state.step !== "confirmed") return;
+
+  let interval: ReturnType<typeof setInterval>;
+
+  const checkPayment = async () => {
+    try {
+      const response = await getOrderStatus(
+        state.orderId!
+      );
+
+      console.log(response)
+
+      const paymentStatus =
+        response.data.payment_status;
+
+      console.log(
+        "Payment status:",
+        paymentStatus
+      );
+
+      setStatus(paymentStatus);
+
+      if (
+        paymentStatus === "PAID" ||
+        paymentStatus === "CANCELLED" ||
+        paymentStatus === "FAILED"
+      ) {
+        clearInterval(interval);
+      }
+
+    } catch (error) {
+      console.error(
+        "Failed to check payment status:",
+        error
+      );
+    }
+  };
+
+  checkPayment();
+
+  interval = setInterval(checkPayment, 2000);
+
+  return () => {
+    clearInterval(interval);
+  };
+
+}, [state.orderId, state.step]);
 
   function goTo(step: StepId) {
     const index = STEP_ORDER.indexOf(step);
@@ -107,30 +161,6 @@ const initialState: CheckoutState = {
       addressId = selectedId;
     }
 
-    const payment = createPayment({
-      phone:state.mpesaNumber,
-      amount: breakdown.total
-    })
-    
-    // console.log(cartItems, state.mpesaNumber)
-    //  const payload = {
-    //   items: cartItems.map((item) => ({
-    //     product_id: item.product_id,
-    //     quantity: item.quantity,
-    //     price: item.price,
-       
-    //   })),
-    //   address: state.usingNewAddress ? state.newAddress : { addressId: state.addressId },
-    //   deliveryMethodId: state.deliveryMethodId,
-    //   paymentMethodId: state.paymentMethodId,
-    //   mpesaNumber: state.paymentMethodId === "mpesa" ? state.mpesaNumber : undefined,
-    //   card:
-    //     state.paymentMethodId === "card"
-    //       ? { ...state.card, number: state.card.number.replace(/\s/g, "").slice(-4) } // never send full PAN to your own logs/back end unless it's actually PCI-handled
-    //       : undefined,
-    //   promoCode: state.promoApplied ? state.promoCode : undefined,
-    //   totals: state.totalPrice,
-    // };
     
      const data = {
       address_id: addressId,
@@ -150,10 +180,21 @@ const initialState: CheckoutState = {
 
     
      const order = await createOrder(data);
+     
+     setStatus(order.data.status)
 
-     console.log("Hello ",order)
+      const orderId = order.data.order_id;
+     const orderNo = order.data.order_number;
 
+     setState((s) => ({
+      ...s,
+      orderId,
+      orderNumber: orderNo,
+      step: "confirmed",
+    }));
     
+     
+
     goTo("confirmed");
   }
 
@@ -164,7 +205,7 @@ const initialState: CheckoutState = {
           orderNumber={state.orderNumber}
           total={breakdown.total}
           deliveryMethod={deliveryMethod}
-          paymentStatus={"PENDING"}
+          paymentStatus={status}
         />
       </div>
     );
