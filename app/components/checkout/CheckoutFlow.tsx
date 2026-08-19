@@ -99,7 +99,7 @@ const initialState: CheckoutState = {
       console.log("order response: ",response)
 
       const paymentStatus =
-        response.data.payment_status;
+        response.data;
 
       console.log(
         "Payment status:",
