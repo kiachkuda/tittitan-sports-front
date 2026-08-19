@@ -96,7 +96,7 @@ const initialState: CheckoutState = {
         state.orderId!
       );
 
-      console.log(response)
+      console.log("order response: ",response)
 
       const paymentStatus =
         response.data.payment_status;
