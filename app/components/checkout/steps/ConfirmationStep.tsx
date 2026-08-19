@@ -2,9 +2,8 @@
 
 import Button from "../../ui/Button";
 import { formatCurrency } from "@/app/types/constants";
-import { DeliveryMethod } from "@/app/types/interface";
+import { DeliveryMethod, PaymentStatus } from "@/app/types/interface";
 
-type PaymentStatus = "PENDING" | "SUCCESS" | "CANCELLED" | "FAILED";
 
 interface ConfirmationStepProps {
   orderNumber: string;

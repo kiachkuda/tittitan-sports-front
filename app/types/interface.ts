@@ -100,6 +100,8 @@ export interface CardDetails {
 
 export type PaymentMethodId = "mpesa" | "card"
 
+
+
 export interface CheckoutState {
   step: StepId;
   promoCode: string;
@@ -115,6 +117,9 @@ export interface CheckoutState {
   orderNumber: string | null;
   orderId: string | null
 }
+
+export type PaymentStatus = "PENDING" | "SUCCESS" | "CANCELLED" | "FAILED";
+
 export interface PriceBreakdown {
   subtotal: number;
   shipping: number;

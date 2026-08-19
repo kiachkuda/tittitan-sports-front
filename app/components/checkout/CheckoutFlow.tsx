@@ -10,7 +10,7 @@ import ReviewStep from "./steps/ReviewStep";
 import ConfirmationStep from "./steps/ConfirmationStep";
 
 import { calculatePriceBreakdown, DELIVERY_METHODS, generateOrderNumber, SAVED_ADDRESSES } from "@/app/types/constants";
-import { Address, DeliveryMethodId, StepId } from "@/app/types/interface";
+import { Address, DeliveryMethodId, PaymentStatus, StepId } from "@/app/types/interface";
 import { CheckoutState } from "@/app/types/interface";
 
 import { useCart } from "@/contexts/CartProvider";
@@ -19,7 +19,7 @@ import { useAuth } from "@/contexts/AuthProvider";
 import { createPayment } from "@/app/lib/payment";
 import { createOrder, getOrderStatus } from "@/app/lib/order";
 import { address } from "framer-motion/client";
-import { PaymentStatus } from "@/titan-sportke/prisma/generated";
+
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
 
