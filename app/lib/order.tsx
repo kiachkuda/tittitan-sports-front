@@ -47,10 +47,10 @@ export async function getAllOrders() {
   }
 }
 
-export async function getOrderStatus(id:string) {
+export async function getOrderStatus(id:number) {
   try {
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders`,
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/${id}`,
       {
         method: "GET",
         credentials: "include",
