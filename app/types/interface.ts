@@ -115,7 +115,7 @@ export interface CheckoutState {
   mpesaNumber:string;
   totalPrice:number;
   orderNumber: string | null;
-  orderId: string | null
+  orderId: number | null
 }
 
 export type PaymentStatus = "PENDING" | "SUCCESS" | "CANCELLED" | "FAILED";

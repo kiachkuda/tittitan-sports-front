@@ -65,6 +65,6 @@ export async function getOrderStatus(id:number) {
     return response.json();
     
   } catch (error) {
-    
+    console.log(error)
   }
 }
