@@ -16,9 +16,9 @@ import { CheckoutState } from "@/app/types/interface";
 import { useCart } from "@/contexts/CartProvider";
 import { createAddress, getAddress } from "@/app/lib/address";
 import { useAuth } from "@/contexts/AuthProvider";
-import { createPayment } from "@/app/lib/payment";
+
 import { createOrder, getOrderStatus } from "@/app/lib/order";
-import { address } from "framer-motion/client";
+
 
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
