@@ -11,7 +11,7 @@ import { Category, Product, ProductCategory, SingleProduct } from "@/app/types/i
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams, useParams } from "next/navigation"
 
-import cat1 from "@/public/images/epl.jpeg"
+import cat1 from "@/public/images/epl.png"
 import cat2 from "@/public/images/bb.png"
 import cat3 from "@/public/images/tracksuit.png"
 import cat4 from "@/public/images/gears.png"
