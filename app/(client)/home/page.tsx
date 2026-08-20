@@ -4,20 +4,18 @@ import Announcement from "@/app/components/Announcement"
 import Hero from "@/app/components/Hero"
 import CategoryCard from "@/app/components/home/categoryCard"
 import Title from "@/app/components/home/title"
-import Nav from "@/app/components/NavBar"
-import CategoryProducts from "@/app/components/products/categoryProduct"
-import { getAllProducts, getProductsByCategory } from "@/app/lib/product"
-import { Category, Product, ProductCategory, SingleProduct } from "@/app/types/interface"
+
+import { SingleProduct } from "@/app/types/interface"
 import { useEffect, useState } from "react"
-import { usePathname, useRouter, useSearchParams, useParams } from "next/navigation"
+
 
 import cat1 from "@/public/images/epl.png"
 import cat2 from "@/public/images/bb.png"
 import cat3 from "@/public/images/tracksuit.png"
 import cat4 from "@/public/images/gears.png"
-import cat5 from "@/public/images/image-4.jpeg"
+import cat5 from "@/public/images/balls.png"
 import { getAllCategories } from "@/app/lib/category"
-import ProductCard from "@/app/components/ProductCard"
+
 import Link from "next/link"
 import ProductSection from "@/app/components/home/ProductSection"
 
@@ -29,9 +27,10 @@ import ProductSection from "@/app/components/home/ProductSection"
 const Images = [cat1, cat2, cat3, cat4, cat5];
 const categoryImages: Record<string, string> = {
     "Premier League": cat1.src,
-    "Football Boots": cat2.src,
-    "La Liga": cat3.src,
-    "Protective Gears": cat4.src,
+    "Sport Balls": cat5.src,
+    "Tracksuits": cat3.src,
+    "Sports Accessories": cat4.src,
+    "Basket Ball Apparel":cat2.src,
 };
 
 
