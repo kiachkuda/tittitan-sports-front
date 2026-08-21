@@ -22,8 +22,6 @@ import ProductSection from "@/app/components/home/ProductSection"
 
 
 
-
-
 const Images = [cat1, cat2, cat3, cat4, cat5];
 const categoryImages: Record<string, string> = {
     "Premier League": cat1.src,
