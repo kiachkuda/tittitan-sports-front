@@ -45,7 +45,7 @@ export default function VerifyPage() {
         }
 
         try{
-                const res = await fetch(`${API_URL}/auth/verify_email`, {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify_email`, {
                 method: "POST",
                 credentials: "include",
                 headers: {

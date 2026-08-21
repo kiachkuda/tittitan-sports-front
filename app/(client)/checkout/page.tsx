@@ -16,22 +16,22 @@ export default function CheckoutPage() {
   const router = useRouter();
   const [addressess, setAddressess] = useState<Address[]>(SAVED_ADDRESSES);
 
-  useEffect(()=>{
+  useEffect(() => {
 
-    if(!user && !loading) {
+    if (!user && !loading) {
       router.push("/login")
     }
 
-    
-        const getUserAddress = async ()=>{
-            const data = await getAddress();
-            console.log(data) 
-            setAddressess(data.data)
-          }
-          getUserAddress();
-      
 
-  },[])
+    const getUserAddress = async () => {
+      const data = await getAddress();
+      console.log(data)
+      setAddressess(data.data)
+    }
+    getUserAddress();
+
+
+  }, [user])
 
   return (
     <main className="min-h-screen bg-paper">
