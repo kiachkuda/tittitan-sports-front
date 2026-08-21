@@ -19,6 +19,7 @@ const navLinks = [
   
   { name: "blog",href: "/products" },
   { name: "contact us", href: "/products" },
+  { name: "Login", href: "/login" },
 ];
 
 export default function Nav() {
