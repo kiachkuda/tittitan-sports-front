@@ -219,7 +219,7 @@ export default function ProductPage() {
         const checked = e.target.checked;
 
         setIsPrinting(checked);
-        setPrintingCost(checked ? 400 : 0);
+        setPrintingCost(checked ? 1 : 0);
 
         // Optional: clear fields when unchecked
         if (!checked) {
