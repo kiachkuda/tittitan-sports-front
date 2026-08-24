@@ -67,6 +67,8 @@ export interface CartItem {
   quantity: number;
   variant_id:number;
   printing_cost:number;
+  printName?:string;
+  printNumber?:string
 }
 
 export type Address = {
