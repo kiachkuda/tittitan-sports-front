@@ -32,7 +32,7 @@ export default function CheckoutFlow(props:{savedAddress:Address[]}) {
   const auth = useAuth();
 
   const user = auth.user;
-
+  const clearcart = ;
   
 
   const cartItems = cart.cartItems;
@@ -193,7 +193,7 @@ const initialState: CheckoutState = {
       step: "confirmed",
     }));
     
-     
+     cart.clearCart
 
     goTo("confirmed");
   }
