@@ -19,7 +19,7 @@ export default function CheckoutPage() {
   useEffect(() => {
 
     if (!user && !loading) {
-      router.push("/login")
+      router.push("/login?redirect=/checkout")
     }
 
 

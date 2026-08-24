@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {useCart} from "@/contexts/CartProvider";
+import { useAuth } from "@/contexts/AuthProvider";
 import {
   Menu,
   X,
@@ -16,16 +17,15 @@ import Logo from "./logo";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "products",href: "/products" },
-  
   { name: "blog",href: "/products" },
   { name: "contact us", href: "/products" },
-  { name: "Login", href: "/login" },
+  { name: "signup", href: "/signup" },
 ];
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const { cartItems } = useCart();
-
+  const {logout, user} = useAuth();
   return (
     <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 lg:px-6">
@@ -39,7 +39,7 @@ export default function Nav() {
               key={link.name}
               href={link.href}
               className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-                link.name === "contact us"
+                link.name === "signup"
                   ? "bg-red-600 text-white hover:bg-red-700"
                   : "hover:bg-black hover:text-white"
               }`}
@@ -47,6 +47,8 @@ export default function Nav() {
               {link.name}
             </Link>
           ))}
+          <Link href={"/login"}>Login</Link>
+          <Link href={"/login"}>Login</Link>
         </nav>
 
         {/* Actions */}
