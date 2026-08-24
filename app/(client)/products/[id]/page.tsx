@@ -48,6 +48,8 @@ export default function ProductPage() {
   const [selectedSize, setSelectedSize] = useState<number>();
   const [isPrinting, setIsPrinting] = useState<boolean>(false);
   const [printingCost, setPrintingCost] = useState<number>(0);
+  const [printName, setPrintName] = useState("");
+  const [printNumber, setPrintNumber] = useState("");
 
 
 
