@@ -48,7 +48,7 @@ export default function ReviewStep({
 
   const address = usingNewAddress
   ? newAddress
-  : savedAddress.find((a) => a.address_id === addressId);
+  : savedAddress.find((a) => (a.address_id).toString() === addressId);
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === deliveryMethodId)!;
   const paymentMethod = PAYMENT_METHODS.find((m) => m.id === paymentMethodId)!;
 
