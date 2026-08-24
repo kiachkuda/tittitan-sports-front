@@ -52,7 +52,7 @@ export default function ReviewStep({
   const deliveryMethod = DELIVERY_METHODS.find((m) => m.id === deliveryMethodId)!;
   const paymentMethod = PAYMENT_METHODS.find((m) => m.id === paymentMethodId)!;
 
-  console.log(address)
+  console.log(savedAddress)
 
   function handlePlaceOrder() {
     setPlacing(true);
