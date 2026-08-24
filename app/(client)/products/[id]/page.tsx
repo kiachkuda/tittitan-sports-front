@@ -305,7 +305,7 @@ export default function ProductPage() {
               </div>
 
               <button
-                onClick={() => addToCart(product, qty, selectedSize, printingCost)}
+                onClick={() => addToCart(product, qty, selectedSize, printingCost, printName, printNumber)}
                 className="flex-1 rounded-full bg-black py-3 font-medium text-white"
               >
                 Add To Bag — KSH{price * qty + printingCost}
