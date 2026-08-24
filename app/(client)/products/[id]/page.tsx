@@ -67,7 +67,7 @@ export default function ProductPage() {
       setPrice(data.price ?? 0);
       setVariants(data.product_variants ?? [])
       setSku(data.sku ?? "")
-      setTeam(data.team ?? "");
+      
 
       const v = data.product_variants[0];
 
