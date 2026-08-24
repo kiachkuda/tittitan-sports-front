@@ -60,11 +60,11 @@ export default function Nav() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          {/* Search */}
-          <button className="hidden items-center gap-2 rounded-full border px-4 py-2 text-sm text-gray-500 transition hover:border-black md:flex">
+        
+          {/* <button className="hidden items-center gap-2 rounded-full border px-4 py-2 text-sm text-gray-500 transition hover:border-black md:flex">
             <Search size={18} />
             Search...
-          </button>
+          </button> */}
 
           {/* Wishlist */}
           <button className="rounded-full p-2 transition hover:bg-gray-100">

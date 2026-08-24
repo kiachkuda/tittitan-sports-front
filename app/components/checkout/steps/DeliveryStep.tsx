@@ -81,7 +81,7 @@ export default function DeliveryStep({
             key={addr.address_id}
             name="address"
             value={`${(addr.address_id)?.toString()}`}
-            checked={!usingNewAddress && addressId === addr.address_id}
+            checked={!usingNewAddress && addressId === (addr.address_id).toString()}
             onChange={onAddressSelect}
             title={addr.first_name}
             subtitle={`${addr.street_address}, ${addr.city}, ${addr.county}`}
