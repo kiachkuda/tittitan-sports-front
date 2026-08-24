@@ -47,8 +47,8 @@ export default function Nav() {
               {link.name}
             </Link>
           ))}
-          <Link href={"/login"}>Login</Link>
-          <Link href={"/login"}>Login</Link>
+          {user ? <Link href={"/login"}>Login</Link> :
+          <Link href={"/login"}>Login</Link> }
         </nav>
 
         {/* Actions */}
@@ -88,7 +88,7 @@ export default function Nav() {
 
       {/* Mobile Menu */}
       <div
-        className={`overflow-hidden transition-all duration-300 lg:hidden ${
+        className={`overflow-hidden transition-all duration-300 md:hidden ${
           isOpen ? "max-h-96 border-t" : "max-h-0"
         }`}
       >
