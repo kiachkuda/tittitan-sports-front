@@ -205,22 +205,97 @@ export default function ProductPage() {
 
                 <div className="flex items-center gap-5 my-4">
                   <div className="flex flex-col gap-2">
-                    <div className="flex flex-row items-center gap-2">
-                      <input type="checkbox"
-                       onChange={()=>{
-                          setIsPrinting( (prev) => !prev);
-                          
-                          setPrintingCost(400);
-                        }}
-                         name="printname" className="text-2lg w-4 h-4 border-2 border-gray-300 outline-1" />
+                    <div className="space-y-4">
+  {/* Printing option */}
+  <div className="flex flex-row items-center gap-3">
+    <input
+      id="printname"
+      type="checkbox"
+      name="printname"
+      checked={isPrinting}
+      onChange={(e) => {
+        const checked = e.target.checked;
 
-                      <label htmlFor="printname"
-                         className="ml-2 text-gray-700 font-medium text-lg"
-                        
-                        >PRINT NAME & NUMBER
-                        + Ksh 400</label>
+        setIsPrinting(checked);
+        setPrintingCost(checked ? 400 : 0);
 
-                    </div>
+        // Optional: clear fields when unchecked
+        if (!checked) {
+          setPrintName("");
+          setPrintNumber("");
+        }
+      }}
+      className="h-4 w-4 rounded border-gray-300 accent-orange-500"
+    />
+
+    <label
+      htmlFor="printname"
+      className="cursor-pointer text-lg font-medium text-gray-700"
+    >
+      PRINT NAME & NUMBER
+      <span className="ml-2 text-orange-500">+ Ksh 400</span>
+    </label>
+  </div>
+
+  {/* Custom printing fields */}
+  {isPrinting && (
+    <div className="grid grid-cols-1 gap-4 rounded-xl border border-gray-200 bg-gray-50 p-4 sm:grid-cols-2">
+      {/* Name */}
+      <div>
+        <label
+          htmlFor="printName"
+          className="mb-2 block text-sm font-medium text-gray-700"
+        >
+          Name to Print
+        </label>
+
+        <input
+          id="printName"
+          type="text"
+          value={printName}
+          onChange={(e) => setPrintName(e.target.value)}
+          placeholder="Enter name"
+          className="h-12 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm outline-none transition
+            placeholder:text-gray-400
+            focus:border-orange-500
+            focus:ring-4 focus:ring-orange-500/10"
+        />
+      </div>
+
+      {/* Number */}
+      <div>
+        <label
+          htmlFor="printNumber"
+          className="mb-2 block text-sm font-medium text-gray-700"
+        >
+          Number to Print
+        </label>
+
+        <input
+          id="printNumber"
+          type="text"
+          value={printNumber}
+          onChange={(e) => setPrintNumber(e.target.value)}
+          placeholder="e.g. 10"
+          maxLength={2}
+          className="h-12 w-full rounded-xl border border-gray-200 bg-white px-4 text-sm outline-none transition
+            placeholder:text-gray-400
+            focus:border-orange-500
+            focus:ring-4 focus:ring-orange-500/10"
+        />
+      </div>
+    </div>
+  )}
+
+  {/* Cost */}
+  <div className="flex items-center justify-between border-t border-gray-100 pt-3">
+    <span className="text-sm text-gray-500">Printing cost</span>
+
+    <span className="font-semibold text-gray-900">
+      Ksh {printingCost.toLocaleString()}
+    </span>
+  </div>
+</div>
                     
                   </div>
                 </div>
