@@ -47,7 +47,7 @@ export default function Nav() {
             </Link>
           ))}
           {user ? 
-          <button onClick={logout} className="bg-red-600 text-white hover:bg-red-700">Logout</button>
+          <button onClick={logout} className="bg-red-600 text-white hover:bg-red-700 p-2 rounded-xl">Logout</button>
          
            :
           <>
