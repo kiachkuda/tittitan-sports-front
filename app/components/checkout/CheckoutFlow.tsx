@@ -32,7 +32,7 @@ export default function CheckoutFlow(props:{savedAddress:Address[]}) {
   const auth = useAuth();
 
   const user = auth.user;
-  const clearcart = ;
+  
   
 
   const cartItems = cart.cartItems;
