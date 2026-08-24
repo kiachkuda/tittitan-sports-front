@@ -35,7 +35,7 @@ export default function RadioCard({
         value={value}
         checked={checked}
         onChange={() => onChange(value)}
-        className={clsx(`mt-1 h-4 w-4 accent-accent outline-red-300 ${checked} ? "outline-orange-500 bg-gray-500" : ""` )}
+        className={clsx(`mt-1 h-4 w-4 accent-accent outline-red-500, ${checked} ? "outline-orange-500 bg-gray-500" : ""` )}
       />
       {icon && <span className="mt-0.5 text-ink/60">{icon}</span>}
       <span className="flex-1">
