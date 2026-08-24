@@ -19,7 +19,6 @@ const navLinks = [
   { name: "products",href: "/products" },
   { name: "blog",href: "/products" },
   { name: "contact us", href: "/products" },
-  { name: "signup", href: "/signup" },
 ];
 
 export default function Nav() {
@@ -47,8 +46,16 @@ export default function Nav() {
               {link.name}
             </Link>
           ))}
-          {user ? <Link href={"/login"}>Login</Link> :
-          <Link href={"/login"}>Login</Link> }
+          {user ? 
+          <button onClick={logout} className="bg-red-600 text-white hover:bg-red-700">Logout</button>
+         
+           :
+          <>
+          <Link className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+               "hover:bg-black hover:text-white"
+              }`} href={"/login"}>Login</Link>
+          <Link href={"/signup"}>signup</Link>
+          </> }
         </nav>
 
         {/* Actions */}
