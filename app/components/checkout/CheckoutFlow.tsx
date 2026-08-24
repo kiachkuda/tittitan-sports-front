@@ -19,7 +19,8 @@ import { useAuth } from "@/contexts/AuthProvider";
 
 import { createOrder, getOrderStatus } from "@/app/lib/order";
 
-
+import {  } from "next";
+import { useRouter } from "next/navigation";
 
 const STEP_ORDER: StepId[] = ["bag", "delivery", "payment", "review", "confirmed"];
 
@@ -33,7 +34,7 @@ export default function CheckoutFlow(props:{savedAddress:Address[]}) {
 
   const user = auth.user;
   
-  
+  const router = useRouter();
 
   const cartItems = cart.cartItems;
   const total =cart.subtotal;
@@ -72,6 +73,8 @@ const initialState: CheckoutState = {
   const [status, setStatus] = useState<PaymentStatus>("PENDING");
 
  useEffect(()=>{
+
+  if(!user) return (router.push('/login?redirect=/checkout'))
   const saved = async()=>{
 
     let data = await getAddress();
@@ -182,6 +185,7 @@ const initialState: CheckoutState = {
      const order = await createOrder(data);
      
      setStatus(order.data.status)
+     console.log(status)
 
       const orderId = order.data.order_id;
      const orderNo = order.data.order_number;
