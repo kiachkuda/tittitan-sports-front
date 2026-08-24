@@ -173,6 +173,8 @@ const initialState: CheckoutState = {
         subtotal: (item.quantity * item.price + item.printing_cost),
         product_name: item.product_name,
         printing_cost:item.printing_cost,
+        print_name: item.printName,
+        print_number: item.printNumber
       })),
       subtotal:breakdown.subtotal,
       shipping_cost: breakdown.shipping,
