@@ -54,6 +54,7 @@ export default function ReviewStep({
 
   console.log(savedAddress)
   console.log(addressId)
+  console.log(address)
 
   function handlePlaceOrder() {
     setPlacing(true);
