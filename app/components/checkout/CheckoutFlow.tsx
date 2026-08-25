@@ -81,7 +81,6 @@ const initialState: CheckoutState = {
     setSavedAdd(data.data)
     setState((s)=>({...s, }))
 
-
   }
   saved();
  },[])
@@ -102,7 +101,7 @@ const initialState: CheckoutState = {
       console.log("order response: ",response.data)
 
       const paymentStatus =
-        response.data.payments.status;
+        response.data.status;
 
       console.log(
         "Payment status:",
