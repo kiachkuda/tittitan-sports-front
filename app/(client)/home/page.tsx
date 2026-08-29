@@ -18,18 +18,35 @@ import { getAllCategories } from "@/app/lib/category"
 
 import Link from "next/link"
 import ProductSection from "@/app/components/home/ProductSection"
+import { CircleDot, Flag, Shirt } from "lucide-react"
+import CategoryCards from "@/app/components/categories/categoryComponent"
 
 
 
 
 const Images = [cat1, cat2, cat3, cat4, cat5];
-const categoryImages: Record<string, string> = {
-    "Premier League": cat1.src,
-    "Sport Balls": cat5.src,
-    "Tracksuits": cat3.src,
-    "Sports Accessories": cat4.src,
-    "Basket Ball Apparel":cat2.src,
-};
+const categoryIcons = [
+  {
+    name: "National Teams",
+    icon: Flag,
+    href: "/shop?category=national-teams",
+  },
+  {
+    name: "Jerseys",
+    icon: Shirt,
+    href: "/shop?category=jerseys",
+  },
+  {
+    name: "Football Accessories",
+    icon: CircleDot,
+    href: "/shop?category=accessories",
+  },
+  {
+    name: "Tracksuits",
+    icon: Shirt,
+    href: "/shop?category=tracksuits",
+  },
+];
 
 
 const HomePage = () => {
@@ -72,24 +89,12 @@ const HomePage = () => {
 
                 {/* Mobile Slider */}
                 <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 md:hidden scrollbar-hide">
-                    {Object.entries(categoryImages).map(([name, src]) => (
-                        <Link
-                            key={name}
-                            href={`/products?category=${name}`}
-                            className="snap-start flex-none w-[calc(50%-8px)]"
-                        >
-                            <CategoryCard title={name} image={src} />
-                        </Link>
-                    ))}
+                    <CategoryCards />
                 </div>
 
                 {/* Tablet/Desktop Grid */}
                 <div className="hidden md:grid grid-cols-3 lg:grid-cols-4 gap-6">
-                    {Object.entries(categoryImages).map(([name, src]) => (
-                        <Link key={name} href={`/products?category=${name}`}>
-                            <CategoryCard title={name} image={src} />
-                        </Link>
-                    ))}
+                    <CategoryCards />
                 </div>
             </div>
             {/* Products By Categories */}

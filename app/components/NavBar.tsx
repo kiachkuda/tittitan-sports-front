@@ -35,7 +35,7 @@ export default function Navbar({
     },
     {
       name: "Shop",
-      href: "/shop",
+      href: "/products",
     },
     {
       name: "Orders",
@@ -47,19 +47,19 @@ export default function Navbar({
   const categories = [
     {
       name: "Football Jerseys",
-      href: "/shop?category=jerseys",
+      href: "/products?category=jerseys",
     },
     {
       name: "National Teams",
-      href: "/shop?category=national-teams",
+      href: "/products?category=national-teams",
     },
     {
       name: "Tracksuits",
-      href: "/shop?category=tracksuits",
+      href: "/products?category=tracksuits",
     },
     {
       name: "Football Accessories",
-      href: "/shop?category=accessories",
+      href: "/products?category=accessories",
     },
   ];
 
