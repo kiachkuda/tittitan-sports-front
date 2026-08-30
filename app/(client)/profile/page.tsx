@@ -116,7 +116,7 @@ export default function ProfilePage() {
         return <SecuritySection />;
 
       default:
-        return !Loading ? (
+        return !loading ? (
           <PersonalInformation/>
         ) : (
           <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600 shadow-sm">
