@@ -110,7 +110,7 @@ export default function CategoryCards() {
 
         {/* Mobile View All */}
         <Link
-          href="/shop"
+          href="/products"
           className="mt-5 flex items-center justify-center gap-2 rounded-xl border border-gray-200 py-3 text-sm font-bold text-slate-900 transition hover:border-orange-500 hover:text-orange-500 sm:hidden"
         >
           View all products

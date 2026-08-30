@@ -91,6 +91,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     console.error(error);
   } finally {
     setUser(null);
+    setIsLoggedIn(false);
     router.push("/login");
   }
 };

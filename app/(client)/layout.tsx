@@ -5,18 +5,18 @@ import Announcement from "../components/Announcement";
 import { useAuth } from "@/contexts/AuthProvider";
 
 export default function Layout({ children }: { children: ReactNode }) {
-    const user = useAuth().user;
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const {isLoggedIn, user, setIsLoggedIn} = useAuth();
+   
 
 
     useEffect( ()=> {
-        if(user !== null) {setIsLoggedIn(true)};
+        if(user == null) {setIsLoggedIn(false)};
     }, [user])
 
     return (
         <>
          <Announcement />
-            <Nav user={user} />
+            <Nav isLoggedIn={isLoggedIn} />
             {children}
             <Footer />        
         </>
