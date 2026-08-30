@@ -94,7 +94,8 @@ export default function ProfilePage() {
   const [activeSection, setActiveSection] =
     useState<ProfileSection>("profile");
 
-  const [orders, setOrdres] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [payments, setPayments] = useState([]);
     const auth =useAuth();
 
 
@@ -111,15 +112,18 @@ export default function ProfilePage() {
         const data = await getUserOrders();
 
         console.log("User Orders:",data)
+        setOrders(data.data);
       } 
 
       const getUserPays = async () => {
         const data = await getUserPayments();
 
         console.log("User Payments", data)
+        setPayments(data.data)
       }
 
       getUserOrds();
+      getUserPays();
       
     }, [user])
 
