@@ -12,25 +12,25 @@ const categories = [
   {
     name: "National Teams",
     description: "Represent your nation",
-    href: "/shop?category=national-teams",
+    href: "/products?category=national-teams",
     icon: Flag,
   },
   {
     name: "Jerseys",
     description: "Official football jerseys",
-    href: "/shop?category=jerseys",
+    href: "/products?category=jerseys",
     icon: Shirt,
   },
   {
     name: "Football Accessories",
     description: "Gear up for the game",
-    href: "/shop?category=accessories",
+    href: "/products?category=accessories",
     icon: CircleDot,
   },
   {
     name: "Tracksuits",
     description: "Train in style",
-    href: "/shop?category=tracksuits",
+    href: "/products?category=tracksuits",
     icon: Shirt,
   },
 ];
@@ -57,7 +57,7 @@ export default function CategoryCards() {
           </div>
 
           <Link
-            href="/shop"
+            href="/products"
             className="hidden items-center gap-1 text-sm font-bold text-slate-900 transition hover:text-orange-500 sm:flex"
           >
             View all
