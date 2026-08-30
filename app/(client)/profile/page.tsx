@@ -109,7 +109,7 @@ export default function ProfilePage() {
       const getUserOrds = async () => {
         const data = await getUserOrders();
 
-        console.log(data)
+        console.log("User Orders:",data)
       } 
 
       getUserOrds();
