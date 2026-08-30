@@ -111,6 +111,8 @@ export default function ProfilePage() {
 
         console.log(data)
       } 
+
+      getUserOrds();
       
     }, [user])
 
