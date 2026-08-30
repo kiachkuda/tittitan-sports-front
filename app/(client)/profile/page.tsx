@@ -31,6 +31,7 @@ import { SecuritySection } from "@/app/components/profile/SecuritySection";
 import { WishlistSection } from "@/app/components/profile/WishlistSection";
 import { useAuth } from "@/contexts/AuthProvider";
 import { PersonalInformation } from "@/app/components/profile/PersonalInformation";
+import Loading from "../products/loading";
 
 type ProfileSection =
   | "profile"
@@ -92,6 +93,7 @@ export default function ProfilePage() {
     const auth =useAuth();
 
     const user = auth.user;
+    const loading = auth.loading
 
   const renderContent = () => {
     switch (activeSection) {
@@ -114,8 +116,8 @@ export default function ProfilePage() {
         return <SecuritySection />;
 
       default:
-        return user ? (
-          <PersonalInformation user={user} />
+        return !Loading ? (
+          <PersonalInformation/>
         ) : (
           <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600 shadow-sm">
             Loading profile information...
