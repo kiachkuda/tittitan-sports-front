@@ -94,6 +94,7 @@ export default function ProfilePage() {
 
     const user = auth.user;
     const loading = auth.loading
+    const logout = auth.logout
 
   const renderContent = () => {
     switch (activeSection) {
@@ -138,7 +139,7 @@ export default function ProfilePage() {
               </p>
 
               <h1 className="text-2xl font-bold sm:text-3xl">
-                Welcome back, {`${user?.first_name}`} 👋
+                Welcome back, {`${user?.firstname}`} 👋
               </h1>
 
               <p className="mt-1 text-sm text-slate-300">
@@ -146,7 +147,9 @@ export default function ProfilePage() {
               </p>
             </div>
 
-            <button className="flex items-center gap-2 self-start rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium transition hover:bg-white/10 sm:self-auto">
+            <button 
+            onClick={logout}
+            className="flex items-center gap-2 self-start rounded-xl border border-white/20 px-4 py-2.5 text-sm font-medium transition hover:bg-white/10 sm:self-auto">
               <LogOut size={17} />
               Logout
             </button>

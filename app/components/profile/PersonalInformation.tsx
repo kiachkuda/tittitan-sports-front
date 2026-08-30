@@ -70,7 +70,7 @@ export function PersonalInformation() {
 
           <InfoField
             label="Last Name"
-            value={`${user?.last_name}`}
+            value={`${user?.lastname}`}
           />
 
           <InfoField
