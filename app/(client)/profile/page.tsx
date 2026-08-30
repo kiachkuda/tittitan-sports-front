@@ -195,11 +195,11 @@ export default function ProfilePage() {
 
               <div className="min-w-0">
                 <h2 className="truncate font-semibold text-slate-900">
-                  Samuel Kiarie
+                  {`${user?.firstname} ${user?.lastname}`}
                 </h2>
 
                 <p className="truncate text-xs text-slate-500">
-                  samuel@example.com
+                  {`${user?.email}`}
                 </p>
 
                 <div className="mt-1 flex items-center gap-1 text-xs text-green-600">
