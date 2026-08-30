@@ -8,7 +8,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     const user = useAuth().user;
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    
 
     useEffect( ()=> {
         if(user !== null) {setIsLoggedIn(true)};
