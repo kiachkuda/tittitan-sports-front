@@ -1,7 +1,7 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   
@@ -32,6 +32,7 @@ import { WishlistSection } from "@/app/components/profile/WishlistSection";
 import { useAuth } from "@/contexts/AuthProvider";
 import { PersonalInformation } from "@/app/components/profile/PersonalInformation";
 import Loading from "../products/loading";
+import { useRouter } from "next/navigation";
 
 type ProfileSection =
   | "profile"
@@ -95,6 +96,12 @@ export default function ProfilePage() {
     const user = auth.user;
     const loading = auth.loading
     const logout = auth.logout
+
+    const router = useRouter();
+
+    useEffect(()=>{
+      if(!user) router.push("/login")
+    })
 
   const renderContent = () => {
     switch (activeSection) {
