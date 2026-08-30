@@ -58,7 +58,7 @@ export default function SignUpForm() {
             body: JSON.stringify({
                 firstname,
                 lastname,
-                phone_number,
+                mobile:phone_number,
                 email,
                 password,
                 role : "user"
