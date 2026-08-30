@@ -34,6 +34,7 @@ import { PersonalInformation } from "@/app/components/profile/PersonalInformatio
 import Loading from "../products/loading";
 import { useRouter } from "next/navigation";
 import { getUserOrders } from "@/app/lib/order";
+import { getUserPayments } from "@/app/lib/payment";
 
 type ProfileSection =
   | "profile"
@@ -111,6 +112,12 @@ export default function ProfilePage() {
 
         console.log("User Orders:",data)
       } 
+
+      const getUserPays = async () => {
+        const data = await getUserPayments();
+
+        console.log("User Payments", data)
+      }
 
       getUserOrds();
       
