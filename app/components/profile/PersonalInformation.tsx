@@ -35,7 +35,7 @@ export function PersonalInformation() {
 
     const user = auth.user;
 
-    console.log({}, user)
+    console.log("hello mrs: ", user)
 
   return (
     <div className="space-y-6">
