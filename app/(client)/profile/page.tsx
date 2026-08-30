@@ -101,7 +101,7 @@ export default function ProfilePage() {
 
     useEffect(()=>{
       if(!user) router.push("/login")
-    })
+    }, [user])
 
   const renderContent = () => {
     switch (activeSection) {
