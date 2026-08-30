@@ -35,6 +35,8 @@ export function PersonalInformation() {
 
     const user = auth.user;
 
+    console.log({}, user)
+
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -63,12 +65,12 @@ export function PersonalInformation() {
         <div className="grid gap-5 sm:grid-cols-2">
           <InfoField
             label="First Name"
-            value={`${user?.first_name}`}
+            value={`${user?.firstname}`}
           />
 
           <InfoField
             label="Last Name"
-            value={`${user?.last_name}`}
+            value={`${user?.lastname}`}
           />
 
           <InfoField
@@ -78,11 +80,11 @@ export function PersonalInformation() {
             verified
           />
 
-          <InfoField
+          {/* <InfoField
             label="Phone Number"
             value={`${user?.mobile}`}
             icon={<Phone size={16} />}
-          />
+          /> */}
 
           <InfoField
             label="Date of Birth"
