@@ -350,12 +350,12 @@ export default function Navbar({
             {/* Account Button */}
             <div className="mt-5 border-t border-gray-100 pt-5">
               <Link
-                href={isLoggedIn ? "/profile" : "/login"}
+                href={user || user != null ? "/profile" : "/login"}
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center justify-center gap-2 rounded-xl bg-orange-500 px-4 py-3 text-sm font-bold text-white transition hover:bg-orange-600"
               >
                 <User size={18} />
-                {isLoggedIn ? "My Account" : "Login / Create Account"}
+                {user || user != null ? "My Account" : "Login / Create Account"}
               </Link>
             </div>
           </div>
