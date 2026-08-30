@@ -22,6 +22,8 @@ type AuthContextType = {
   loading: boolean;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   logout: () => Promise<void>;
+  isLoggedIn: boolean;
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AuthContext = createContext<AuthContextType>({
@@ -29,6 +31,8 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   setUser: () => {},
   logout: async () => {},
+  isLoggedIn: false,
+  setIsLoggedIn: () => false
 });
 
 type AuthProviderProps = {
@@ -38,6 +42,7 @@ type AuthProviderProps = {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -54,15 +59,17 @@ export function AuthProvider({ children }: AuthProviderProps) {
         if (!response.ok) {
           console.log("Auth failed:", response.status);
           setUser(null);
+          setIsLoggedIn(false);
           return;
         }
-
         const data = await response.json();
 
         console.log("Auth response:", data);
 
         // Change this depending on your API response
         setUser(data.user);
+        setIsLoggedIn(true);
+        
       } catch (error) {
         console.error("Failed to load user:", error);
         setUser(null);
@@ -72,7 +79,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
 
     loadUser();
-  }, []);
+  }, [isLoggedIn]);
 
   const logout = async () => {
   try {
@@ -95,7 +102,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         user,
         loading,
         setUser,
-        logout
+        logout,
+        isLoggedIn,
+        setIsLoggedIn
       }}
     >
       {children}
@@ -104,3 +113,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 }
 
 export const useAuth = () => useContext(AuthContext);
+
+function setIsLoggedIn(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
