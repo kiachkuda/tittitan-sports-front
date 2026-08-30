@@ -16,6 +16,7 @@ export default function LoginForm() {
   const router = useRouter();
   const auth = useAuth();
   const setUser = auth.setUser;
+  const setIsLoggedIn = auth.setIsLoggedIn
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     // Handle form submission logic here
@@ -45,6 +46,7 @@ export default function LoginForm() {
       const data = await res.json();
 
       setUser(data.user);
+      setIsLoggedIn(true);
 
       console.log(data)
       
