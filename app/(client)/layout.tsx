@@ -16,7 +16,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     return (
         <>
          <Announcement />
-            <Nav isLoggedIn={isLoggedIn} />
+            <Nav user={user} />
             {children}
             <Footer />        
         </>
