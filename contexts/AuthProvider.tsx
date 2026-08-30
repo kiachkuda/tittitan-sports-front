@@ -79,7 +79,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     };
 
     loadUser();
-  }, [isLoggedIn]);
+  }, []);
 
   const logout = async () => {
   try {
