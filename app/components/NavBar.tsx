@@ -34,7 +34,7 @@ export default function Navbar({
       href: "/",
     },
     {
-      name: "Shop",
+      name: "products",
       href: "/products",
     },
     {
@@ -284,7 +284,7 @@ export default function Navbar({
               </Link>
 
               <Link
-                href="/shop"
+                href="/products"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`flex items-center rounded-xl px-4 py-3 text-sm font-semibold ${
                   isActive("/shop")

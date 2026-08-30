@@ -41,8 +41,8 @@ export default function SignUpForm() {
         const form = e.currentTarget;
 
         const formData = new FormData();
-        const last_name = (form.elements.namedItem("lastname") as HTMLInputElement).value;
-        const first_name = (form.elements.namedItem("firstname") as HTMLInputElement).value;
+        const lastname = (form.elements.namedItem("lastname") as HTMLInputElement).value;
+        const firstname = (form.elements.namedItem("firstname") as HTMLInputElement).value;
         const email = (form.elements.namedItem("email") as HTMLInputElement).value;
         const phone_number = (form.elements.namedItem("phone") as HTMLInputElement).value;
         const password = (form.elements.namedItem("password") as HTMLInputElement).value;
@@ -56,8 +56,8 @@ export default function SignUpForm() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                first_name,
-                last_name,
+                firstname,
+                lastname,
                 phone_number,
                 email,
                 password,
