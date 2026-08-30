@@ -1,6 +1,6 @@
 import { CheckCircle2, Edit3, Heart, Mail, MapPin, Package, Phone } from "lucide-react";
 import { InfoField } from "./InfoField";
-import { User } from "@/app/types/interface";
+
 import { useAuth } from "@/contexts/AuthProvider";
 
 export function SectionHeader({
@@ -65,12 +65,12 @@ export function PersonalInformation() {
         <div className="grid gap-5 sm:grid-cols-2">
           <InfoField
             label="First Name"
-            value={`${user?.firstname}`}
+            value={`${user?.first_name}`}
           />
 
           <InfoField
             label="Last Name"
-            value={`${user?.lastname}`}
+            value={`${user?.last_name}`}
           />
 
           <InfoField

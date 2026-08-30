@@ -22,7 +22,7 @@ import {
   Lock,
   User2,
 } from "lucide-react";
-import { User } from "@/app/types/interface";
+
 import { AddressesSection } from "@/app/components/profile/AddressSection";
 import { OrdersSection } from "@/app/components/profile/OrderSection";
 import { PaymentsSection } from "@/app/components/profile/PaymentSection";
