@@ -130,13 +130,13 @@ export default function ProfilePage() {
   const renderContent = () => {
     switch (activeSection) {
       case "orders":
-        return <OrdersSection orders={[]} />;
+        return <OrdersSection orders={orders} />;
 
       case "addresses":
         return <AddressesSection addressess={[]} />;
 
       case "payments":
-        return <PaymentsSection />;
+        return <PaymentsSection payments={payments} />;
 
       case "wishlist":
         return <WishlistSection wishlist={[]} />;

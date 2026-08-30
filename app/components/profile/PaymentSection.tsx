@@ -1,7 +1,7 @@
 import { CheckCircle2 } from "lucide-react";
 import { SectionHeader } from "./PersonalInformation";
 
-export function PaymentsSection() {
+export function PaymentsSection(props: {payments:any[]}) {
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -15,11 +15,7 @@ export function PaymentsSection() {
         </div>
 
         <div className="divide-y divide-slate-100">
-          {[
-            ["#TS-10045", "M-Pesa", "KSh 6,500", "Successful"],
-            ["#TS-10032", "M-Pesa", "KSh 4,800", "Successful"],
-            ["#TS-10021", "M-Pesa", "KSh 3,500", "Successful"],
-          ].map(([order, method, amount, status]) => (
+          {props.payments.map(([order, gateway, amount, status]) => (
             <div
               key={order}
               className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between"
@@ -29,7 +25,7 @@ export function PaymentsSection() {
                   {order}
                 </p>
                 <p className="text-sm text-slate-500">
-                  {method}
+                  {gateway}
                 </p>
               </div>
 
