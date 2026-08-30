@@ -33,6 +33,7 @@ import { useAuth } from "@/contexts/AuthProvider";
 import { PersonalInformation } from "@/app/components/profile/PersonalInformation";
 import Loading from "../products/loading";
 import { useRouter } from "next/navigation";
+import { getUserOrders } from "@/app/lib/order";
 
 type ProfileSection =
   | "profile"
@@ -91,7 +92,10 @@ const menuItems = [
 export default function ProfilePage() {
   const [activeSection, setActiveSection] =
     useState<ProfileSection>("profile");
+
+  const [orders, setOrdres] = useState([]);
     const auth =useAuth();
+
 
     const user = auth.user;
     const loading = auth.loading
@@ -101,6 +105,13 @@ export default function ProfilePage() {
 
     useEffect(()=>{
       if(!user) router.push("/login")
+
+      const getUserOrds = async () => {
+        const data = await getUserOrders();
+
+        console.log(data)
+      } 
+      
     }, [user])
 
   const renderContent = () => {

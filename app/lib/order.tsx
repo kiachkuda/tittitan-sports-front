@@ -68,3 +68,25 @@ export async function getOrderStatus(id:number) {
     console.log(error)
   }
 }
+
+export async function getUserOrders(){
+  try {
+   
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/my-orders`,
+      {
+        method: "GET",
+        credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      }
+    )
+
+    
+    return response.json();
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
