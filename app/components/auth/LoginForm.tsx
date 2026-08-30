@@ -47,8 +47,6 @@ export default function LoginForm() {
 
       setUser(data.user);
       setIsLoggedIn(true);
-
-      console.log(data)
       
       setSuccess(true);
 

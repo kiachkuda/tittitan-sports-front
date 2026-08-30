@@ -65,7 +65,7 @@ export function PersonalInformation() {
         <div className="grid gap-5 sm:grid-cols-2">
           <InfoField
             label="First Name"
-            value={`${user?.first_name}`}
+            value={`${user?.firstname}`}
           />
 
           <InfoField

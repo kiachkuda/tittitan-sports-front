@@ -6,8 +6,8 @@ import Announcement from "../components/Announcement";
 import { useAuth } from "@/contexts/AuthProvider";
 
 export default function Layout({ children }: { children: ReactNode }) {
-    const {isLoggedIn, user, setIsLoggedIn} = useAuth();
-    console.log(isLoggedIn)
+    const {isLoggedIn} = useAuth();
+    
     return (
         <>
          <Announcement />
