@@ -65,7 +65,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         }
         const data = await response.json();
 
-        console.log("Auth response:", data);
+        // console.log("Auth response:", data);
 
         // Change this depending on your API response
         setUser(data.user);

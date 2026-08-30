@@ -123,9 +123,7 @@ export default function ProductsPage() {
     <section className="mx-auto  px-8 md:px-16 py-8">
       {/* Heading */}
       <div className="mb-10">
-        <p className="font-semibold uppercase tracking-[0.3em] text-red-600">
-          Products
-        </p>
+        
 
         <h1 className="mt-2 md:text-5xl md:font-black text-2xl">
           Shop The Latest Collection
@@ -157,8 +155,6 @@ export default function ProductsPage() {
 
             <select className="rounded-xl border px-4 py-3">
               <option>Newest</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
               <option>Most Popular</option>
             </select>
           </div>

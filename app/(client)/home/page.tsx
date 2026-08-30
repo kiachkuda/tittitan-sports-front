@@ -23,32 +23,6 @@ import CategoryCards from "@/app/components/categories/categoryComponent"
 
 
 
-
-const Images = [cat1, cat2, cat3, cat4, cat5];
-const categoryIcons = [
-  {
-    name: "National Teams",
-    icon: Flag,
-    href: "/shop?category=national-teams",
-  },
-  {
-    name: "Jerseys",
-    icon: Shirt,
-    href: "/shop?category=jerseys",
-  },
-  {
-    name: "Football Accessories",
-    icon: CircleDot,
-    href: "/shop?category=accessories",
-  },
-  {
-    name: "Tracksuits",
-    icon: Shirt,
-    href: "/shop?category=tracksuits",
-  },
-];
-
-
 const HomePage = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [categories, setCategories] = useState<any[]>([]);
@@ -72,15 +46,7 @@ const HomePage = () => {
 
     }, []);
 
-    const handleCategoryClick = (category: any) => {
-        setSelectedCategory(category.category_id);
-
-        setProducts(
-            category?.product_categories.map((pc: any) => pc.products)
-        );
-    };
-
-
+  
     return (
         <div className="flex flex-col gap-6">
             {/* Category Cards */}
