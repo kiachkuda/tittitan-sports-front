@@ -87,15 +87,11 @@ const HomePage = () => {
             <div className="flex flex-col mx-auto gap-6 px-4 md:px-16 py-6">
                 <Title title="Home" />
 
-                {/* Mobile Slider */}
-                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 md:hidden scrollbar-hide">
-                    <CategoryCards />
-                </div>
-
+             
                 {/* Tablet/Desktop Grid */}
-                <div className="hidden md:grid grid-cols-3 lg:grid-cols-4 gap-6">
+                
                     <CategoryCards />
-                </div>
+                
             </div>
             {/* Products By Categories */}
             {categories.slice(0, 4).map((category) => (

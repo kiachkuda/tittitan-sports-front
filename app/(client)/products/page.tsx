@@ -1,4 +1,5 @@
 "use client"
+import LoadingPage from "@/app/components/loading/loading";
 import ProductCard from "@/app/components/ProductCard";
 import ProductFilter from "@/app/components/ProductFilter";
 import { getAllCategories } from "@/app/lib/category";
@@ -27,17 +28,19 @@ export default function ProductsPage() {
   const currentPage = Number(searchParams.get("page") || 1);
   const currentCategory = searchParams.get("category") || "";
   const currentSize = searchParams.getAll("size") || [];
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     
-    const getproducts = async () => {
+    try {
+      setLoading(true);
+      const getproducts = async () => {
       const result = await getAllProducts({ page: currentPage, category: currentCategory, size: currentSize.join(",") });
       const data = result;
       const pagination = data.pagination;
 
       setTotalPages(pagination.totalPages)
       setProducts(data.data);
-
     }
 
     const getCategories = async () => {
@@ -45,8 +48,14 @@ export default function ProductsPage() {
       setCategories(cats.data);
     }
 
-    getproducts();
-    getCategories();
+     getproducts();
+     getCategories();
+    } catch (error) {
+      
+    }finally{
+      setLoading(false);
+    }
+   
   }, [currentPage, currentCategory,]);
 
 
@@ -105,6 +114,10 @@ export default function ProductsPage() {
 
     router.push(`${pathname}?${params.toString()}`);
   };
+
+  if(loading) {
+    return <LoadingPage />
+  }
 
   return (
     <section className="mx-auto  px-8 md:px-16 py-8">
