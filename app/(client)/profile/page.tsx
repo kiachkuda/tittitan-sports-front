@@ -29,6 +29,8 @@ import { PaymentsSection } from "@/app/components/profile/PaymentSection";
 import { PreferencesSection } from "@/app/components/profile/PreferenceSection";
 import { SecuritySection } from "@/app/components/profile/SecuritySection";
 import { WishlistSection } from "@/app/components/profile/WishlistSection";
+import { useAuth } from "@/contexts/AuthProvider";
+import { PersonalInformation } from "@/app/components/profile/PersonalInformation";
 
 type ProfileSection =
   | "profile"
@@ -87,6 +89,9 @@ const menuItems = [
 export default function ProfilePage() {
   const [activeSection, setActiveSection] =
     useState<ProfileSection>("profile");
+    const auth =useAuth();
+
+    const user = auth.user;
 
   const renderContent = () => {
     switch (activeSection) {
@@ -94,13 +99,13 @@ export default function ProfilePage() {
         return <OrdersSection orders={[]} />;
 
       case "addresses":
-        return <AddressesSection />;
+        return <AddressesSection addressess={[]} />;
 
       case "payments":
         return <PaymentsSection />;
 
       case "wishlist":
-        return <WishlistSection />;
+        return <WishlistSection wishlist={[]} />;
 
       case "preferences":
         return <PreferencesSection />;
@@ -109,7 +114,13 @@ export default function ProfilePage() {
         return <SecuritySection />;
 
       default:
-        return <PersonalInformation user={} />;
+        return user ? (
+          <PersonalInformation user={user} />
+        ) : (
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 text-slate-600 shadow-sm">
+            Loading profile information...
+          </div>
+        );
     }
   };
 
@@ -125,7 +136,7 @@ export default function ProfilePage() {
               </p>
 
               <h1 className="text-2xl font-bold sm:text-3xl">
-                Welcome back, Samuel 👋
+                Welcome back, {`${user?.first_name}`} 👋
               </h1>
 
               <p className="mt-1 text-sm text-slate-300">

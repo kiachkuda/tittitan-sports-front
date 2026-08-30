@@ -1,7 +1,7 @@
 import { Heart } from "lucide-react";
 import { SectionHeader } from "./PersonalInformation";
 
-export function WishlistSection() {
+export function WishlistSection(props: {wishlist:any[]}) {
   return (
     <div className="space-y-6">
       <SectionHeader

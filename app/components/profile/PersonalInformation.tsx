@@ -28,7 +28,7 @@ export function SectionHeader({
   );
 }
 
-function PersonalInformation(props:{user:User}) {
+export function PersonalInformation({user}:{user:User}) {
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -57,24 +57,24 @@ function PersonalInformation(props:{user:User}) {
         <div className="grid gap-5 sm:grid-cols-2">
           <InfoField
             label="First Name"
-            value="Samuel"
+            value={`${user.first_name}`}
           />
 
           <InfoField
             label="Last Name"
-            value="Kiarie"
+            value={`${user.last_name}`}
           />
 
           <InfoField
             label="Email Address"
-            value="samuel@example.com"
+            value={`${user.email}`}
             icon={<Mail size={16} />}
             verified
           />
 
           <InfoField
             label="Phone Number"
-            value="+254 7XX XXX XXX"
+            value={`${user.mobile}`}
             icon={<Phone size={16} />}
           />
 
@@ -150,7 +150,6 @@ function PersonalInformation(props:{user:User}) {
     </div>
   );
 }
-
 
 export function StatCard({
   icon,
