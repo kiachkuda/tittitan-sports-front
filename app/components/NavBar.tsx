@@ -17,12 +17,12 @@ import { useState } from "react";
 
 type NavbarProps = {
   cartCount?: number;
-  isLoggedIn?: boolean;
+  user?: any;
 };
 
 export default function Navbar({
   cartCount = 0,
-  isLoggedIn = false,
+  user = null,
 }: NavbarProps) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -200,7 +200,7 @@ export default function Navbar({
 
           {/* Profile */}
           <Link
-            href={isLoggedIn ? "/profile" : "/login"}
+            href={user != null ? "/profile" : "/login"}
             aria-label="Profile"
             className={`hidden h-10 w-10 items-center justify-center rounded-full transition sm:flex ${
               isActive("/profile")
@@ -227,7 +227,7 @@ export default function Navbar({
           </Link>
 
           {/* Desktop Login/Profile */}
-          {!isLoggedIn ? (
+          {!user || user == null ? (
             <Link
               href="/login"
               className="ml-1 hidden rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-orange-500 sm:block"
@@ -318,12 +318,12 @@ export default function Navbar({
               </Link>
 
               <Link
-                href={isLoggedIn ? "/profile" : "/login"}
+                href={user || user != null ? "/profile" : "/login"}
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
               >
                 <User size={18} />
-                {isLoggedIn ? "My Profile" : "Login / Sign Up"}
+                {user || user != null ? "My Profile" : "Login / Sign Up"}
               </Link>
             </div>
 
