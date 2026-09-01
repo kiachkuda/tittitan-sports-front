@@ -10,6 +10,7 @@ type ProductCardProps = {
   name: string;
   price: number;
   product_image: ImageType;
+  addToWishlist: (productId: number) => void;
 };
 
 export default function ProductCard({
@@ -17,6 +18,7 @@ export default function ProductCard({
   name,
   price,
   product_image,
+  addToWishlist,
 }: ProductCardProps) {
   return (
      
@@ -36,7 +38,13 @@ export default function ProductCard({
           className="aspect-square w-full h-full object-cover transition duration-500 group-hover:scale-105"
         /></Link>
 
-        <button className="absolute right-4 top-4 rounded-full bg-white p-2 shadow transition hover:bg-orange-600 hover:text-white">
+        <button 
+          className="absolute right-4 top-4 rounded-full bg-white p-2 shadow transition hover:bg-orange-600 hover:text-white"
+          onClick={(e) => {
+            e.preventDefault();
+            addToWishlist(Number(product_id));
+          }}
+        >
           <Heart size={18} />
         </button>
       </div>

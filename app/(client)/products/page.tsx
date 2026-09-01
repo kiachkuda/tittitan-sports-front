@@ -119,6 +119,20 @@ export default function ProductsPage() {
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const addToWishlist = async (productId: number) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/wishlist/${productId}`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if(loading) {
     return <LoadingPage />
   }
