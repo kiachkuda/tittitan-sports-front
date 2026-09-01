@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ProductCard from "../ProductCard";
 import { Product } from "@/app/types/interface";
+import { addToWishlist } from "@/app/lib/wishlist";
 
 interface Props {
   title: string;
@@ -56,7 +57,7 @@ export default function CategoryProducts({
             product_id={(product.product_id).toString()}
             name={product.name}
             price={product.price}
-           
+           addToWishlist={()=>addToWishlist(product.product_id)}
             product_image={product.product_image[0]}
           />
         ))}
@@ -75,7 +76,7 @@ export default function CategoryProducts({
             <ProductCard product_id={(products[index].product_id).toString()}
             name={products[index].name}
             price={products[index].price}
-           
+            addToWishlist={() => addToWishlist(products[index].product_id)}
             product_image={products[index].product_image[0]} />
           </motion.div>
         </AnimatePresence>
