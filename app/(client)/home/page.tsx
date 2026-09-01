@@ -31,9 +31,6 @@ const HomePage = () => {
 
 
     useEffect(() => {
-
-       console.log( "env file:", process.env.NEXT_PUBLIC_API_URL)
-
         async function loadCategories() {
             const res = await getAllCategories();
             setCategories(res.data);

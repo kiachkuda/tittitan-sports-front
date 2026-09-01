@@ -50,10 +50,11 @@ export default function ProductsPage() {
 
      getproducts();
      getCategories();
+     
     } catch (error) {
       
     }finally{
-      setLoading(false);
+     
     }
    
   }, [currentPage, currentCategory,]);
@@ -123,8 +124,6 @@ export default function ProductsPage() {
     <section className="mx-auto  px-8 md:px-16 py-8">
       {/* Heading */}
       <div className="mb-10">
-        
-
         <h1 className="mt-2 md:text-5xl md:font-black text-2xl">
           Shop The Latest Collection
         </h1>
