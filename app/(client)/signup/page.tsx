@@ -82,7 +82,7 @@ export default function SignUpForm() {
             setMsg(data.message)
             // Redirect to verify page after 2 seconds
             setTimeout(() => {
-                router.push("/verify_account");
+                router.push("/login");
             }, 2000);
 
         } else {

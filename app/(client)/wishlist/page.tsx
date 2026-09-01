@@ -12,6 +12,8 @@ import {
   PackageOpen,
 } from "lucide-react";
 import ProductCard from "@/app/components/ProductCard";
+import { useAuth } from "@/contexts/AuthProvider";
+import { useRouter } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -20,6 +22,10 @@ export default function WishlistPage() {
   const [loading, setLoading] = useState(true);
   const [removingId, setRemovingId] = useState(null);
   const [error, setError] = useState("");
+    const router = useRouter();
+  const auth = useAuth();
+
+  const isLoggedIn = auth?.isLoggedIn;
 
   const fetchWishlist = async () => {
     try {
@@ -55,8 +61,12 @@ export default function WishlistPage() {
   };
 
   useEffect(() => {
-    fetchWishlist();
-  }, []);
+    if (isLoggedIn) {
+      fetchWishlist();
+    }else{
+        router.push("/login")
+    }
+  }, [isLoggedIn]);
 
   const removeFromWishlist = async (productId:number, wishlistId:any) => {
     try {
@@ -207,11 +217,7 @@ function WishlistCard(props:{item:any, removing : boolean, onRemove:(productId:n
    * Adjust these fields if your Product model uses
    * different names.
    */
-  const image =
-    product.image ||
-    product.image_url ||
-    product.images?.[0] ||
-    "/images/product-placeholder.png";
+  
 
   const price = Number(product.price || 0);
   console.log("WishlistCard product:", product);
