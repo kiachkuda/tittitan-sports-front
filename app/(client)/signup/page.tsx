@@ -21,6 +21,7 @@ type FormErrors = {
     email?: string;
     phone?: string;
     password?: string;
+    user?: string;
 };
 
 export default function SignUpForm() {
@@ -47,6 +48,16 @@ export default function SignUpForm() {
         const phone_number = (form.elements.namedItem("phone") as HTMLInputElement).value;
         const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
+        if(!firstname || !lastname || !email || !phone_number || !password){
+            setErrors({
+                firstname: !firstname ? "First name is required" : undefined,
+                lastname: !lastname ? "Last name is required" : undefined,
+                email: !email ? "Email is required" : undefined,
+                phone: !phone_number ? "Phone number is required" : undefined,
+                password: !password ? "Password is required" : undefined,
+            });
+            return;
+        }
 
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`, {
@@ -77,13 +88,17 @@ export default function SignUpForm() {
         } else {
             const data = await res.json();
             console.log(data)
-            setErrors(data.errors);
+            setErrors({user:data.errors.user});
         }
     }
 
     return (
     <div className="space-y-2" >
       <div className="flex-1 flex justify-center items-center p-6">
+
+        {errors?.user && <div className='text-red-500 bg-white p-2'>
+                  {errors?.user}
+        </div>}
 
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-10">
 
