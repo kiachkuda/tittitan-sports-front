@@ -88,7 +88,7 @@ export default function SignUpForm() {
         } else {
             const data = await res.json();
             console.log(data)
-            setErrors({user:data.errors.user});
+            setErrors(data.errors);
         }
     }
 
@@ -96,9 +96,7 @@ export default function SignUpForm() {
     <div className="space-y-2" >
       <div className="flex-1 flex justify-center items-center p-6">
 
-        {errors?.user && <div className='text-red-500 bg-white p-2'>
-                  {errors?.user}
-        </div>}
+       
 
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-lg p-10">
 
@@ -121,6 +119,24 @@ export default function SignUpForm() {
             <div>
               
             </div>
+             {errors?.user && <div className='text-red-500 bg-white p-2'>
+                  {errors?.user}
+        </div>}
+        {errors?.firstname && <div className='text-red-500 bg-white p-2'>
+                  {errors?.firstname}
+        </div>}
+        {errors?.lastname && <div className='text-red-500 bg-white p-2'>
+                  {errors?.lastname}
+        </div>}
+        {errors?.email && <div className='text-red-500 bg-white p-2'>
+                  {errors?.email}
+        </div>}
+        {errors?.phone && <div className='text-red-500 bg-white p-2'>
+                  {errors?.phone}
+        </div>}
+        {errors?.password && <div className='text-red-500 bg-white p-2'>
+                  {errors?.password}
+        </div>}
             <form className="mt-10 space-y-6" onSubmit={handleSubmit}>
 
               <div className='grid sm:grid-cols-2 gap-2'>
