@@ -76,7 +76,7 @@ export default function SignUpForm() {
 
         } else {
             const data = await res.json();
-            console.log(data.errors.firstname)
+            console.log(data)
             setErrors(data.errors);
         }
     }
