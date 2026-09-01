@@ -3,7 +3,7 @@ import { API_URL } from "../types/constants";
 export const addToWishlist = async (productId:number) => {
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/wishlist/${productId}`,
+      `${API_URL}/wishlist/${productId}`,
       {
         method: "POST",
         credentials: "include",
@@ -25,7 +25,7 @@ export const addToWishlist = async (productId:number) => {
 export const removeFromWishlist = async (productId:number) => {
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/wishlist/${productId}`,
+      `${API_URL}/wishlist/${productId}`,
       {
         method: "DELETE",
         credentials: "include",
@@ -46,7 +46,7 @@ export const removeFromWishlist = async (productId:number) => {
 export const getWishlist = async () => {
   try {
     const response = await fetch(
-      `${API_URL}/api/v1/wishlist`,
+      `${API_URL}/wishlist`,
       {
         method: "GET",
         credentials: "include",
