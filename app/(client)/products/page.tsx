@@ -122,12 +122,21 @@ export default function ProductsPage() {
   const addToWishlist = async (productId: number) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/wishlist/${productId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/wishlist/${productId}`,
         {
           method: "POST",
           credentials: "include",
         }
       );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+      console.log(data);
+
     } catch (error) {
       console.error(error);
     }
@@ -178,10 +187,11 @@ export default function ProductsPage() {
           <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
             {products.map((product: Product) => (
               <ProductCard
+                
                 key={product.product_id}
                 product_id={product.product_id.toString()}
                 name={product.name}
-
+                addToWishlist={addToWishlist}
                 price={product.price}
                 product_image={product.product_image[0]}
 
