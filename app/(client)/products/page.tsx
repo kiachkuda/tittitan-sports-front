@@ -191,7 +191,7 @@ export default function ProductsPage() {
                 key={product.product_id}
                 product_id={product.product_id.toString()}
                 name={product.name}
-                addToWishlist={addToWishlist}
+                addToWishlist={() => addToWishlist(product.product_id)}
                 price={product.price}
                 product_image={product.product_image[0]}
 
