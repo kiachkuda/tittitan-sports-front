@@ -62,7 +62,7 @@ export default function WishlistPage() {
       setRemovingId(wishlistId);
 
       const response = await fetch(
-        `${API_URL}/api/v1/wishlist/${productId}`,
+        `${API_URL}/wishlist/${productId}`,
         {
           method: "DELETE",
           credentials: "include",
