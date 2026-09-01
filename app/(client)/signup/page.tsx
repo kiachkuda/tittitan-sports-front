@@ -122,21 +122,7 @@ export default function SignUpForm() {
              {errors?.user && <div className='text-red-500 bg-white p-2'>
                   {errors?.user}
         </div>}
-        {errors?.firstname && <div className='text-red-500 bg-white p-2'>
-                  {errors?.firstname}
-        </div>}
-        {errors?.lastname && <div className='text-red-500 bg-white p-2'>
-                  {errors?.lastname}
-        </div>}
-        {errors?.email && <div className='text-red-500 bg-white p-2'>
-                  {errors?.email}
-        </div>}
-        {errors?.phone && <div className='text-red-500 bg-white p-2'>
-                  {errors?.phone}
-        </div>}
-        {errors?.password && <div className='text-red-500 bg-white p-2'>
-                  {errors?.password}
-        </div>}
+        
             <form className="mt-10 space-y-6" onSubmit={handleSubmit}>
 
               <div className='grid sm:grid-cols-2 gap-2'>
