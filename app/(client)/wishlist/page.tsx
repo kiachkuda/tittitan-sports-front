@@ -11,6 +11,7 @@ import {
   Loader2,
   PackageOpen,
 } from "lucide-react";
+import ProductCard from "@/app/components/ProductCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -215,77 +216,14 @@ function WishlistCard(props:{item:any, removing : boolean, onRemove:(productId:n
   const price = Number(product.price || 0);
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
-      {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-slate-100">
-        <Link href={`/products/${product.product_id}`}>
-          <img
-            src={product.product_image[0]?.image_path || "/images/product-placeholder.png"}
-            alt={product.name}
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
-          />
-        </Link>
-
-        {/* Remove */}
-        <button
-          type="button"
-          onClick={() =>
-            props.onRemove(
-              product.product_id,
-              props.item.wishlist_id
-            )
-          }
-          disabled={props.removing}
-          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-600 shadow-sm backdrop-blur transition hover:bg-red-50 hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-60"
-          aria-label="Remove from wishlist"
-        >
-          {props.removing ? (
-            <Loader2
-              size={17}
-              className="animate-spin"
-            />
-          ) : (
-            <Trash2 size={17} />
-          )}
-        </button>
-
-        {/* Wishlist indicator */}
-        <div className="absolute bottom-3 left-3 flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-xs font-medium text-orange-600 shadow-sm backdrop-blur">
-          <Heart
-            size={12}
-            className="fill-orange-500"
-          />
-          Saved
-        </div>
-      </div>
-
-      {/* Details */}
-      <div className="p-4">
-        <Link
-          href={`/products/${product.product_id}`}
-          className="block"
-        >
-          <h3 className="line-clamp-2 min-h-[40px] text-sm font-semibold text-slate-900 transition hover:text-orange-600">
-            {product.name}
-          </h3>
-        </Link>
-
-        <div className="mt-3 flex items-center justify-between gap-2">
-          <p className="text-base font-bold text-slate-900">
-            KSh {price.toLocaleString()}
-          </p>
-        </div>
-
-        {/* Add to cart */}
-        <button
-          type="button"
-          className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-orange-500 px-3 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600"
-        >
-          <ShoppingCart size={16} />
-          Add to Cart
-        </button>
-      </div>
-    </article>
+    // 
+    <ProductCard
+      product_id={product.product_id.toString()}
+      name={product.name}
+        price={price}
+        product_image={image}
+        addToWishlist={() => props.onRemove(product.product_id, props.item.wishlist_id)}
+         />
   );
 }
 
