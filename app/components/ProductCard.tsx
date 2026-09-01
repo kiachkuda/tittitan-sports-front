@@ -40,8 +40,7 @@ export default function ProductCard({
 
         <button 
           className="absolute right-4 top-4 rounded-full bg-white p-2 shadow transition hover:bg-orange-600 hover:text-white"
-          onClick={(e) => {
-            e.preventDefault();
+          onClick={() => {
             addToWishlist(Number(product_id));
           }}
         >
