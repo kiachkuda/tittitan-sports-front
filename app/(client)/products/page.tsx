@@ -50,11 +50,11 @@ export default function ProductsPage() {
 
      getproducts();
      getCategories();
-     
+     setLoading(false);
     } catch (error) {
       
     }finally{
-     
+      setLoading(false);
     }
    
   }, [currentPage, currentCategory,]);
