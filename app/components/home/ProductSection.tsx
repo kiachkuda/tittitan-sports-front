@@ -4,6 +4,7 @@ import Link from "next/link";
 import ProductCard from "../ProductCard";
 import { ChevronRight } from "lucide-react";
 import { Product } from "@/app/types/interface";
+import { addToWishlist } from "@/app/lib/wishlist";
 
 interface ProductSectionProps {
   title: string;
@@ -54,6 +55,7 @@ export default function ProductSection({
                 price={product?.price}
                 product_id={product?.product_id.toString()}
                 product_image={product?.product_image[0]}
+                addToWishlist={() => addToWishlist(product.product_id)}
             />
           ))}
         </div>
