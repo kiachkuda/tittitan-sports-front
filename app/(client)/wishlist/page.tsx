@@ -220,7 +220,7 @@ function WishlistCard(props:{item:any, removing : boolean, onRemove:(productId:n
       <div className="relative aspect-square overflow-hidden bg-slate-100">
         <Link href={`/products/${product.product_id}`}>
           <img
-            src={image}
+            src={product.product_image[0]?.image_path || "/images/product-placeholder.png"}
             alt={product.name}
             className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
           />
