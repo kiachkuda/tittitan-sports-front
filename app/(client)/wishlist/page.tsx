@@ -26,7 +26,7 @@ export default function WishlistPage() {
       setError("");
 
       const response = await fetch(
-        `${API_URL}/api/v1/wishlist`,
+        `${API_URL}/wishlist`,
         {
           method: "GET",
           credentials: "include",
