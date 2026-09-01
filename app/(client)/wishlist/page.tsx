@@ -214,7 +214,7 @@ function WishlistCard(props:{item:any, removing : boolean, onRemove:(productId:n
     "/images/product-placeholder.png";
 
   const price = Number(product.price || 0);
-
+  console.log("WishlistCard product:", product);
   return (
     // 
     <ProductCard
