@@ -48,7 +48,7 @@ const HomePage = () => {
         <div className="flex flex-col gap-6">
             {/* Category Cards */}
             <div className="flex flex-col mx-auto gap-6 px-4 md:px-16 py-6">
-                <Title title="Home" />
+                {/* <Title title="Home" /> */}
 
              
                 {/* Tablet/Desktop Grid */}

@@ -221,7 +221,7 @@ function WishlistCard(props:{item:any, removing : boolean, onRemove:(productId:n
       product_id={product.product_id.toString()}
       name={product.name}
         price={price}
-        product_image={product.product_image[0]?.image_path}
+        product_image={product.product_image[0].image_path}
         addToWishlist={() => props.onRemove(product.product_id, props.item.wishlist_id)}
          />
   );
