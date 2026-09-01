@@ -5,6 +5,7 @@ import ProductCard from "@/app/components/ProductCard";
 import { Category, Product } from "@/app/types/interface";
 // import { Categories,  CategoryType } from "./Categories";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { addToWishlist } from "@/app/lib/wishlist";
 
 export default function ProductGrid() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -110,7 +111,7 @@ const [categories, setCategories] = useState<Category[]>([])
                           
                           price={product.price}
                           product_image={product.product_image[0]}
-                         
+                         addToWishlist={()=>addToWishlist(product.product_id)}
                         />
                       ))}
                     </div>
