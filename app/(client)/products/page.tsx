@@ -5,6 +5,7 @@ import ProductFilter from "@/app/components/ProductFilter";
 import { getAllCategories } from "@/app/lib/category";
 import { getAllProducts } from "@/app/lib/product";
 import { Category, Product } from "@/app/types/interface";
+import { time } from "console";
 import { Search } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -50,11 +51,13 @@ export default function ProductsPage() {
 
      getproducts();
      getCategories();
-     setLoading(false);
+    
     } catch (error) {
       
     }finally{
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     }
    
   }, [currentPage, currentCategory,]);
